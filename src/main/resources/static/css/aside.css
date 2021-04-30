@@ -1,0 +1,29 @@
+ul {
+	list-style-type: none;
+	font-size: 20px;
+	color: white;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.aside {
+	padding-top: 100px;
+}
+
+.far {
+	color: white;
+}
+
+label {
+	color: white;
+}
+
+.formateur, .apprenant {
+	font-size: 20px;
+	font-style: italic;
+}
+
+a, li {
+	text-decoration: none !important;
+}

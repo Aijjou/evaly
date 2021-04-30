@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.org/dtd/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+  <table-filter match-schema="evaly" match-name=".*"/>
+  <table-filter match-catalog="evaly" match-name="apprenant"/>
+  <table-filter match-catalog="evaly" match-name="examen"/>
+  <table-filter match-catalog="evaly" match-name="examen_sujet"/>
+  <table-filter match-catalog="evaly" match-name="formateur"/>
+  <table-filter match-catalog="evaly" match-name="formateur_groupe_formateur"/>
+  <table-filter match-catalog="evaly" match-name="formateur_matiere"/>
+  <table-filter match-catalog="evaly" match-name="groupe_formateur"/>
+  <table-filter match-catalog="evaly" match-name="matiere"/>
+  <table-filter match-catalog="evaly" match-name="organisation"/>
+  <table-filter match-catalog="evaly" match-name="promotion"/>
+  <table-filter match-catalog="evaly" match-name="promotion_formateur"/>
+  <table-filter match-catalog="evaly" match-name="question"/>
+  <table-filter match-catalog="evaly" match-name="reponse"/>
+  <table-filter match-catalog="evaly" match-name="reponse_apprenant"/>
+  <table-filter match-catalog="evaly" match-name="reponse_apprenant_examen"/>
+  <table-filter match-catalog="evaly" match-name="resultat_examen"/>
+  <table-filter match-catalog="evaly" match-name="sujet"/>
+  <table-filter match-catalog="evaly" match-name="sujet_question"/>
+  <table-filter match-catalog="evaly" match-name="theme"/>
+  <table-filter match-catalog="evaly" match-name="utilisateur"/>
+</hibernate-reverse-engineering>

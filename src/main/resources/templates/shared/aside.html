@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	crossorigin="anonymous">
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+	integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+	crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+	integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+	crossorigin="anonymous"></script>
+<link href="../../css/aside.css" rel="stylesheet"
+	th:href="@{/css/aside.css}">
+<link href="/fontawesome/css/all.css" rel="stylesheet">
+</head>
+<body>
+	<aside th:fragment="aside"
+		class="col-2 aside d-flex flex-column justify-content-start">
+		<ul class="p-2">
+			<li class="mb-4 pb-0"><a href="info_eleve.html"><i
+					class="fas fa-user mr-1"></i>&nbsp;Profile</a></li>
+			<li class="mb-4 pb-0 nav-header" data-toggle="collapse"
+				data-target="#test"><i class="fas fa-user-plus"></i>&nbsp;Utilisateur
+				<ul class="nav nav-list collapse ml-4 mb-0" id="test">
+					<li class="formateur"><a th:href="@{/admin/liste-formateur}"  title="formateur">
+							&nbsp; &nbsp;Formateurs</a></li><br>
+					<li class="apprenant"><a th:href="@{/protected/liste-eleve}" title="apprenants"> &nbsp;
+							&nbsp;Apprenants</a></li>
+				</ul></li>
+			<li class="mb-4 pb-0"><a th:href="@{/admin/groupe}"><i
+					class="fas fa-list-ul mr-1"></i>&nbsp;Groupes</a></li>
+			<li class="mb-4 pb-0"><a href="http://"><i
+					class="far fa-file-alt mr-1"></i>&nbsp;Examens</a></li>
+			<li class="mb-4 pb-0"><a href="connexion.html"><i
+					class="fas fa-sign-out-alt"></i>&nbsp;Deconnexion</a></li>
+		</ul>
+	</aside>
+</body>
+</html>
