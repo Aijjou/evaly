@@ -12,28 +12,27 @@ ul {
 	color: white;
 }
 
+main {
+	margin-left: 15%;
+	height: 100%;
+	padding: 0px;
+}
+
 .principal {
 	height: 90%;
 	padding: 0px;
+	width: 100%;
 	margin: 0px;
 	position: absolute;
 	top: 10%;
 	left: 0px;
 	right: 0px;
 	overflow: auto;
-}
-
-nav {
-	background-color: #51438F;
-	height: 100%;
+	margin: 0px;
 }
 
 .fa-sign-out-alt {
 	color: white;
-}
-
-.aside {
-	padding-top: 100px;
 }
 
 sup {
@@ -97,11 +96,6 @@ a {
 	color: white;
 }
 
-.aside {
-	background-color: #9178FF;
-	box-shadow: 1px 5px 5px grey;
-}
-
 .ajoutButton, .creerButton {
 	background-color: #51438F;
 	color: white;
@@ -124,7 +118,7 @@ label {
 .matiere {
 	background-color: #9178FF;
 	font-size: 10px;
-	color : white;
+	color: white;
 }
 
 .card-img-top {

@@ -6,8 +6,6 @@ body, html {
 	background-color: #C4C4C4;
 }
 
-
-
 .dataTables_filter label {
 	color: black;
 	padding: 5px;
@@ -16,7 +14,12 @@ body, html {
 
 .dataTables_length {
 	display: none;
-	
+}
+
+main {
+	margin-left: 15%;
+	height: 100%;
+	padding: 0px;
 }
 
 ul {
@@ -36,17 +39,8 @@ ul {
 	overflow: auto;
 }
 
-nav {
-	background-color: #51438F;
-	height: 100%;
-}
-
 .fa-sign-out-alt {
 	color: white;
-}
-
-.aside {
-	padding-top: 100px;
 }
 
 sup {
@@ -87,14 +81,6 @@ a {
 	height: 40px;
 }
 
-.fa-bell {
-	font-size: 25px;
-}
-
-.badge {
-	margin-left: -10px;
-}
-
 .searchButton {
 	background-color: #51438F;
 	color: white;
@@ -108,11 +94,6 @@ a {
 
 .fa-edit {
 	color: white;
-}
-
-.aside {
-	background-color: #9178FF;
-	box-shadow: 1px 5px 5px grey;
 }
 
 .ajoutButton, .creerButton {

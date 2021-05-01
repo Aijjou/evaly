@@ -9,6 +9,13 @@ ul {
 
 .aside {
 	padding-top: 100px;
+	height: 100%;
+	position: fixed;
+	left: 0px;
+	background-color: #9178FF;
+	box-shadow: 1px 5px 5px grey;
+	width : 15%;
+	margin-right:0px;
 }
 
 .far {

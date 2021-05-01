@@ -39,10 +39,10 @@
 <body>
 	<div th:replace="/shared/header :: header"></div>
 	<div
-		class="container-fluid principal d-flex flex-row justify-content-around">
+		class="container-fluid principal">
 		<div th:replace="/shared/aside :: aside"></div>
-		<main class="col-10 d-flex flex-column justify-content-center">
-			<div class="row d-flex flex-row justify-content-center mb-4">
+		<main class="d-flex flex-column justify-content-center">
+			<div class="d-flex flex-row justify-content-center mb-4">
 				<div
 					class="card connexion w-25 d-flex flex-column justify-content-between pt-1 pl-3 pr-4 pb-2 mb-4 ">
 					<small class="row d-flex flex-row justify-content-start promotion"><i
@@ -52,7 +52,7 @@
 				</div>
 			</div>
 			<div
-				class="row mt-4 w-100 align-self-center d-flex flex-row justify-content-center flex-wrap">
+				class="mt-4 w-100 align-self-center d-flex flex-row justify-content-center flex-wrap">
 				<div th:each="formateur:${formateurs}">
 					<div class="card mr-4 mb-4" style="width: 15em;">
 						<div class="card-header">
