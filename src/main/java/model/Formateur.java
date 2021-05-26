@@ -3,14 +3,10 @@ package model;
 
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -24,7 +20,7 @@ import javax.persistence.Table;
 @PrimaryKeyJoinColumn(name = "id_utilisateur")
 public class Formateur extends Utilisateur {
 
-	private FormateurId id;
+
 	private Utilisateur utilisateur;
 	private Set<Examen> examens = new HashSet<Examen>(0);
 	private Set<FormateurMatiere> formateurMatieres = new HashSet<FormateurMatiere>(0);
@@ -35,15 +31,13 @@ public class Formateur extends Utilisateur {
 	public Formateur() {
 	}
 
-	public Formateur(FormateurId id, Utilisateur utilisateur) {
-		this.id = id;
+	public Formateur( Utilisateur utilisateur) {
 		this.utilisateur = utilisateur;
 	}
 
-	public Formateur(FormateurId id, Utilisateur utilisateur, Set<Examen> examens,
+	public Formateur(Utilisateur utilisateur, Set<Examen> examens,
 			Set<FormateurMatiere> formateurMatieres, Set<Sujet> sujets,
 			Set<FormateurGroupeFormateur> formateurGroupeFormateurs, Set<PromotionFormateur> promotionFormateurs) {
-		this.id = id;
 		this.utilisateur = utilisateur;
 		this.examens = examens;
 		this.formateurMatieres = formateurMatieres;
@@ -111,7 +105,7 @@ public class Formateur extends Utilisateur {
 
 	@Override
 	public String toString() {
-		return "Formateur [id=" + id + " examens=" + examens + ", formateurMatieres="
+		return "Formateur [ examens=" + examens + ", formateurMatieres="
 				+ formateurMatieres + ", sujets=" + sujets + ", formateurGroupeFormateurs=" + formateurGroupeFormateurs
 				+ ", promotionFormateurs=" + promotionFormateurs + "]";
 	}

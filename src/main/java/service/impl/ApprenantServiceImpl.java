@@ -1,6 +1,7 @@
 package service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
@@ -23,6 +24,8 @@ public class ApprenantServiceImpl implements ApprenantService{
 	
 	@Override
 	public List<Apprenant> apprenants() {
+		
+		
 		
 		return (List<Apprenant>) apprenantRepository.findAll();
 	}
