@@ -35,11 +35,11 @@ public class Apprenant extends Utilisateur{
 	public Apprenant() {
 	}
 
-	public Apprenant(ApprenantId id, Utilisateur utilisateur) {
+	public Apprenant(Utilisateur utilisateur) {
 		this.utilisateur = utilisateur;
 	}
 
-	public Apprenant(ApprenantId id, Promotion promotion, Utilisateur utilisateur,
+	public Apprenant(Promotion promotion, Utilisateur utilisateur,
 			Set<ReponseApprenantExamen> reponseApprenantExamens, Set<ResultatExamen> resultatExamens,
 			Set<ReponseApprenant> reponseApprenants) {
 

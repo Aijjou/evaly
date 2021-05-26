@@ -25,6 +25,7 @@
         <mapping class="model.Organisation"/>
         <mapping class="model.Apprenant"/>
         <mapping class="model.GroupeFormateur"/>
+        <mapping class="model.PromotionFormateur"/>
         <mapping class="model.FormateurGroupeFormateur"/>
         <mapping class="model.ReponseApprenantExamen"/>
         <mapping class="model.ReponseApprenant"/>

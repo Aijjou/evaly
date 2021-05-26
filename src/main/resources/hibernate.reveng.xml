@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.org/dtd/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+  <table-filter match-schema="bd" match-name=".*"/>
+  <table-filter match-catalog="bd" match-name="acc_transaction"/>
+  <table-filter match-catalog="bd" match-name="account"/>
+  <table-filter match-catalog="bd" match-name="branch"/>
+  <table-filter match-catalog="bd" match-name="business"/>
+  <table-filter match-catalog="bd" match-name="compte"/>
+  <table-filter match-catalog="bd" match-name="customer"/>
+  <table-filter match-catalog="bd" match-name="department"/>
+  <table-filter match-catalog="bd" match-name="employee"/>
+  <table-filter match-catalog="bd" match-name="individual"/>
+</hibernate-reverse-engineering>
