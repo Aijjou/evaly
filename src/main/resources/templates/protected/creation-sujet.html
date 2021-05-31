@@ -56,97 +56,102 @@
 
 <body>
 	<div th:replace="/shared/header :: header"></div>
-	<div
-		class="container-fluid principal d-flex flex-row justify-content-around">
-		<div th:replace="/shared/aside :: aside"></div>
-		<main class="col-10 d-flex flex-column justify-content-center">
-			<div class="row d-flex flex-row justify-content-center mb-4">
-				<div
-					class="card connexion w-25 d-flex flex-column justify-content-between pt-1 pl-3 pr-4 pb-4 mb-4 padb05">
-					<small class="row d-flex flex-row justify-content-center"> <i
-						class="fas fa-graduation-cap align-self-center ml-1 font-weight-bold"></i>&nbsp;
-						<div class="align-self-center pt-1">Création - Sujet</div>
-					</small>
-					<div class="row align-self-center " th:text="${formation}"></div>
-				</div>
+	<div th:replace="/shared/aside :: aside"></div>
+	<div class=" principal d-flex flex-column justify-content-around">
+
+
+		<div class="d-flex flex-row justify-content-center mb-4 titre">
+			<div
+				class="card connexion w-25 d-flex flex-column justify-content-between pt-1 pl-3 pr-4 pb-4 mb-4">
+				<small class="row d-flex flex-row justify-content-center promotion"> <i
+					class="fas fa-graduation-cap align-self-center ml-1 font-weight-bold"></i>&nbsp;
+					<div class="align-self-center pt-1">SUJET</div>
+				</small>
+				<div class="row align-self-center ">CREATION-SUJET</div>
 			</div>
-			<form method="post" th:action="@{/creasujet}">
-				<div class="d-flex flex-row justify-content-center">
+		</div>
+		<div
+			class="d-flex flex-row justify-content-center mt-4 align-self-center w-75">
+			<div class="d-flex flex-row justify-content-center  p-4 main">
+				<form method="post" th:action="@{/creasujet}">
+					<div class="d-flex flex-row justify-content-center">
 
-					<div class="card w-75 align-self-center p-2  m-2">
-						<div class="row mt-4 w-75 align-self-center">
-							<div class="row mb-4 w-100 mb20px">
+						<div class="card w-75 align-self-center p-2  m-2">
+							<div class="row mt-4 w-75 align-self-center">
+								<div class="row mb-4 w-100 mb20px">
 
-								<div
-									class="col-3 align-self-center d-flex flex-row justify-content-center">
-									Sujet</div>
-								<div
-									class="col-9 align-self-center d-flex flex-row px-0">
-									<select name="title">
-										<option value="">-- Choisir un sujet --</option>
-										<option th:each="sujet : ${listsujet}"
-											th:value="${sujet.idMatiere}" th:text="${sujet.nom}">
-									</select>
+									<div
+										class="col-3 align-self-center d-flex flex-row justify-content-center">
+										Sujet</div>
+									<div class="col-9 align-self-center d-flex flex-row px-0">
+										<select name="title">
+											<option value="">-- Choisir un sujet --</option>
+											<option th:each="sujet : ${listsujet}"
+												th:value="${sujet.idMatiere}" th:text="${sujet.nom}">
+										</select>
+									</div>
 								</div>
-							</div>
-							<div class="row mb-4 w-100">
-								<div
-									class="col-3 align-self-center d-flex flex-row justify-content-center">
-									Thème(s) : </div>
-								<div
-									class="col-9 align-self-center d-flex flex-row px-0">
-									<div class="multiselect">
-										<div class="selectBox justify-content-center" onclick="showCheckboxes()">
-											<select>
-												<option>Choisir un ou plusieurs thème(s)</option>
-											</select >
-											<div class="overSelect align-self-center" ></div>
-										</div>
-										<div id="checkboxes">
-											<label for="one"> <input type="checkbox" id="one" />First
-												checkbox
-											</label> <label for="two"> <input type="checkbox" id="two" />Second
-												checkbox
-											</label> <label for="three"> <input type="checkbox"
-												id="three" />Third checkbox
-											</label>
+								<div class="row mb-4 w-100">
+									<div
+										class="col-3 align-self-center d-flex flex-row justify-content-center">
+										Thème(s) :</div>
+									<div class="col-9 align-self-center d-flex flex-row px-0">
+										<div class="multiselect">
+											<div class="selectBox justify-content-center"
+												onclick="showCheckboxes()">
+												<select>
+													<option>Choisir un ou plusieurs thème(s)</option>
+												</select>
+												<div class="overSelect align-self-center"></div>
+											</div>
+											<div id="checkboxes">
+												<label for="one"> <input type="checkbox" id="one" />First
+													checkbox
+												</label> <label for="two"> <input type="checkbox" id="two" />Second
+													checkbox
+												</label> <label for="three"> <input type="checkbox"
+													id="three" />Third checkbox
+												</label>
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-							
-							<div class="row w-100 mb20px">
-								<div class="col-2 d-flex flex-row justify-content-center">
-									<button  class="btn annulerButton" onclick="location.href='LINK'" type="button">
-										Retour</button>
-								</div>
-								<div class="col-5 d-flex flex-row justify-content-center">
-									<input  class="btn validerButton"  type="submit" value="Sélectionner les questions">
-								</div>
-								<div class="col-5 d-flex flex-row justify-content-center">
-									<input  class="btn validerButton"  type="submit" value="Générer sujet automatiquement">
+
+								<div class="row w-100 mb20px">
+									<div class="col-2 d-flex flex-row justify-content-center">
+										<button class="btn annulerButton"
+											onclick="location.href='LINK'" type="button">Retour</button>
+									</div>
+									<div class="col-5 d-flex flex-row justify-content-center">
+										<input class="btn validerButton" type="submit"
+											value="Sélectionner les questions">
+									</div>
+									<div class="col-5 d-flex flex-row justify-content-center">
+										<input class="btn validerButton" type="submit"
+											value="Générer sujet automatiquement">
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-			</form>
-		</main>
+				</form>
+			</div>
+		</div>
 	</div>
 	<script type="text/javascript">
-var expanded = false;
+		var expanded = false;
 
-function showCheckboxes() {
-  var checkboxes = document.getElementById("checkboxes");
-  if (!expanded) {
-    checkboxes.style.display = "block";
-    expanded = true;
-  } else {
-    checkboxes.style.display = "none";
-    expanded = false;
-  }
-}
-</script>
+		function showCheckboxes() {
+			var checkboxes = document.getElementById("checkboxes");
+			if (!expanded) {
+				checkboxes.style.display = "block";
+				expanded = true;
+			} else {
+				checkboxes.style.display = "none";
+				expanded = false;
+			}
+		}
+	</script>
 </body>
 
 </html>

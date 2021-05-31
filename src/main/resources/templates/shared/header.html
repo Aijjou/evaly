@@ -37,7 +37,7 @@
 					<i class="far fa-bell position-relative mr-0 pr-0"><sup><span
 							class="badge border border-light rounded-circle bg-success">1</span></sup></i>
 				</div>
-				<div class="col-2 ml-0" th:if="${admin == true}">
+				<div class="col-2 ml-0"  th:if="${connexion == true}">
 					<div class="row" >
 
 						<div class="col-3 align-self-center">
@@ -47,8 +47,14 @@
 							<div class="row">
 								<label for="" class="nom mb-0">Peter Panne</label>
 							</div>
-							<div class="row">
+							<div class="row"th:if="${admin == true}">
 								<label for="" class="role mt-1 mb-0">Admin</label>
+							</div>
+							<div class="row" th:if="${formateur == true}">
+								<label for="" class="role mt-1 mb-0">Formateur</label>
+							</div>
+							<div class="row" th:if="${apprenant == true}" >
+								<label for="" class="role mt-1 mb-0">Apprenant</label>
 							</div>
 						</div>
 					</div>

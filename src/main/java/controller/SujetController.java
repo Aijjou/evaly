@@ -18,24 +18,76 @@ import service.FormateurService;
 @Controller
 public class SujetController {
 
-
+	Boolean isConnectBoolean = false;
+	Boolean isAdmin = false;
+	Boolean isFormateur = false;
+	Boolean isApprenant = false;
+	
+	
+	
 	@RequestMapping(value = "/protected/creation-sujet", method = RequestMethod.GET)
 	public String afficheFormateur(Model model) {
+		
+		isFormateur = true;
+		isApprenant = false;
+		isConnectBoolean = true;
+		isAdmin = false;
+		
+		model.addAttribute("connexion", isConnectBoolean);
+		model.addAttribute("apprenant", isApprenant);
+		model.addAttribute("admin", isAdmin);
+		model.addAttribute("formateur", isFormateur);
+		
 		return "/protected/creation-sujet";
 	}
 	
 	@RequestMapping(value = "/protected/creation-sujet-gen", method = RequestMethod.GET)
 	public String generateSubject(Model model) {
+		
+		isFormateur = true;
+		isApprenant = false;
+		isConnectBoolean = true;
+		isAdmin = false;
+		
+		model.addAttribute("connexion", isConnectBoolean);
+		model.addAttribute("apprenant", isApprenant);
+		model.addAttribute("admin", isAdmin);
+		model.addAttribute("formateur", isFormateur);
+		
 		return "/protected/creation-sujet-gen";
 	}
 	
 	@RequestMapping(value = "/protected/creation-sujet-manu", method = RequestMethod.GET)
 	public String manualSubject(Model model) {
+		
+		isFormateur = true;
+		isApprenant = false;
+		isConnectBoolean = true;
+		isAdmin = false;
+		
+		model.addAttribute("connexion", isConnectBoolean);
+		model.addAttribute("apprenant", isApprenant);
+		model.addAttribute("admin", isAdmin);
+		model.addAttribute("formateur", isFormateur);
+		
 		return "/protected/creation-sujet-manu";
 	}
 
 	@RequestMapping(value = "/protected/liste-sujet", method = RequestMethod.GET)
 	public String listeSujet(Model model) {
+		
+		
+		isFormateur = true;
+		isApprenant = false;
+		isConnectBoolean = true;
+		isAdmin = false;
+		
+		model.addAttribute("connexion", isConnectBoolean);
+		model.addAttribute("apprenant", isApprenant);
+		model.addAttribute("admin", isAdmin);
+		model.addAttribute("formateur", isFormateur);
+		
+		
 		return "/protected/liste-sujet";
 	}
 }

@@ -1,5 +1,6 @@
 package controller;
 
+import org.aspectj.weaver.patterns.IScope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +12,8 @@ public class ConnexionController {
 	
 	Boolean isConnectBoolean = false;
 	Boolean isAdmin = false;
+	Boolean isFormateur = false;
+	Boolean isApprenant = false;
 	
 	
 	@RequestMapping(value = "/public/connexion", method = RequestMethod.GET)

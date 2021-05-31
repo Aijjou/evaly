@@ -16,10 +16,8 @@ body, html {
 	display: none;
 }
 
-main {
-	margin-left: 15%;
-	height: 100%;
-	padding: 0px;
+.promotion {
+	font-size: 10px;
 }
 
 ul {
@@ -29,14 +27,24 @@ ul {
 }
 
 .principal {
-	height: 90%;
 	padding: 0px;
 	margin: 0px;
 	position: absolute;
 	top: 10%;
-	left: 0px;
+	left: 15%;
 	right: 0px;
-	overflow: auto;
+	padding-bottom: 5%;
+}
+
+.titre {
+	position: relative;
+	top: 40px;
+	margin-bottom: 40px;
+}
+
+.main {
+	position: relative;
+	top: 40px;
 }
 
 .fa-sign-out-alt {
@@ -55,7 +63,6 @@ sup {
 	font-size: 25px;
 	font-weight: bold;
 }
-
 
 a {
 	color: white;

@@ -6,16 +6,21 @@ body, html {
 	background-color: #C4C4C4;
 }
 
+.dataTables_filter label {
+	color: black;
+	padding: 5px;
+	border-radius: 15px;
+}
 
-.promotion {
-	font-size: 10px;
+.dataTables_length {
+	display: none;
 }
 
 
 .annulerButton, .validerButton {
     background-color: #51438F;
     color: white;
-    width: 250px;
+    width: 150px;
     height: 40px;
 }
 
@@ -128,6 +133,12 @@ a {
 	font-style: oblique;
 }
 
+.annulerButton, .validerButton {
+	background-color: #51438F;
+	color: white;
+	width: 100px;
+	height: 40px;
+}
 
 .searchButton {
 	background-color: #51438F;
@@ -168,5 +179,6 @@ img {
 .longselect{
 	width: 70%;
 }
+
 
 

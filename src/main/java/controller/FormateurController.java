@@ -20,6 +20,8 @@ public class FormateurController {
 
 	Boolean isConnectBoolean = false;
 	Boolean isAdmin = false;
+	Boolean isFormateur = false;
+	Boolean isApprenant = false;
 	
 	
 	@Autowired
@@ -28,7 +30,9 @@ public class FormateurController {
 	@RequestMapping(value = "/admin/liste-formateur", method = RequestMethod.GET)
 	public String afficheFormateur(Model model) {
 
-		
+		isAdmin = true;
+		isFormateur = false;
+		isApprenant = false;
 		
 		List<Formateur> formateurs = formateurService.formateurs();
 		List<String> nomMatiere = new ArrayList<>();
@@ -45,8 +49,9 @@ public class FormateurController {
 		isAdmin = true;
 		
 		model.addAttribute("connexion", isConnectBoolean);
+		model.addAttribute("apprenant", isApprenant);
 		model.addAttribute("admin", isAdmin);
-
+		model.addAttribute("formateur", isFormateur);
 		model.addAttribute("formateurs", formateurs);
 		model.addAttribute("matieres", nomMatiere);
 
