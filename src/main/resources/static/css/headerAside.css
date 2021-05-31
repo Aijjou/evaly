@@ -1,13 +1,16 @@
+
 body, html {
 	height: 100%;
 	width: 100%;
 	padding: 0px;
 	margin: 0px;
+
 }
 
 aside {
 	background-color: #9178FF;
 	box-shadow: 1px 5px 5px grey;
+
 	height: 100%;
 	left: 0px;
 	width: 15%;
@@ -79,6 +82,7 @@ ul {
 }
 
 .fas {
+
 	color: white;
 }
 
@@ -91,20 +95,22 @@ label {
 	font-style: italic;
 }
 
+
 li {
 	text-decoration: none !important;
 }
 
 a {
-	text-decoration: none !important;
-	color: white;
+
 }
+
 
 .hvr:hover {
 	color: #0000EE;
 }
 
 /* HEADER CSS */
+
 .avatar {
 	border-radius: 50%;
 	height: 40px;
@@ -117,6 +123,7 @@ img {
 	background-color: #51438F;
 }
 
+
 .fa-bell {
 	font-size: 25px;
 }
@@ -124,3 +131,4 @@ img {
 .badge {
 	margin-left: -10px;
 }
+
