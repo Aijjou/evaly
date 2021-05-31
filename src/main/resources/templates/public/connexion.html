@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	crossorigin="anonymous">
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+	integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+	crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+	integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+	crossorigin="anonymous"></script>
+<link href="../../connexion.css" rel="stylesheet" th:href="@{/css/connexion.css}">
+<link href="../../css/header.css" rel="stylesheet"
+	th:href="@{/css/header.css}">
+<link href="/fontawesome/css/all.css" rel="stylesheet">
+<title>Connexion</title>
+</head>
+
+<body>
+	<div th:replace="/shared/header :: header"></div>
+	<div
+		class="principal d-flex flex-column justify-content-around">
+			<div class="d-flex flex-row justify-content-center mb-4 titre">
+			<div
+				class="card connexion w-25 d-flex flex-column justify-content-between pt-1 pl-3 pr-4 pb-2 mb-4 ">
+				<small class="row d-flex flex-row justify-content-start promotion"><i class="fas fa-plug align-self-center ml-1 font-weight-bold"></i>&nbsp;
+					<div class="align-self-center pt-1">CONNEXION</div></small>
+				<div class="row align-self-center">CONNEXION</div>
+			</div>
+		</div>
+			
+			<div class="d-flex flex-row justify-content-center mt-4">
+				<div class="card d-flex flex-row justify-content-center w-75 p-4 main">
+					<form class="w-50 align-items-center">
+						<div class="form-group">
+							<label for="exampleInputEmail1" class="text-dark">Email</label> <input
+								type="email" class="form-control" id="exampleInputEmail1"
+								aria-describedby="emailHelp" placeholder="Saisir votre email"
+								required>
+
+						</div>
+						<div class="form-group mb-4">
+							<label for="exampleInputPassword1" class="text-dark">Password</label>
+							<input type="password" class="form-control"
+								id="exampleInputPassword1" placeholder="Saisir mot de passe"
+								required>
+						</div>
+						<div class="d-flex flex-row justify-content-between mt-3">
+							<div>
+								<small class="form-text text-muted">Si vous ne disposez
+									pas encore de compte.</small> <a href="/public/inscription-admin" class="mt-0">Inscription</a>
+							</div>
+							<div class="d-flex flex-row justify-content-center">
+								<a type="submit" href="#" class="btn annulerButton mr-2">ANNULER</a>
+								<a type="submit" href="/admin/liste-formateur" class="btn validerButton">VALIDER</a>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		
+	</div>
+</body>
+
+</html>

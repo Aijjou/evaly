@@ -1,0 +1,115 @@
+body, html{
+    height:100%;
+    width: 100%;
+    padding: 0px;
+    margin:0px;
+}
+
+aside {
+	background-color: #9178FF;
+	box-shadow: 1px 5px 5px grey;
+    height: 100%;	
+    left:0px;
+    width : 15%;
+    margin:0px;
+    position: fixed;
+    top:10%;
+	overflow: auto;
+}
+
+.mainbody{
+	margin-left:15%;
+	padding: 0px;
+	width: 100%;
+	height:auto;
+}
+
+.header{
+    height:10%;
+	background-color: #51438F;
+	top:0%;
+	left:0%;
+	right:0%;
+	width: 100%;
+	position: fixed;
+	box-shadow: 2px 3px 2px grey;
+}
+
+.principal{
+    padding: 0px;
+    margin: 0px;
+    left:0px;
+    right:0px;
+    width:100%;
+    position: relative;
+}
+
+.placement{
+    padding-top: 30px;
+    padding-bottom: 20px;
+}
+
+/* ASIDE CSS */
+
+.aside{
+	padding-top: 30px;
+	padding-left: 30px;
+}
+
+ul {
+	list-style-type: none;
+	font-size: 20px;
+	color: white;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	color:white;
+}
+
+.fas {
+	color: white;
+}
+
+label {
+	color: white;
+}
+
+.formateur, .apprenant {
+	font-size: 20px;
+	font-style: italic;
+}
+
+li {
+	text-decoration: none !important;
+}
+
+a {
+	text-decoration: none !important;
+	color:white;
+}
+
+.hvr:hover{
+	color:#0000EE;
+}
+
+/* HEADER CSS */
+
+.avatar {
+	border-radius: 50%;
+	height: 40px;
+	width: 40px;
+}
+
+img {
+	height: 70px;
+	width: 25px;
+	background-color: #51438F;
+}
+
+.fa-bell {
+	font-size: 25px;
+}
+
+.badge {
+	margin-left: -10px;
+}

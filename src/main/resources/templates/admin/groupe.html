@@ -38,11 +38,12 @@
 
 <body>
 	<div th:replace="/shared/header :: header"></div>
+	<div th:replace="/shared/aside :: aside"></div>
 	<div
-		class="container-fluid principal d-flex flex-row justify-content-around">
-		<div th:replace="/shared/aside :: aside"></div>
-		<main class="col-10 d-flex flex-column justify-content-center">
-			<div class="row d-flex flex-row justify-content-center mb-4">
+		class="principal d-flex flex-column justify-content-around">
+	
+	
+			<div class="d-flex flex-row justify-content-center mb-4 titre">
 				<div
 					class="card connexion w-25 d-flex flex-column justify-content-between pt-1 pl-3 pr-4 pb-2 mb-4 ">
 					<small class="row d-flex flex-row justify-content-start promotion"><i
@@ -52,7 +53,7 @@
 				</div>
 			</div>
 			<div
-				class="row mt-4 w-100 align-self-center d-flex flex-row justify-content-center flex-wrap">
+				class="row mt-4 w-75 align-self-center d-flex flex-row justify-content-center flex-wrap main">
 				<div th:each="groupe:${groupes}">
 					<div class="card mr-4 mb-4" style="width: 17rem;">
 						<div class="card-body">
@@ -75,7 +76,7 @@
 					</div>
 				</div>
 			</div>
-		</main>
+	
 	</div>
 </body>
 

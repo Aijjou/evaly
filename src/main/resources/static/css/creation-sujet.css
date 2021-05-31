@@ -13,7 +13,20 @@ body, html {
 }
 
 .dataTables_length {
-	padding: 5px;
+	display: none;
+}
+
+main {
+	margin-left: 15%;
+	height: 100%;
+	padding: 0px;
+}
+
+.annulerButton, .validerButton {
+    background-color: #51438F;
+    color: white;
+    width: 250px;
+    height: 40px;
 }
 
 ul {
@@ -22,25 +35,15 @@ ul {
 	color: white;
 }
 
-.titre {
-	position: relative;
-	top: 40px;
-	margin-bottom: 40px;
-}
-
 .principal {
+	height: 90%;
 	padding: 0px;
 	margin: 0px;
 	position: absolute;
 	top: 10%;
-	left: 15%;
+	left: 0px;
 	right: 0px;
-	padding-bottom: 10%;
-}
-
-.main {
-	position: relative;
-	top: 40px;
+	overflow: auto;
 }
 
 .fa-sign-out-alt {
@@ -55,6 +58,50 @@ sup {
 	vertical-align: baseline;
 }
 
+.multiselect {
+  width: 200px;
+}
+
+.selectBox {
+	width: 130%;
+  position: relative;
+  font-style: black;
+}
+
+
+.overSelect {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+#checkboxes {
+  display: none;
+  border: 1px #dadada solid;
+      width: 125%;
+}
+
+#checkboxes label {
+  display: block;
+}
+
+#checkboxes label:hover {
+  background-color: #1e90ff;
+}
+
+.mb5px{
+	margin-bottom: 10px;
+}
+
+.mb20px{
+	margin-bottom: 20px;
+}
+
+.padb05{
+	padding-bottom: 0.5rem!important;
+}
 .connexion {
 	font-size: 25px;
 	font-weight: bold;
@@ -78,12 +125,6 @@ a {
 	font-style: oblique;
 }
 
-.annulerButton, .validerButton {
-	background-color: #51438F;
-	color: white;
-	width: 100px;
-	height: 40px;
-}
 
 .searchButton {
 	background-color: #51438F;
@@ -121,9 +162,10 @@ img {
 	color: white;
 }
 
-label {
-	color: white;
+.longselect{
+	width: 70%;
 }
+
 
 #myModalLabel {
 	font-size: 18px;
@@ -134,7 +176,7 @@ label {
 }
 
 #datatable_filter label input {
-	background-color: dark;
+	background-color: white;
 	width: 80%;
 	border-radius: 7px;
 }

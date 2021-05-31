@@ -1,0 +1,196 @@
+body, html {
+	height: 100%;
+	width: 100%;
+	padding: 0px;
+	margin: 0px;
+	background-color: #C4C4C4;
+}
+
+.tg {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+.tg td {
+	border-color: black;
+	border-style: solid;
+	border-width: 1px;
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+	overflow: hidden;
+	padding: 10px 5px;
+	word-break: normal;
+}
+
+.annulerButton, .validerButton {
+    background-color: #51438F;
+    color: white;
+    width: 100px;
+    height: 40px;
+}
+
+.tg th {
+	border-color: black;
+	border-style: solid;
+	border-width: 1px;
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+	font-weight: normal;
+	overflow: hidden;
+	padding: 10px 5px;
+	word-break: normal;
+}
+
+.tg .tg-0lax {
+	text-align: left;
+	vertical-align: top
+}
+
+main {
+	margin-left: 15%;
+	height: 100%;
+	padding: 0px;
+}
+
+ul {
+	list-style-type: none;
+	font-size: 20px;
+	color: white;
+}
+
+.principal {
+	height: 90%;
+	padding: 0px;
+	margin: 0px;
+	position: absolute;
+	top: 10%;
+	left: 0px;
+	right: 0px;
+	overflow: auto;
+}
+
+.fa-sign-out-alt {
+	color: white;
+}
+
+sup {
+	top: -.5em;
+	position: relative;
+	font-size: 50%;
+	line-height: 0;
+	vertical-align: baseline;
+}
+
+.multiselect {
+	width: 200px;
+}
+
+.selectBox {
+	width: 130%;
+	position: relative;
+	font-style: black;
+}
+
+.overSelect {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+}
+
+#checkboxes {
+	display: none;
+	border: 1px #dadada solid;
+	width: 125%;
+}
+
+#checkboxes label {
+	display: block;
+}
+
+#checkboxes label:hover {
+	background-color: #1e90ff;
+}
+
+.mb5px {
+	margin-bottom: 10px;
+}
+
+.mb20px {
+	margin-bottom: 20px;
+}
+
+.padb05 {
+	padding-bottom: 0.5rem !important;
+}
+
+.connexion {
+	font-size: 25px;
+	font-weight: bold;
+}
+
+.promotion {
+	font-size: 10px;
+}
+
+a {
+	color: white;
+}
+
+.fa-user-circle {
+	color: white;
+	font-size: 33px;
+}
+
+.role {
+	font-size: 15px;
+	font-style: oblique;
+}
+
+.annulerButton, .validerButton {
+	background-color: #51438F;
+	color: white;
+	width: 100px;
+	height: 40px;
+}
+
+.searchButton {
+	background-color: #51438F;
+	color: white;
+	border-color: white;
+}
+
+.card {
+	border-radius: 15px;
+	box-shadow: 1px 5px 5px grey;
+}
+
+.fa-edit {
+	color: white;
+}
+
+.ajoutButton, .creerButton {
+	background-color: #51438F;
+	color: white;
+}
+
+.avatar {
+	border-radius: 50%;
+	height: 40px;
+	width: 40px;
+}
+
+img {
+	height: 70px;
+	width: 25px;
+	background-color: #51438F;
+}
+
+.far {
+	color: white;
+}
+
+.longselect {
+	width: 70%;
+}

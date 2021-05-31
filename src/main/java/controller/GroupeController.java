@@ -16,6 +16,11 @@ import service.GroupeService;
 @Scope("session")
 public class GroupeController {
 
+	
+	Boolean isConnectBoolean = false;
+	Boolean isAdmin = false;
+	
+	
 	@Autowired
 	GroupeService groupeService;
 
@@ -23,7 +28,11 @@ public class GroupeController {
 	public String afficheGroupe(Model model) {
 
 		List<GroupeFormateur> groupesFormateurs = groupeService.getListGroupeFormateur();
-
+		isConnectBoolean = true;
+		isAdmin = true;
+		
+		model.addAttribute("connexion", isConnectBoolean);
+		model.addAttribute("admin", isAdmin);
 		
 		model.addAttribute("groupes", groupesFormateurs);
 

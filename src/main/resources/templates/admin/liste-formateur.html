@@ -38,11 +38,12 @@
 
 <body>
 	<div th:replace="/shared/header :: header"></div>
+	<div th:replace="/shared/aside :: aside"></div>
 	<div
-		class="container-fluid principal">
-		<div th:replace="/shared/aside :: aside"></div>
-		<main class="d-flex flex-column justify-content-center">
-			<div class="d-flex flex-row justify-content-center mb-4">
+		class=" principal  d-flex flex-column justify-content-around">
+		
+		
+			<div class="d-flex flex-row justify-content-center  titre">
 				<div
 					class="card connexion w-25 d-flex flex-column justify-content-between pt-1 pl-3 pr-4 pb-2 mb-4 ">
 					<small class="row d-flex flex-row justify-content-start promotion"><i
@@ -51,8 +52,9 @@
 					<div class="row align-self-center ">APFA</div>
 				</div>
 			</div>
+			<div class="d-flex flex-row justify-content-start m-2 w-75 align-self-center ml-3"><a class="btn btn-light px-4 align-self-start shadow-lg ajoutButton py-2" href="/admin/inscription-formateur-admin"><i class="fas fa-user-plus"></i>&nbsp;Ajouter un formateur</a> </div>
 			<div
-				class="mt-4 w-100 align-self-center d-flex flex-row justify-content-center flex-wrap">
+				class="w-100 align-self-center d-flex flex-row justify-content-center flex-wrap main">
 				<div th:each="formateur:${formateurs}">
 					<div class="card mr-4 mb-4" style="width: 15em;">
 						<div class="card-header">
@@ -102,8 +104,11 @@
 								<div class="badge appel p-2">
 									<i class="fas fa-envelope"></i>
 								</div>
+								<div class="badge bg-danger appel p-2">
+									<i class="far fa-trash-alt"></i>
+								</div>
 								<div class="badge appel p-2">
-									<i class="fas fa-phone-alt"></i>
+									<i class="fas fa-pencil-alt"></i>
 								</div>
 								<div class="badge appel p-2">
 									<i class="fas fa-arrow-right"></i>
@@ -113,7 +118,7 @@
 					</div>
 				</div>
 			</div>
-		</main>
+	
 	</div>
 </body>
 

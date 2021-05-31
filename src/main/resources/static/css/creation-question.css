@@ -6,31 +6,41 @@ body, html {
 	background-color: #C4C4C4;
 }
 
+.dataTables_filter label {
+	color: black;
+	padding: 5px;
+	border-radius: 15px;
+}
+
+.dataTables_length {
+	display: none;
+}
+
+.vertical-center {
+  top: 25%;
+}
+
+main {
+	margin-left: 15%;
+	height: 100%;
+	padding: 0px;
+}
+
 ul {
 	list-style-type: none;
 	font-size: 20px;
 	color: white;
 }
 
-.titre {
-	position: relative;
-	top: 40px;
-	margin-bottom: 40px;
-}
-
 .principal {
+	height: 90%;
 	padding: 0px;
 	margin: 0px;
 	position: absolute;
 	top: 10%;
-	left: 15%;
+	left: 0px;
 	right: 0px;
-	padding-bottom: 10%;
-}
-
-.main {
-	position: relative;
-	top: 40px;
+	overflow: auto;
 }
 
 .fa-sign-out-alt {
@@ -45,6 +55,17 @@ sup {
 	vertical-align: baseline;
 }
 
+.mb5px{
+	margin-bottom: 10px;
+}
+
+.mb20px{
+	margin-bottom: 20px;
+}
+
+.padb05{
+	padding-bottom: 0.5rem!important;
+}
 .connexion {
 	font-size: 25px;
 	font-weight: bold;
@@ -75,14 +96,6 @@ a {
 	height: 40px;
 }
 
-.fa-bell {
-	font-size: 25px;
-}
-
-.badge {
-	margin-left: -10px;
-}
-
 .searchButton {
 	background-color: #51438F;
 	color: white;
@@ -98,7 +111,7 @@ a {
 	color: white;
 }
 
-.ajoutButton, .creerButton, .ajoutButton {
+.ajoutButton, .creerButton {
 	background-color: #51438F;
 	color: white;
 }
@@ -109,41 +122,49 @@ a {
 	width: 40px;
 }
 
+img {
+	height: 70px;
+	width: 25px;
+	background-color: #51438F;
+}
+
 .far {
 	color: white;
 }
 
-label {
-	color: white;
+.annulerButton, .validerButton {
+    background-color: #51438F;
+    color: white;
+    width: 100px;
+    height: 40px;
 }
 
-.matiere {
-	background-color: #9178FF;
-	font-size: 10px;
-	color: white;
+.inputradio{
+	margin:5px;
 }
 
-.card-img-top {
-	height: 100%;
-	width: 100%;
-	border-radius: 50%;
-}
-
-.nbrePromotion, .nbreMatiere {
-	background-color: #51438F;
-	box-shadow: 1px 5px 5px grey;
-	color: white;
-	border-radius: 25px;
-	font-size: 12px;
-}
-
-.appel {
-	border-radius: 50%;
-	background-color: #9178FF;
-	color: white;
-}
-
-
-.fa-envelope, .fa-trash-alt, .fa-pencil-alt, .fa-arrow-right {
+#myModalLabel {
 	font-size: 18px;
+}
+
+#datatable_wrapper {
+	width: 100%;
+}
+
+#datatable_filter label input {
+	background-color: white;
+	width: 80%;
+	border-radius: 7px;
+}
+
+#datatable_filter label {
+	width: 100%;
+}
+
+#datatable_filter {
+	width: 50%;
+}
+
+#dataTables_length {
+	width: 50%;
 }

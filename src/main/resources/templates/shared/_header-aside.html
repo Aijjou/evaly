@@ -1,0 +1,89 @@
+<body>
+	<header th:fragment="header" class="header">
+		<nav class="navbar">
+			<div class="container-fluid d-flex flex-row justify-content-between">
+				<img class="navbar-branda col-1" src="/images/evaly3.png" />
+				<div class="col-8 d-flex flex-row justify-content-end mr-2">
+					<i class="far fa-bell position-relative mr-0 pr-0">
+						<sup><span class="badge border border-light rounded-circle bg-success">9+</span></sup>
+					</i>
+				</div>
+				<div class="col-2">
+					<div class="row">
+						<div class="col-3 align-self-center">
+							<img src="/images/avatar.jpg" class="avatar">
+						</div>
+						<div class="col-7">
+							<div class="row">
+								<label for="" class="nom mb-0">Peter Panne</label>
+							</div>
+							<div class="row"th:if="${admin == true}">
+								<label for="" class="role mt-1 mb-0">Admin</label>
+							</div>
+							<div class="row" th:if="${formateur == true}" >
+								<label for="" class="role mt-1 mb-0">Formateur</label>
+							</div>
+							<div class="row" th:if="${apprenant == true}" >
+								<label for="" class="role mt-1 mb-0">Apprenant</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</nav>
+	</header>
+        <div class="container-fluid principal d-flex flex-row">
+           <aside th:fragment="aside" class="aside d-flex flex-column justify-content-start">
+				<ul class="p-2">
+					<li class="mb-4 pb-0 nav-header" data-toggle="collapse" data-target="#user" th:if="${admin == true} && ${apprenant == false}">
+						<div class="hvr"><i class="fas fa-list-ul"></i>&nbsp;Utilisateur</div>
+						<ul class="nav nav-list collapse ml-4 mb-0" id="user">
+							<li class="mb-4 pb-0">
+								<a href="http://"><i class="fas fa-user-tie"></i>&nbsp;Formateur</a>
+							</li>
+							<li class="mb-4 pb-0">
+								<a href="http://"><i class="fas fa-feather-alt"></i>&nbsp;Apprenants</a>
+							</li>
+						</ul>
+					</li>
+					<li class="mb-4 pb-0" th:if="${apprenant == false}">
+						<a th:href="@{/admin/groupe}"><i class="fas fa-graduation-cap"></i>&nbsp;Promotions</a>
+					</li>
+					<li class="mb-4 pb-0" th:if="${apprenant == true}">
+						<a th:href="@{/admin/groupe}"><i class="fas fa-graduation-cap"></i>&nbsp;Promotion</a>
+					</li>
+					<li class="mb-4 pb-0" th:if="${apprenant == false}">
+						<a th:href="@{/admin/groupe}"><i class="fas fa-users"></i>&nbsp;Groupe formateurs</a>
+					</li>
+					<li class="mb-4 pb-0" th:if="${apprenant == false}">
+						<a th:href="@{/admin/groupe}"><i class="fas fa-book-open"></i>&nbsp;Matieres</a>
+					</li>
+					<li class="mb-4 pb-0 nav-header" data-toggle="collapse" data-target="#resources" th:if="${apprenant == false}">
+						<div class="hvr"><i class="fas fa-file-alt mr-1"></i>&nbsp;Resources</div>
+						<ul class="nav nav-list collapse ml-4 mb-0" id="resources">
+							<li class="mb-4 pb-0">
+								<a href="http://"><i class="far fa-calendar-alt"></i>&nbsp;Examens</a>
+							</li>
+							<li class="mb-4 pb-0">
+								<a th:href="@{/protected/qcm}"><i class="far fa-folder-open"></i>&nbsp;Sujet</a>
+							</li>
+							<li class="mb-4 pb-0">
+								<a href="http://"><i class="fas fa-question"></i>&nbsp;Questions</a>
+							</li>
+						</ul>
+					</li>
+						<li class="mb-4 pb-0" th:if="${apprenant == true}">
+								<a href="http://"><i class="far fa-calendar-alt"></i>&nbsp;Examens</a>
+							</li>
+					<li class="mb-4 pb-0" >
+						<a href="http://"><i class="fas fa-poll"></i>&nbsp;Resultats</a>
+					</li>
+					<li class="mb-4 pb-0" th:if="${admin == true}">
+						<a href="http://"><i class="fas fa-user-cog"></i>&nbsp;Administration</a>
+					</li>
+					<li class="mb-4 pb-0">
+						<a href="connexion.html"><i class="fas fa-sign-out-alt"></i>&nbsp;Deconnexion</a>
+					</li>
+				</ul>
+			</aside>
+            <main class="d-flex flex-column mainbody placement">

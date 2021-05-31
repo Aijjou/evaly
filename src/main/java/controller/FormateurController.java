@@ -18,12 +18,18 @@ import service.FormateurService;
 @Controller
 public class FormateurController {
 
+	Boolean isConnectBoolean = false;
+	Boolean isAdmin = false;
+	
+	
 	@Autowired
 	FormateurService formateurService;
 
 	@RequestMapping(value = "/admin/liste-formateur", method = RequestMethod.GET)
 	public String afficheFormateur(Model model) {
 
+		
+		
 		List<Formateur> formateurs = formateurService.formateurs();
 		List<String> nomMatiere = new ArrayList<>();
 		for (Formateur formateur : formateurs) {
@@ -34,6 +40,12 @@ public class FormateurController {
 			});
 
 		}
+		
+		isConnectBoolean = true;
+		isAdmin = true;
+		
+		model.addAttribute("connexion", isConnectBoolean);
+		model.addAttribute("admin", isAdmin);
 
 		model.addAttribute("formateurs", formateurs);
 		model.addAttribute("matieres", nomMatiere);

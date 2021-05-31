@@ -30,16 +30,12 @@ public class ExamenController {
 		return "protected/liste-examen";
 
 	}
-	
-//	@RequestMapping(value = "/", method = RequestMethod.GET)
-//	public String afficheExamen1(Model model) {
-//
-//		List<Examen> examens = examenService.getListExamen();
-//
-//		model.addAttribute("examens", examens);
-//
-//		return "Hello les copains";
-//
-//	}
+
+	@RequestMapping(value = "protected/creation-examen", method = RequestMethod.GET)
+	public String creationExamen(Model model) {
+
+		return "protected/creation-examen";
+
+	}
 
 }
