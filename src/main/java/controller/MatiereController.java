@@ -16,47 +16,27 @@ import service.ApprenantService;
 import service.FormateurService;
 
 @Controller
-public class FormateurController {
+public class MatiereController {
 
 	Boolean isConnectBoolean = false;
 	Boolean isAdmin = false;
 	Boolean isFormateur = false;
 	Boolean isApprenant = false;
-	
-	
-	@Autowired
-	FormateurService formateurService;
 
-	@RequestMapping(value = "/admin/liste-formateur", method = RequestMethod.GET)
-	public String afficheFormateur(Model model) {
+	@RequestMapping(value = "/protected/creation-matiere", method = RequestMethod.GET)
+	public String creationMatiere(Model model) {
 
-		isAdmin = true;
+
+		isAdmin = false;
 		isFormateur = false;
 		isApprenant = false;
-		
-		List<Formateur> formateurs = formateurService.formateurs();
-		List<String> nomMatiere = new ArrayList<>();
-		for (Formateur formateur : formateurs) {
-			System.out.println("formateur" + formateur.getNom());
-			formateur.getFormateurMatieres().stream().forEach(matiere -> {
-				nomMatiere.add(matiere.getMatiere().getNom());
-
-			});
-
-		}
-		
-		isConnectBoolean = true;
-		isAdmin = true;
 		
 		model.addAttribute("connexion", isConnectBoolean);
 		model.addAttribute("apprenant", isApprenant);
 		model.addAttribute("admin", isAdmin);
 		model.addAttribute("formateur", isFormateur);
-		model.addAttribute("formateurs", formateurs);
-		model.addAttribute("matieres", nomMatiere);
-
-		return "/admin/liste-formateur";
-
+		
+		return "/protected/creation-matiere";
 	}
-
+	
 }

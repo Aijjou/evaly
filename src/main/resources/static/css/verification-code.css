@@ -1,0 +1,87 @@
+body, html {
+	height: 100%;
+	width: 100%;
+	padding: 0px;
+	margin: 0px;
+	background-color: #C4C4C4;
+}
+
+.bienvenue {
+	font-size: 40px;
+	color: white;
+}
+
+header {
+	height: 10%;
+	box-shadow: 0px 5px 5px grey;
+}
+
+.principal {
+	position: absolute;
+	top: 15%;
+	padding: 0px;
+	margin: 0px;
+	padding-bottom : 10%;
+}
+
+nav {
+	background-color: #51438F;
+	height: 100%;
+}
+
+label {
+	font-size: small;
+}
+
+.infoConnexion {
+	font-size: 13px;
+	color: white;
+}
+
+.connexion {
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.infoCode{
+	
+	font-size:15px;
+}
+
+.promotion {
+	font-size: 10px;
+}
+.adresse, .organisation {
+	font-size: 20px;
+	color: #51438F;
+}
+
+.annulerButton, .validerButton {
+	background-color: #51438F;
+	color: white;
+	width: 100px;
+	height: 40px;
+}
+
+.badge {
+	margin-left: -10px;
+}
+
+.card {
+	border-radius: 15px;
+	box-shadow: 1px 5px 5px grey;
+}
+
+img {
+	height: 70px;
+	width: 25px;
+	background-color: #51438F;
+}
+
+.far {
+	color: white;
+}
+
+label {
+	color: white;
+}

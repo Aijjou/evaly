@@ -6,14 +6,44 @@ body, html {
 	background-color: #C4C4C4;
 }
 
-.dataTables_filter label {
-	color: black;
-	padding: 5px;
-	border-radius: 15px;
+.tg {
+	border-collapse: collapse;
+	border-spacing: 0;
 }
 
-.dataTables_length {
-	padding: 5px;
+.tg td {
+	border-color: black;
+	border-style: solid;
+	border-width: 1px;
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+	overflow: hidden;
+	padding: 10px 5px;
+	word-break: normal;
+}
+
+.annulerButton, .validerButton {
+	background-color: #51438F;
+	color: white;
+	width: 100px;
+	height: 40px;
+}
+
+.tg th {
+	border-color: black;
+	border-style: solid;
+	border-width: 1px;
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+	font-weight: normal;
+	overflow: hidden;
+	padding: 10px 5px;
+	word-break: normal;
+}
+
+.tg .tg-0lax {
+	text-align: left;
+	vertical-align: top
 }
 
 ul {
@@ -38,16 +68,17 @@ ul {
 	margin-bottom: 40px;
 }
 
-
-
 .main {
 	position: relative;
 	top: 40px;
-	
 }
 
 .fa-sign-out-alt {
 	color: white;
+}
+
+.promotion {
+	font-size: 10px;
 }
 
 sup {
@@ -56,6 +87,50 @@ sup {
 	font-size: 50%;
 	line-height: 0;
 	vertical-align: baseline;
+}
+
+.multiselect {
+	width: 200px;
+}
+
+.selectBox {
+	width: 130%;
+	position: relative;
+	font-style: black;
+}
+
+.overSelect {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+}
+
+#checkboxes {
+	display: none;
+	border: 1px #dadada solid;
+	width: 125%;
+}
+
+#checkboxes label {
+	display: block;
+}
+
+#checkboxes label:hover {
+	background-color: #1e90ff;
+}
+
+.mb5px {
+	margin-bottom: 10px;
+}
+
+.mb20px {
+	margin-bottom: 20px;
+}
+
+.padb05 {
+	padding-bottom: 0.5rem !important;
 }
 
 .connexion {
@@ -124,32 +199,6 @@ img {
 	color: white;
 }
 
-label {
-	color: white;
-}
-
-#myModalLabel {
-	font-size: 18px;
-}
-
-#datatable_wrapper {
-	width: 100%;
-}
-
-#datatable_filter label input {
-	background-color: dark;
-	width: 80%;
-	border-radius: 7px;
-}
-
-#datatable_filter label {
-	width: 100%;
-}
-
-#datatable_filter {
-	width: 50%;
-}
-
-#dataTables_length {
-	width: 50%;
+.longselect {
+	width: 70%;
 }

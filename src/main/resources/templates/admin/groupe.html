@@ -38,44 +38,43 @@
 
 <body>
 	<div th:replace="/shared/header :: header"></div>
-	<div
-		class="container-fluid principal d-flex flex-row justify-content-around">
-		<div th:replace="/shared/aside :: aside"></div>
-		<main class="col-10 d-flex flex-column justify-content-center">
-			<div class="row d-flex flex-row justify-content-center mb-4">
-				<div
-					class="card connexion w-25 d-flex flex-column justify-content-between pt-1 pl-3 pr-4 pb-2 mb-4 ">
-					<small class="row d-flex flex-row justify-content-start promotion"><i
-						class="fas fa-users align-self-center ml-1 font-weight-bold"></i>&nbsp;
-						<div class="align-self-center pt-1">GROUPES</div></small>
-					<div class="row align-self-center ">APFA</div>
-				</div>
-			</div>
-			<div
-				class="row mt-4 w-100 align-self-center d-flex flex-row justify-content-center flex-wrap">
-				<div th:each="groupe:${groupes}">
-					<div class="card mr-4 mb-4" style="width: 17rem;">
-						<div class="card-body">
-							<h5 class="card-title" th:text="${groupe.nom}"></h5>
-							<h6 class="card-subtitle mb-2 text-muted">Infos Groupe</h6>
-							<card
-								class="nbreFormateur d-flex flex-row justify-content-around w-100 p-1 mb-2">
-							<i class="fas fa-user-friends align-self-center"></i> <span
-								class="titreNombreFormateur align-self-center">&nbsp;NOMBRE
-								FORMATEUR</span> <span
-								th:text="${#lists.size(groupe?.formateurGroupeFormateurs)}"></span></card>
-							<card
-								class="nbreMatiere d-flex flex-row justify-content-around w-100  p-1">
-							<i class="fas fa-graduation-cap align-self-center"></i> <span
-								class="titreNombreMatiere align-self-center">&nbsp;NOMBRE
-								MATIERE</span> <span th:text="${#lists.size(groupe?.matieres)}">
-								</span></card>
+	<div th:replace="/shared/aside :: aside"></div>
+	<div class="principal d-flex flex-column justify-content-around">
 
-						</div>
+		<!-- 	<th:block th:include="/shared/_header-aside"></th:block> -->
+		<div class="d-flex flex-row justify-content-center mb-4 titre">
+			<div
+				class="card connexion w-25 d-flex flex-column justify-content-between pt-1 pl-3 pr-4 pb-2 mb-4 ">
+				<small class="row d-flex flex-row justify-content-start promotion"><i
+					class="fas fa-users align-self-center ml-1 font-weight-bold"></i>&nbsp;
+					<div class="align-self-center pt-1">GROUPES</div></small>
+				<div class="row align-self-center ">APFA</div>
+			</div>
+		</div>
+		<div
+			class="row mt-4 w-75 align-self-center d-flex flex-row justify-content-center flex-wrap main">
+			<div th:each="groupe:${groupes}">
+				<div class="card mr-4 mb-4" style="width: 17rem;">
+					<div class="card-body">
+						<h5 class="card-title" th:text="${groupe.nom}"></h5>
+						<h6 class="card-subtitle mb-2 text-muted">Infos Groupe</h6>
+						<card
+							class="nbreFormateur d-flex flex-row justify-content-around w-100 p-1 mb-2">
+						<i class="fas fa-user-friends align-self-center"></i> <span
+							class="titreNombreFormateur align-self-center">&nbsp;NOMBRE
+							FORMATEUR</span> <span
+							th:text="${#lists.size(groupe?.formateurGroupeFormateurs)}"></span></card>
+						<card
+							class="nbreMatiere d-flex flex-row justify-content-around w-100  p-1">
+						<i class="fas fa-graduation-cap align-self-center"></i> <span
+							class="titreNombreMatiere align-self-center">&nbsp;NOMBRE
+							MATIERE</span> <span th:text="${#lists.size(groupe?.matieres)}">
+						</span></card>
+
 					</div>
 				</div>
 			</div>
-		</main>
+		</div>
 	</div>
 </body>
 

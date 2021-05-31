@@ -6,12 +6,21 @@ body, html {
 	background-color: #C4C4C4;
 }
 
-ul {
-	list-style-type: none;
-	font-size: 20px;
+.bienvenue {
+	font-size: 40px;
 	color: white;
 }
 
+header {
+	height: 10%;
+	box-shadow: 0px 5px 5px grey;
+}
+
+.main{
+	position: relative;
+	top : 40px;
+	
+}
 .titre {
 	position: relative;
 	top: 40px;
@@ -23,26 +32,19 @@ ul {
 	margin: 0px;
 	position: absolute;
 	top: 10%;
-	left: 15%;
+	left: 0%;
 	right: 0px;
 	padding-bottom: 10%;
 }
 
-.main {
-	position: relative;
-	top: 40px;
+nav {
+	background-color: #51438F;
+	height: 100%;
 }
 
-.fa-sign-out-alt {
+.infoConnexion {
+	font-size: 13px;
 	color: white;
-}
-
-sup {
-	top: -.5em;
-	position: relative;
-	font-size: 50%;
-	line-height: 0;
-	vertical-align: baseline;
 }
 
 .connexion {
@@ -54,13 +56,9 @@ sup {
 	font-size: 10px;
 }
 
-a {
-	color: white;
-}
-
 .fa-user-circle {
 	color: white;
-	font-size: 33px;
+	font-size: 35px;
 }
 
 .role {
@@ -94,19 +92,10 @@ a {
 	box-shadow: 1px 5px 5px grey;
 }
 
-.fa-edit {
-	color: white;
-}
-
-.ajoutButton, .creerButton, .ajoutButton {
+img {
+	height: 70px;
+	width: 25px;
 	background-color: #51438F;
-	color: white;
-}
-
-.avatar {
-	border-radius: 50%;
-	height: 40px;
-	width: 40px;
 }
 
 .far {
@@ -115,35 +104,4 @@ a {
 
 label {
 	color: white;
-}
-
-.matiere {
-	background-color: #9178FF;
-	font-size: 10px;
-	color: white;
-}
-
-.card-img-top {
-	height: 100%;
-	width: 100%;
-	border-radius: 50%;
-}
-
-.nbrePromotion, .nbreMatiere {
-	background-color: #51438F;
-	box-shadow: 1px 5px 5px grey;
-	color: white;
-	border-radius: 25px;
-	font-size: 12px;
-}
-
-.appel {
-	border-radius: 50%;
-	background-color: #9178FF;
-	color: white;
-}
-
-
-.fa-envelope, .fa-trash-alt, .fa-pencil-alt, .fa-arrow-right {
-	font-size: 18px;
 }

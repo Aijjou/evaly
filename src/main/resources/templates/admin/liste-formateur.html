@@ -26,6 +26,7 @@
 <link href="../../css/aside.css" rel="stylesheet"
 	th:href="@{/css/aside.css}">
 <link href="/fontawesome/css/all.css" rel="stylesheet">
+<!-- <link th:href="@{/css/headerAside.css}" rel="stylesheet"> -->
 <title>Listes des formateurs</title>
 </head>
 
@@ -38,82 +39,88 @@
 
 <body>
 	<div th:replace="/shared/header :: header"></div>
-	<div
-		class="container-fluid principal">
-		<div th:replace="/shared/aside :: aside"></div>
-		<main class="d-flex flex-column justify-content-center">
-			<div class="d-flex flex-row justify-content-center mb-4">
-				<div
-					class="card connexion w-25 d-flex flex-column justify-content-between pt-1 pl-3 pr-4 pb-2 mb-4 ">
-					<small class="row d-flex flex-row justify-content-start promotion"><i
-						class="fas fa-users align-self-center ml-1 font-weight-bold"></i>&nbsp;
-						<div class="align-self-center pt-1">Formateurs</div></small>
-					<div class="row align-self-center ">APFA</div>
-				</div>
-			</div>
-			<div
-				class="mt-4 w-100 align-self-center d-flex flex-row justify-content-center flex-wrap">
-				<div th:each="formateur:${formateurs}">
-					<div class="card mr-4 mb-4" style="width: 15em;">
-						<div class="card-header">
-							<img class="card-img-top" th:src="${formateur.photo}"
-								alt="Card image cap">
-						</div>
-						<div class="card-body">
-							<h4 class="card-title text-center mb-4">
-								<span class="mr-2" th:text="${formateur.nom}"></span>&nbsp;<span
-									th:text="${formateur.prenom}"></span>
-							</h4>
-							<a
-								class="btn nbreMatiere d-flex flex-row justify-content-around w-100 mb-2 p-2"
-								data-toggle="collapse" href="#collapseExample"
-								role="button" aria-expanded="false"
-								th:aria-controls="${formateur.idUtilisateur}"><i
-								class="fas fa-graduation-cap align-self-center"></i> <span
-								class="titreNombreMatiere align-self-center">&nbsp;NOMBRE
-									MATIERE</span> <span
-								th:text="${#lists.size(formateur.formateurMatieres)}"> </span> </a>
-							<div class="collapse" id="collapseExample">
-								<div
-									class="p-2 d-flex flex-row flex-wrap justify-content-center">
+	<div th:replace="/shared/aside :: aside"></div>
+	<div class=" principal  d-flex flex-column justify-content-around">
 
-									<div th:each="matiere:${formateur.formateurMatieres}"
-										class="badge matiere p-1 m-1"
-										th:text="${matiere.matiere.nom}"></div>
-								</div>
+		<!-- 	<th:block th:include="/shared/_header-aside"></th:block> -->
+		<div class="d-flex flex-row justify-content-center  titre">
+			<div
+				class="card connexion w-25 d-flex flex-column justify-content-between pt-1 pl-3 pr-4 pb-2 mb-4 ">
+				<small class="row d-flex flex-row justify-content-start promotion"><i
+					class="fas fa-users align-self-center ml-1 font-weight-bold"></i>&nbsp;
+					<div class="align-self-center pt-1">Formateurs</div></small>
+				<div class="row align-self-center ">APFA</div>
+			</div>
+		</div>
+		<div
+			class="d-flex flex-row justify-content-start m-2 w-75 align-self-center ml-3">
+			<a
+				class="btn btn-light px-4 align-self-start shadow-lg ajoutButton py-2"
+				href="/admin/inscription-formateur-admin"><i
+				class="fas fa-user-plus"></i>&nbsp;Ajouter un formateur</a>
+		</div>
+		<div
+			class="w-100 align-self-center d-flex flex-row justify-content-center flex-wrap main">
+			<div th:each="formateur:${formateurs}">
+				<div class="card mr-4 mb-4" style="width: 15em;">
+					<div class="card-header">
+						<img class="card-img-top" th:src="${formateur.photo}"
+							alt="Card image cap">
+					</div>
+					<div class="card-body">
+						<h4 class="card-title text-center mb-4">
+							<span class="mr-2" th:text="${formateur.nom}"></span>&nbsp;<span
+								th:text="${formateur.prenom}"></span>
+						</h4>
+						<a
+							class="btn nbreMatiere d-flex flex-row justify-content-around w-100 mb-2 p-2"
+							data-toggle="collapse" href="#collapseExample" role="button"
+							aria-expanded="false"
+							th:aria-controls="${formateur.idUtilisateur}"><i
+							class="fas fa-graduation-cap align-self-center"></i> <span
+							class="titreNombreMatiere align-self-center">&nbsp;NOMBRE
+								MATIERE</span> <span
+							th:text="${#lists.size(formateur.formateurMatieres)}"> </span> </a>
+						<div class="collapse" id="collapseExample">
+							<div class="p-2 d-flex flex-row flex-wrap justify-content-center">
+
+								<div th:each="matiere:${formateur.formateurMatieres}"
+									class="badge matiere p-1 m-1" th:text="${matiere.matiere.nom}"></div>
 							</div>
-							<card
-								class="nbreMatiere d-flex flex-row justify-content-around w-100 mb-2 p-2">
-							<i class="fas fa-users align-self-center"></i> <span
-								class="titreNombreMatiere align-self-center">&nbsp;NOMBRE
-								GROUPE</span> <span
-								th:text="${#lists.size(formateur.formateurGroupeFormateurs)}">
-							</span></card>
-							<card
-								class="nbrePromotion d-flex flex-row justify-content-around w-100  p-2">
-							<i class="fas fa-chalkboard-teacher align-self-center"></i> <span
-								class="titreNombreMatiere align-self-center">&nbsp;NOMBRE
-								PROMOTION</span> <span
-								th:text="${#lists.size(formateur.promotionFormateurs)}">
-							</span></card>
 						</div>
-						<div class="card-footer">
-							<div class="d-flex flex-row justify-content-around">
-								<div class="badge appel p-2">
-									<i class="fas fa-envelope"></i>
-								</div>
-								<div class="badge appel p-2">
-									<i class="fas fa-phone-alt"></i>
-								</div>
-								<div class="badge appel p-2">
-									<i class="fas fa-arrow-right"></i>
-								</div>
+						<card
+							class="nbreMatiere d-flex flex-row justify-content-around w-100 mb-2 p-2">
+						<i class="fas fa-users align-self-center"></i> <span
+							class="titreNombreMatiere align-self-center">&nbsp;NOMBRE
+							GROUPE</span> <span
+							th:text="${#lists.size(formateur.formateurGroupeFormateurs)}">
+						</span></card>
+						<card
+							class="nbrePromotion d-flex flex-row justify-content-around w-100  p-2">
+						<i class="fas fa-chalkboard-teacher align-self-center"></i> <span
+							class="titreNombreMatiere align-self-center">&nbsp;NOMBRE
+							PROMOTION</span> <span
+							th:text="${#lists.size(formateur.promotionFormateurs)}"> </span></card>
+					</div>
+					<div class="card-footer">
+						<div class="d-flex flex-row justify-content-around">
+							<div class="badge appel p-2">
+								<i class="fas fa-envelope"></i>
+							</div>
+							<div class="badge bg-danger appel p-2">
+								<i class="far fa-trash-alt"></i>
+							</div>
+							<div class="badge appel p-2">
+								<i class="fas fa-pencil-alt"></i>
+							</div>
+							<div class="badge appel p-2">
+								<i class="fas fa-arrow-right"></i>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</main>
+		</div>
 	</div>
 </body>
 

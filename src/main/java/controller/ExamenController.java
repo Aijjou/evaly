@@ -17,29 +17,40 @@ import service.ExamenService;
 @Scope("session")
 public class ExamenController {
 
+	Boolean isAdmin = false;
+	Boolean isFormateur = false;
+	Boolean isApprenant = false;
+	Boolean isConnectBoolean = true;
+	
 	@Autowired
 	ExamenService examenService;
 
 	@RequestMapping(value = "protected/liste-examen", method = RequestMethod.GET)
 	public String afficheExamen(Model model) {
 
+		
+		isAdmin = false;
+		isFormateur = false;
+		isApprenant = false;
+		isConnectBoolean = true;
+		
 		List<Examen> examens = examenService.getListExamen();
 
+		model.addAttribute("connexion", isConnectBoolean);
 		model.addAttribute("examens", examens);
+		model.addAttribute("apprenant", isApprenant);
+		model.addAttribute("admin", isAdmin);
+		model.addAttribute("formateur", isFormateur);
 
 		return "protected/liste-examen";
 
 	}
-	
-//	@RequestMapping(value = "/", method = RequestMethod.GET)
-//	public String afficheExamen1(Model model) {
-//
-//		List<Examen> examens = examenService.getListExamen();
-//
-//		model.addAttribute("examens", examens);
-//
-//		return "Hello les copains";
-//
-//	}
+
+	@RequestMapping(value = "protected/creation-examen", method = RequestMethod.GET)
+	public String creationExamen(Model model) {
+
+		return "protected/creation-examen";
+
+	}
 
 }

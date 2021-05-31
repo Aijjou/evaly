@@ -13,7 +13,7 @@ body, html {
 }
 
 .dataTables_length {
-	padding: 5px;
+	display: none;
 }
 
 ul {
@@ -38,7 +38,9 @@ ul {
 	margin-bottom: 40px;
 }
 
-
+.promotion {
+	font-size: 10px;
+}
 
 .main {
 	position: relative;
@@ -50,6 +52,10 @@ ul {
 	color: white;
 }
 
+.vertical-center {
+  top: 25%;
+}
+
 sup {
 	top: -.5em;
 	position: relative;
@@ -58,6 +64,50 @@ sup {
 	vertical-align: baseline;
 }
 
+.multiselect {
+  width: 200px;
+}
+
+.selectBox {
+	width: 130%;
+  position: relative;
+  font-style: black;
+}
+
+
+.overSelect {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+#checkboxes {
+  display: none;
+  border: 1px #dadada solid;
+      width: 125%;
+}
+
+#checkboxes label {
+  display: block;
+}
+
+#checkboxes label:hover {
+  background-color: #1e90ff;
+}
+
+.mb5px{
+	margin-bottom: 10px;
+}
+
+.mb20px{
+	margin-bottom: 20px;
+}
+
+.padb05{
+	padding-bottom: 0.5rem!important;
+}
 .connexion {
 	font-size: 25px;
 	font-weight: bold;
@@ -124,9 +174,21 @@ img {
 	color: white;
 }
 
-label {
-	color: white;
+.longselect{
+	width: 70%;
 }
+
+.ml30{
+	margin-left: 50%;
+}
+
+.annulerButton, .validerButton {
+    background-color: #51438F;
+    color: white;
+    width: 100px;
+    height: 40px;
+}
+
 
 #myModalLabel {
 	font-size: 18px;
@@ -137,7 +199,7 @@ label {
 }
 
 #datatable_filter label input {
-	background-color: dark;
+	background-color: white;
 	width: 80%;
 	border-radius: 7px;
 }

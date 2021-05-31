@@ -1,7 +1,6 @@
 package controller;
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +13,11 @@ import service.ApprenantService;
 @Controller
 public class ApprenantController {
 
+	Boolean isConnectBoolean = false;
+	Boolean isAdmin = false;
+	Boolean isFormateur = false;
+	Boolean isApprenant = false;
+
 	@Autowired
 	ApprenantService apprenantService;
 
@@ -23,7 +27,11 @@ public class ApprenantController {
 		List<Apprenant> apprenants = apprenantService.apprenants();
 		String nomFormation = " ";
 		Boolean premierNom = true;
-
+		isAdmin = false;
+		isFormateur = false;
+		isApprenant = false;
+		isConnectBoolean = true;
+		
 		for (Apprenant apprenant : apprenants) {
 
 			if (apprenant.getPromotion() != null) {
@@ -35,8 +43,12 @@ public class ApprenantController {
 			}
 		}
 
+		model.addAttribute("connexion", isConnectBoolean);
 		model.addAttribute("apprenants", apprenants);
 		model.addAttribute("formation", nomFormation);
+		model.addAttribute("apprenant", isApprenant);
+		model.addAttribute("admin", isAdmin);
+		model.addAttribute("formateur", isFormateur);
 
 		return "/protected/liste-eleve";
 
