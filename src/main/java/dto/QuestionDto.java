@@ -14,7 +14,7 @@ public class QuestionDto implements java.io.Serializable {
 	private Integer idQuestion;
 	private Integer theme;
 	
-	private Integer idmatiere;
+	private Integer idMatiere;
 	private String nvtheme;
 	private String nvthemebool;
 
@@ -32,6 +32,7 @@ public class QuestionDto implements java.io.Serializable {
 	private String rep3br;
 	private String rep4br;
 	private Boolean isVrai;
+	private Boolean toReset;
 
 	public QuestionDto() {
 	}
@@ -142,12 +143,14 @@ public class QuestionDto implements java.io.Serializable {
 		this.isVrai = isVrai;
 	}
 
-	public Integer getIdmatiere() {
-		return idmatiere;
+
+
+	public Integer getIdMatiere() {
+		return idMatiere;
 	}
 
-	public void setIdmatiere(Integer idmatiere) {
-		this.idmatiere = idmatiere;
+	public void setIdMatiere(Integer idMatiere) {
+		this.idMatiere = idMatiere;
 	}
 
 	public String getNvtheme() {
@@ -188,6 +191,14 @@ public class QuestionDto implements java.io.Serializable {
 
 	public void setRep4br(String rep4br) {
 		this.rep4br = rep4br;
+	}
+
+	public Boolean getToReset() {
+		return toReset;
+	}
+
+	public void setToReset(Boolean toReset) {
+		this.toReset = toReset;
 	}
 
 

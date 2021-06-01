@@ -7,8 +7,7 @@ import model.Apprenant;
 import model.Question;
 
 
-public interface QuestionRepository extends CrudRepository<Question, Long>{
-	
+public interface QuestionRepository extends CrudRepository<Question, Integer>{
 	
 
 }
