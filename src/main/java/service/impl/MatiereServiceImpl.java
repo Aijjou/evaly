@@ -28,13 +28,11 @@ import service.ThemeService;
 public class MatiereServiceImpl implements MatiereService{
 
 	@Resource
-	MatiereRepository matiereRepository;
-	
+	MatiereRepository matiereRepo;
 	
 	@Override
-	public List<Matiere> matieres() {
-		
-		return (List<Matiere>) matiereRepository.findAll();
+	public List<Matiere> findAllMatieres() {
+		return (List<Matiere>) matiereRepo.findAll();
 	}
 
 }

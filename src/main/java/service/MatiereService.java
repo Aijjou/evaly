@@ -8,6 +8,6 @@ import model.Theme;
 public interface MatiereService {
 	
 
-	public List<Matiere> matieres();
+	public List<Matiere> findAllMatieres();
 
 }

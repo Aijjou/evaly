@@ -46,10 +46,10 @@ public class QuestionController {
 		qdto.setRep1br("true");
 		model.addAttribute("question", qdto);
 
-		List<Theme> listth = themeService.themes();
+		List<Theme> listth = themeService.findAllThemes();
 		model.addAttribute("listtheme", listth);
 		
-		List<Matiere> listmatiere = matiereService.matieres();
+		List<Matiere> listmatiere = matiereService.findAllMatieres();
 		model.addAttribute("listmatiere", listmatiere);
 		
 		model.addAttribute("connexion", isConnectBoolean);
