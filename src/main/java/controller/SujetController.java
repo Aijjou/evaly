@@ -1,7 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import model.Matiere;
 import model.Question;
+import model.Sujet;
 import model.Theme;
 import service.MatiereService;
 import service.QuestionService;
+import service.SujetService;
 import service.ThemeService;
 
 @Controller
@@ -26,6 +28,7 @@ public class SujetController {
 	Boolean isAdmin = false;
 	Boolean isFormateur = false;
 	Boolean isApprenant = false;
+	Sujet sujet;
 	
 	@Autowired
 	MatiereService matiereService;
@@ -35,6 +38,9 @@ public class SujetController {
 	
 	@Autowired
 	QuestionService questionService;
+	
+	@Autowired
+	SujetService sujetService;
 	
 	
 	@RequestMapping(value = "/protected/creation-sujet", method = RequestMethod.GET)
@@ -156,7 +162,7 @@ public class SujetController {
 		return "/protected/liste-sujet";
 	}
 	
-	@RequestMapping(value = "/protected/recap", method = RequestMethod.POST)
+	@RequestMapping(value = "/protected/creation-sujet-manu", method = RequestMethod.POST)
 	public String creationQuesionnaire(Model model, @RequestParam List<Integer> ok) {
 		
 		isFormateur = true;
@@ -164,6 +170,7 @@ public class SujetController {
 		isConnectBoolean = true;
 		isAdmin = false;
 		List<Question> questions = new ArrayList<Question>();
+		
 		
 		System.err.println(ok);
 		
@@ -174,17 +181,19 @@ public class SujetController {
 			//creation de la question et set l'id question
 			Optional<Question> questionOp = questionService.findById(questIds.get(i));
 			Question question = questionOp.get();
-			System.err.println(question.getDescriptionQuestion()+"<<<<<<<<<<");
 			//ajout de la quest a la liste de quests selectionnées
 			questions.add(question);
 		}
+		
+		Collections.sort(questions);
 		
 		model.addAttribute("connexion", isConnectBoolean);
 		model.addAttribute("apprenant", isApprenant);
 		model.addAttribute("admin", isAdmin);
 		model.addAttribute("formateur", isFormateur);
 		model.addAttribute("questions", questions);
+		model.addAttribute("sujet", sujet);
 		
-		return "/protected/recap";
+		return "/protected/creation-sujet-manu";
 	}
 }

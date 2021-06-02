@@ -21,7 +21,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "question", catalog = "evaly")
-public class Question implements java.io.Serializable {
+public class Question implements java.io.Serializable, Comparable {
 
 	private Integer idQuestion;
 	private Theme theme;
@@ -146,11 +146,11 @@ public class Question implements java.io.Serializable {
 
 	@Column(name = "tauxreussite")
 	public double getTauxreussite() {
-		return tauxreussite;
+		return this.tauxreussite;
 	}
 
 	public void setTauxreussite(double tauxreussite) {
-		this.tauxreussite = tauxreussite;
+			this.tauxreussite = tauxreussite;
 	}
 
 	@Column(name = "nbnotes")
@@ -160,6 +160,12 @@ public class Question implements java.io.Serializable {
 
 	public void setNbnotes(Integer nbnotes) {
 		this.nbnotes = nbnotes;
+	}
+
+	@Override
+	public int compareTo(Object o) {
+		int compare = ((Question)o).getIdQuestion();
+		return this.idQuestion-compare;
 	}
 	
 	
