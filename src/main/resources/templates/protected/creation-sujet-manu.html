@@ -109,19 +109,16 @@
 										id="datatable">
 										<thead class="bg-dark">
 											<tr>
-												<th scope="col">Select</th>
 												<th scope="col">Intitulé - hover total+réponses</th>
 												<th scope="col">Coefficient</th>
 												<th scope="col" class="text-center">Taux réussite</th>
 											</tr>
 										</thead>
 										<tbody class="bg-dark ">
-											<tr th:each="apprenant : ${apprenants}" class="bg-dark">
-												<th class="bg-dark" scope="row"><input type="checkbox"
-													checked></th>
-												<th class="bg-dark" scope="row">1</th>
-												<td th:text="${apprenant.nom}"></td>
-												<td th:text="${apprenant.prenom}"></td>
+											<tr th:each="question : ${questions}" class="bg-dark">
+												<th th:text="${question.descriptionQuestion}"></th>
+												<td th:text="${question.coefficient}"></td>
+												<td th:text="${question.tauxreussite}"></td>
 											</tr>
 										</tbody>
 									</table>
