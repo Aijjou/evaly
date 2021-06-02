@@ -19,7 +19,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "reponse", catalog = "evaly")
-public class Reponse implements java.io.Serializable {
+public class Reponse implements java.io.Serializable, Comparable{
 
 	private Integer idReponse;
 	private Question question;
@@ -108,5 +108,19 @@ public class Reponse implements java.io.Serializable {
 	public void setReponseApprenants(Set<ReponseApprenant> reponseApprenants) {
 		this.reponseApprenants = reponseApprenants;
 	}
+
+	@Override
+	public String toString() {
+		return "Reponse [idReponse=" + idReponse + ", question=" + question.getIdQuestion() + ", descriptionReponse="
+				+ descriptionReponse + ", isBonneReponse=" + isBonneReponse + "]";
+	}
+
+	@Override
+	public int compareTo(Object o) {
+		int compareindex =((Reponse)o).getIdReponse();
+		return this.idReponse-compareindex;
+	}
+	
+	
 
 }

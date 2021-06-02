@@ -36,5 +36,11 @@ public class MatiereServiceImpl implements MatiereService{
 		
 		return (List<Matiere>) matiereRepository.findAll();
 	}
+	
+	@Override
+	public Optional<Matiere> findById(Integer id){
+		
+		return matiereRepository.findById(id);
+	}
 
 }

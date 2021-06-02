@@ -50,7 +50,7 @@
 
 <script
 	src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.colVis.min.js"></script>
-<title>Création question</title>
+<title>Edition question</title>
 </head>
 <body>
 	<div th:replace="/shared/header :: header"></div>
@@ -65,15 +65,15 @@
 				<small class="row d-flex flex-row justify-content-center promotion"><i
 					class="fas fa-graduation-cap align-self-center ml-1 font-weight-bold"></i>&nbsp;
 					<div class="align-self-center pt-1">QUESTION</div></small>
-				<div class="row align-self-center ">CREATION</div>
+				<div class="row align-self-center ">EDITION</div>
 			</div>
 		</div>
 		<div
 			class="d-flex flex-row justify-content-center mt-4 align-self-center w-75">
 			<div class=" d-flex flex-row justify-content-center  p-4 main">
-				<form method="post" th:action="@{/protected/creation-question-sub}" th:object="${question}">
+				<form method="post" th:action="@{/protected/edition-question-sub}" th:object="${question}">
+				<input type="hidden"  name="idQuestion"   th:value="*{idQuestion}" >
 					<div class="d-flex flex-row justify-content-center">
-
 					<div class="card w-75 align-self-center p-2  m-2">
 						<div class="row mt-4 w-75 align-self-center">
 							<div class="row mb-4 w-100">
@@ -95,14 +95,14 @@
 								<div class="col-2 d-flex flex-row vertical-center">
 									<input type="checkbox" id="checker" value="true" th:field="*{nvthemebool}">
 								</div>
-								<div class="col-5 d-flex flex-row justify-content-center px-0">
+								<div class="col-6 d-flex flex-row justify-content-center px-0">
 									<textarea id="themename" name="rep1" rows="1" cols="30" th:field="*{nvtheme}" 
 										disabled></textarea>
 								</div>
 							</div>
 							<div class="row mb-4 w-100 mb5px">
 								<div class="col-4 d-flex flex-row justify-content-center">
-									Matière Nouveau thème :</div>
+									Matière du thème :</div>
 								<div
 									class="col-8 align-self-center d-flex flex-row justify-content-center">
 									<select id="matselect" th:field="*{idMatiere}" disabled>
@@ -113,35 +113,35 @@
 							</div>
 							</div>
 							<div class="row w-100 mb5px">
-								<div class="col-3 d-flex flex-row justify-content-center">
-									Intitulé</div>
-								<div class="col-9 d-flex flex-row justify-content-center px-0">
+								<div class="col-4 d-flex flex-row justify-content-center">
+									Intitulé :</div>
+								<div class="col-8 d-flex flex-row justify-content-center px-0">
 									<textarea id="intitule" rows="5" cols="80" name="intitule" th:field="*{descriptionQuestion}"></textarea>
 								</div>
 							</div>
 							<div class="row mb-4 w-100 mb5px">
-								<div class="col-2 d-flex flex-row justify-content-center">
-									Coefficient</div>
-							
-								<div class="col-2 d-flex flex-row justify-content-center">
+								<div class="col-3 d-flex flex-row justify-content-center">
+									Coefficient :</div>
+							<div class="col-2 d-flex flex-row justify-content-center"></div>
+								<div class="col-1 d-flex flex-row justify-content-center">
 									<input class="inputradio" type="radio" id="1" name="coeff" value="1" th:field="*{coefficient}" checked>
 									<label for="qcm">1</label>
 								</div>
 
-								<div class="col-2 d-flex flex-row justify-content-center">
+								<div class="col-1 d-flex flex-row justify-content-center">
 									<input class="inputradio" type="radio" id="2" name="coeff" value="2" th:field="*{coefficient}">
 									<label for="vraifaux">2</label>
 								</div>
-								<div class="col-2 d-flex flex-row justify-content-center">
+								<div class="col-1 d-flex flex-row justify-content-center">
 									<input class="inputradio" type="radio" id="3" name="coeff" value="3" th:field="*{coefficient}" >
 									<label for="qcm">3</label>
 								</div>
 
-								<div class="col-2 d-flex flex-row justify-content-center">
+								<div class="col-1 d-flex flex-row justify-content-center">
 									<input class="inputradio" type="radio" id="4" name="coeff" value="4" th:field="*{coefficient}">
 									<label for="vraifaux">4</label>
 								</div>
-								<div class="col-2 d-flex flex-row justify-content-center">
+								<div class="col-1 d-flex flex-row justify-content-center">
 									<input class="inputradio" type="radio" id="5" name="coeff" value="5" th:field="*{coefficient}" >
 									<label for="qcm">5</label>
 								</div>
@@ -224,7 +224,31 @@
 									<textarea id="rep4" name="rep4" rows="1" cols="80" th:field="*{rep4}"></textarea>
 								</div>
 							</div>
+							<div class="row mb-4 w-100 ">
+								<div class="col-3 d-flex flex-row justify-content-center">
+									Statistiques :</div>
 							
+								<div class="col-4 d-flex flex-row justify-content-center">
+									Passée :&nbsp;<label type="text"  th:text="*{nbnotes}"  />&nbsp;fois
+								</div>
+								<div class="col-4 d-flex flex-row justify-content-center">
+									Réussite :&nbsp;<label type="text"  th:text="*{tauxreussite}"  />&nbsp;%
+								</div>
+							</div>
+							<div class="row mb-4 w-100">
+								<div class="col-5 d-flex flex-row justify-content-center">
+									Reset Statistiques :</div>
+							
+								<div class="col-3 d-flex flex-row justify-content-center">
+									<input class="inputradio" type="radio" id="oui" name="resetyn" value="true"  th:field="*{toReset}" >
+									<label for="oui">Oui</label>
+								</div>
+
+								<div class="col-3 d-flex flex-row justify-content-center">
+									<input class="inputradio" type="radio" id="non" name="resetyn" value="false"  th:field="*{toReset}"  checked>
+									<label for="non">Non</label>
+								</div>
+							</div>
 							<div class="row w-100 mb5px">
 								<div class="col-6 d-flex flex-row justify-content-center">
 									<button class="btn annulerButton"  onclick="location.href='LINK'" type="button">

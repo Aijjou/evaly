@@ -62,7 +62,7 @@
 				<small class="row d-flex flex-row justify-content-start promotion"><i
 					class="fas fa-graduation-cap align-self-center ml-1 font-weight-bold"></i>&nbsp;
 					<div class="align-self-center pt-1">QUESTION</div></small>
-				<div class="row align-self-center ">Liste des quetions</div>
+				<div class="row align-self-center ">Liste des questions</div>
 			</div>
 		</div>
 		<div
@@ -76,32 +76,22 @@
 							<thead class="bg-dark">
 								<tr>
 									<th scope="col">Id</th>
-									<th scope="col">Matière</th>
 									<th scope="col">Thème</th>
 									<th scope="col">Intitulé</th>
 									<th scope="col">Coefficient</th>
 									<th scope="col">Taux réussite</th>
-									<th scope="col" class="text-center">Options</th>
+									<th scope="col" >Options</th>
 								</tr>
 							</thead>
 							<tbody class="bg-dark ">
 								<tr th:each="question : ${questions}" class="bg-dark">
-									<th class="bg-dark" scope="row">1</th>
+								
 									<td th:text="${question.idQuestion}"></td>
-									<td th:text="${question.theme.matiere.nom}"></td>
 									<td th:text="${question.theme.nom}"></td>
 									<td th:text="${question.descriptionQuestion}"></td>
-									<td th:utext="${question.coefficient}"></td>
-									<td th:utext="${question.coefficient}"></td>
-									<td class="d-flex flex-row justify-content-center"><a
-										href="http://" target="_blank" rel="noopener noreferrer"
-										class="mr-2"><i class="fas fa-edit"></i></a> &nbsp; <a
-										href="info_eleve.html" target="_blank" class="mr-2"
-										rel="noopener noreferrer" type="button" data-toggle="modal"
-										data-target="#myModal"><i
-											class="far fa-arrow-alt-circle-right"></i></a> &nbsp; <a
-										href="http://" target="_blank" rel="noopener noreferrer"
-										class="mr-2"><i class="far fa-envelope-open"></i></a></td>
+									<td th:text="${question.coefficient}"></td>
+									<td th:text="${question.tauxreussite}"></td>
+							<td th:text="${question.tauxreussite}"></td>
 								</tr>
 							</tbody>
 							<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
