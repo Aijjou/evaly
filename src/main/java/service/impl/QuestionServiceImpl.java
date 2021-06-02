@@ -9,7 +9,9 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import model.Apprenant;
+import model.Matiere;
 import model.Question;
+import model.Theme;
 import repository.ApprenantRepository;
 import repository.QuestionRepository;
 import service.ApprenantService;
@@ -26,9 +28,8 @@ public class QuestionServiceImpl implements QuestionService{
 	
 	
 	@Override
-	public List<Question> questions() {
-		
-		return (List<Question>) questionRepository.findAll();
+	public List<Question> QuestionsByTheme(Theme theme) {
+		return questionRepository.findByTheme(theme);
 	}
 
 
@@ -41,8 +42,13 @@ public class QuestionServiceImpl implements QuestionService{
 
 	@Override
 	public Optional<Question> findById(Integer id) {
-		// TODO Auto-generated method stub
 		return questionRepository.findById(id);
+	}
+
+
+	@Override
+	public List<Question> questions() {
+		return (List<Question>) questionRepository.findAll();
 	}
 
 }

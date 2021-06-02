@@ -32,15 +32,14 @@ public class MatiereServiceImpl implements MatiereService{
 	
 	
 	@Override
-	public List<Matiere> matieres() {
-		
-		return (List<Matiere>) matiereRepository.findAll();
-	}
-	
-	@Override
 	public Optional<Matiere> findById(Integer id){
 		
 		return matiereRepository.findById(id);
+	}
+
+	@Override
+	public List<Matiere> matieres() {
+		return (List<Matiere>) matiereRepository.findAll();
 	}
 
 }

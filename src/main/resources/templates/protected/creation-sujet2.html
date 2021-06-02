@@ -73,24 +73,41 @@
 		<div
 			class="d-flex flex-row justify-content-center mt-4 align-self-center w-75">
 			<div class="d-flex flex-row justify-content-center  p-4 main">
-				<form method="post" th:action="@{/protected/creation-sujet2}">
+				<form method="post" th:action="@{/protected/liste-question}">
 					<div class="d-flex flex-row justify-content-center">
 
 						<div class="card w-75 align-self-center p-2  m-2">
 							<div class="row mt-4 w-75 align-self-center">
-								<div class="row mb-4 w-100 mb20px">
-
+								<div class="row mb-4 w-100">
 									<div
 										class="col-3 align-self-center d-flex flex-row justify-content-center">
-										Matière</div>
+										Thème(s) :</div>
 									<div class="col-9 align-self-center d-flex flex-row px-0">
-										<select name="title">
-											<option value="">-- Choisir une matière --</option>
-											<option th:each="matiere : ${listmatieres}"
-												th:value="${matiere.idMatiere}" th:text="${matiere.nom}">
-										</select>
+										<div class="multiselect">
+											<div class="selectBox justify-content-center"
+												onclick="showCheckboxes()">
+												<select>
+													<option>Choisir un ou plusieurs thème(s)</option>
+												</select>
+												<div class="overSelect align-self-center"></div>
+											</div>
+											<!-- <div id="checkboxes">
+												<label th:each="theme : ${themes}" for="${theme.idTheme}">
+													<input type="checkbox" id="${theme.idTheme}" name="id" />
+													<span th:text="${theme.nom}"></span>
+												</label>
+											</div> -->
+											<div id="checkboxes">
+												<select multiple name="title">
+													<option value="">-- Choisir Thème(s) --</option>
+													<option th:each="theme : ${themes}"
+													th:value="${theme.idTheme}" th:text="${theme.nom}">
+												</select>
+											</div>
+										</div>
 									</div>
 								</div>
+
 								<div class="row w-100 mb20px">
 									<div class="col-2 d-flex flex-row justify-content-center">
 										<button class="btn annulerButton"
@@ -98,7 +115,7 @@
 									</div>
 									<div class="col-5 d-flex flex-row justify-content-center">
 										<input class="btn validerButton" type="submit"
-											value="Sélectionner les Themes">
+											value="Sélectionner les questions">
 									</div>
 								</div>
 							</div>

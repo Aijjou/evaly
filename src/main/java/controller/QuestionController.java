@@ -133,6 +133,7 @@ public class QuestionController {
 		model.addAttribute("listtheme", listth);
 
 		List<Matiere> listmatiere = matiereService.matieres();
+		
 		model.addAttribute("listmatiere", listmatiere);
 
 		return "/protected/edition-question";

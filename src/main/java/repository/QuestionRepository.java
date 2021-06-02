@@ -1,13 +1,16 @@
 package repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
+
 import org.springframework.data.repository.CrudRepository;
 
-import model.Apprenant;
 import model.Question;
+import model.Theme;
 
 
 public interface QuestionRepository extends CrudRepository<Question, Integer>{
 	
+	List<Question> findByTheme(Theme theme);
+	Question findByIdQuestion(Integer id);
 
 }

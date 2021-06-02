@@ -8,7 +8,6 @@ import model.Theme;
 
 public interface MatiereService {
 	
-
 	public List<Matiere> matieres();
 	
 	public Optional<Matiere> findById(Integer id);
