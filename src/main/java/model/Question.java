@@ -3,6 +3,8 @@ package model;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -33,6 +35,7 @@ public class Question implements java.io.Serializable, Comparable {
 	private double tauxreussite=100;
 	private Integer nbnotes=0;
 	
+	
 	public Question() {
 	}
 
@@ -61,7 +64,7 @@ public class Question implements java.io.Serializable, Comparable {
 		this.idQuestion = idQuestion;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name = "id_theme")
 	public Theme getTheme() {
 		return this.theme;

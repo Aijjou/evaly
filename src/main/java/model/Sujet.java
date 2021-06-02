@@ -28,7 +28,7 @@ public class Sujet implements java.io.Serializable {
 	private Boolean isAutomaticGenerated;
 	private String descriptionSujet;
 	private Double noteMoyenne;
-	private Set<ExamenSujet> examenSujets = new HashSet<ExamenSujet>(0);
+	private Set<Examen> examens = new HashSet<Examen>(0);
 	private Set<ReponseApprenantExamen> reponseApprenantExamens = new HashSet<ReponseApprenantExamen>(0);
 	private Set<SujetQuestion> sujetQuestions = new HashSet<SujetQuestion>(0);
 	private Set<ReponseApprenant> reponseApprenants = new HashSet<ReponseApprenant>(0);
@@ -43,6 +43,7 @@ public class Sujet implements java.io.Serializable {
         this.nbnotes = nbnotes;
     }
 
+	
 	public Sujet() {
 	}
 
@@ -54,7 +55,6 @@ public class Sujet implements java.io.Serializable {
 		this.isAutomaticGenerated = isAutomaticGenerated;
 		this.descriptionSujet = descriptionSujet;
 		this.noteMoyenne = noteMoyenne;
-		this.examenSujets = examenSujets;
 		this.reponseApprenantExamens = reponseApprenantExamens;
 		this.sujetQuestions = sujetQuestions;
 		this.reponseApprenants = reponseApprenants;
@@ -70,6 +70,16 @@ public class Sujet implements java.io.Serializable {
 
 	public void setIdSujet(Integer idSujet) {
 		this.idSujet = idSujet;
+	}
+	
+	private Integer nbnotes;
+	@Column(name = "nbnotes")
+	public Integer getNbnotes() {
+		return nbnotes;
+	}
+
+	public void setNbnotes(Integer nbnotes) {
+		this.nbnotes = nbnotes;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -119,12 +129,12 @@ public class Sujet implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sujet")
-	public Set<ExamenSujet> getExamenSujets() {
-		return this.examenSujets;
+	public Set<Examen> getExamens() {
+		return this.examens;
 	}
 
-	public void setExamenSujets(Set<ExamenSujet> examenSujets) {
-		this.examenSujets = examenSujets;
+	public void setExamens(Set<Examen> examens) {
+		this.examens = examens;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sujet")
@@ -154,4 +164,6 @@ public class Sujet implements java.io.Serializable {
 		this.reponseApprenants = reponseApprenants;
 	}
 
+
+	
 }
