@@ -3,6 +3,7 @@ package controller;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -48,7 +49,7 @@ public class SujetController {
 		model.addAttribute("apprenant", isApprenant);
 		model.addAttribute("admin", isAdmin);
 		model.addAttribute("formateur", isFormateur);
-		model.addAttribute("listmatieres", matiereService.findAllMatieres());
+		model.addAttribute("listmatieres", matiereService.matieres());
 		
 		return "/protected/creation-sujet";
 	}
@@ -171,8 +172,8 @@ public class SujetController {
 		//iteration dans la liste d'ids
 		for (int i=0;i<questIds.size();i++) {
 			//creation de la question et set l'id question
-			Question question = new Question();
-			question = questionService.findQuestionsById(questIds.get(i));
+			Optional<Question> questionOp = questionService.findById(questIds.get(i));
+			Question question = questionOp.get();
 			System.err.println(question.getDescriptionQuestion()+"<<<<<<<<<<");
 			//ajout de la quest a la liste de quests selectionnées
 			questions.add(question);

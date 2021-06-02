@@ -34,8 +34,21 @@ public class QuestionServiceImpl implements QuestionService{
 
 
 	@Override
-	public Question findQuestionsById(Integer id) {
-		return questionRepository.findByIdQuestion(id);
+	public void save(Question q) {
+		// TODO Auto-generated method stub
+		questionRepository.save(q);
+	}
+
+
+	@Override
+	public Optional<Question> findById(Integer id) {
+		return questionRepository.findById(id);
+	}
+
+
+	@Override
+	public List<Question> questions() {
+		return (List<Question>) questionRepository.findAll();
 	}
 
 }

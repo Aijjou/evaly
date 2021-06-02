@@ -30,7 +30,9 @@ public class Question implements java.io.Serializable {
 	private Set<SujetQuestion> sujetQuestions = new HashSet<SujetQuestion>(0);
 	private Set<Reponse> reponses = new HashSet<Reponse>(0);
 	private Set<ReponseApprenant> reponseApprenants = new HashSet<ReponseApprenant>(0);
-
+	private double tauxreussite=100;
+	private Integer nbnotes=0;
+	
 	public Question() {
 	}
 
@@ -131,5 +133,32 @@ public class Question implements java.io.Serializable {
 	public void setReponseApprenants(Set<ReponseApprenant> reponseApprenants) {
 		this.reponseApprenants = reponseApprenants;
 	}
+
+	@Override
+	public String toString() {
+		return "Question [idQuestion=" + idQuestion + ", theme=" + theme + ", descriptionQuestion="
+				+ descriptionQuestion + ", coefficient=" + coefficient + ", isQcm=" + isQcm + ", reponses=" + reponses
+				+ "]";
+	}
+
+	@Column(name = "tauxreussite")
+	public double getTauxreussite() {
+		return tauxreussite;
+	}
+
+	public void setTauxreussite(double tauxreussite) {
+		this.tauxreussite = tauxreussite;
+	}
+
+	@Column(name = "nbnotes")
+	public Integer getNbnotes() {
+		return nbnotes;
+	}
+
+	public void setNbnotes(Integer nbnotes) {
+		this.nbnotes = nbnotes;
+	}
+	
+	
 
 }

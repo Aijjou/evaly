@@ -1,17 +1,7 @@
 package dto;
-// Generated 26 mars 2021 � 22:40:09 by Hibernate Tools 5.1.10.Final
+// Generated 26 mars 2021 ï¿½ 22:40:09 by Hibernate Tools 5.1.10.Final
 
-import java.util.HashSet;
-import java.util.Set;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -24,9 +14,10 @@ public class QuestionDto implements java.io.Serializable {
 	private Integer idQuestion;
 	private Integer theme;
 	
-	private Integer idmatiere;
+	private Integer idMatiere;
 	private String nvtheme;
-	
+	private String nvthemebool;
+
 	private String descriptionQuestion;
 	private Integer coefficient;
 	private Boolean isQcm;
@@ -41,10 +32,19 @@ public class QuestionDto implements java.io.Serializable {
 	private String rep3br;
 	private String rep4br;
 	private Boolean isVrai;
+	private Boolean toReset;
 
 	public QuestionDto() {
 	}
 
+	public String getNvthemebool() {
+		return nvthemebool;
+	}
+
+	public void setNvthemebool(String nvthemebool) {
+		this.nvthemebool = nvthemebool;
+	}
+	
 	public Integer getIdQuestion() {
 		return this.idQuestion;
 	}
@@ -143,12 +143,14 @@ public class QuestionDto implements java.io.Serializable {
 		this.isVrai = isVrai;
 	}
 
-	public Integer getIdmatiere() {
-		return idmatiere;
+
+
+	public Integer getIdMatiere() {
+		return idMatiere;
 	}
 
-	public void setIdmatiere(Integer idmatiere) {
-		this.idmatiere = idmatiere;
+	public void setIdMatiere(Integer idMatiere) {
+		this.idMatiere = idMatiere;
 	}
 
 	public String getNvtheme() {
@@ -189,6 +191,14 @@ public class QuestionDto implements java.io.Serializable {
 
 	public void setRep4br(String rep4br) {
 		this.rep4br = rep4br;
+	}
+
+	public Boolean getToReset() {
+		return toReset;
+	}
+
+	public void setToReset(Boolean toReset) {
+		this.toReset = toReset;
 	}
 
 

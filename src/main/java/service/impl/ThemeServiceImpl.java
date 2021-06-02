@@ -1,6 +1,7 @@
 package service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
@@ -27,13 +28,19 @@ public class ThemeServiceImpl implements ThemeService{
 	}
 
 	@Override
-	public List<Theme> findAllThemes() {
-		return (List<Theme>) themeRepository.findAll();
+	public Optional<Theme> findById(Integer id){
+		return themeRepository.findById(id);
 	}
 
 	@Override
-	public Theme findThemesById(Integer id) {
-		return themeRepository.findByIdTheme(id);
+	public void save(Theme t) {
+		themeRepository.save(t);
+		
+	}
+
+	@Override
+	public List<Theme> themes() {
+		return (List<Theme>) themeRepository.findAll();
 	}
 
 }
