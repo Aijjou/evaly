@@ -21,6 +21,11 @@ import javax.persistence.Table;
 @Table(name = "theme", catalog = "evaly")
 public class Theme implements java.io.Serializable {
 
+	@Override
+	public String toString() {
+		return "Theme nom=" + nom;
+	}
+
 	private Integer idTheme;
 	private Matiere matiere;
 	private String nom;
