@@ -26,23 +26,33 @@ public class Sujet implements java.io.Serializable {
 	private Formateur formateur;
 	private String nom;
 	private Boolean isAutomaticGenerated;
-	private String descriptionSuejt;
+	private String descriptionSujet;
 	private Double noteMoyenne;
 	private Set<ExamenSujet> examenSujets = new HashSet<ExamenSujet>(0);
 	private Set<ReponseApprenantExamen> reponseApprenantExamens = new HashSet<ReponseApprenantExamen>(0);
 	private Set<SujetQuestion> sujetQuestions = new HashSet<SujetQuestion>(0);
 	private Set<ReponseApprenant> reponseApprenants = new HashSet<ReponseApprenant>(0);
+	private Integer nbnotes;
+	
+    @Column(name = "nbnotes")
+    public Integer getNbnotes() {
+        return nbnotes;
+    }
+    
+    public void setNbnotes(Integer nbnotes) {
+        this.nbnotes = nbnotes;
+    }
 
 	public Sujet() {
 	}
 
-	public Sujet(Formateur formateur, String nom, Boolean isAutomaticGenerated, String descriptionSuejt,
+	public Sujet(Formateur formateur, String nom, Boolean isAutomaticGenerated, String descriptionSujet,
 			Double noteMoyenne, Set<ExamenSujet> examenSujets, Set<ReponseApprenantExamen> reponseApprenantExamens,
 			Set<SujetQuestion> sujetQuestions, Set<ReponseApprenant> reponseApprenants) {
 		this.formateur = formateur;
 		this.nom = nom;
 		this.isAutomaticGenerated = isAutomaticGenerated;
-		this.descriptionSuejt = descriptionSuejt;
+		this.descriptionSujet = descriptionSujet;
 		this.noteMoyenne = noteMoyenne;
 		this.examenSujets = examenSujets;
 		this.reponseApprenantExamens = reponseApprenantExamens;
@@ -91,12 +101,12 @@ public class Sujet implements java.io.Serializable {
 	}
 
 	@Column(name = "description_suejt", length = 1000)
-	public String getDescriptionSuejt() {
-		return this.descriptionSuejt;
+	public String getdescriptionSujet() {
+		return this.descriptionSujet;
 	}
 
-	public void setDescriptionSuejt(String descriptionSuejt) {
-		this.descriptionSuejt = descriptionSuejt;
+	public void setdescriptionSujet(String descriptionSujet) {
+		this.descriptionSujet = descriptionSujet;
 	}
 
 	@Column(name = "note_moyenne", precision = 22, scale = 0)
