@@ -277,6 +277,7 @@ public class QuestionController {
 			theme=themerec.get();
 		}
 		edit.setTheme(theme);
+		
 		// Recup Description
 		edit.setDescriptionQuestion(question.getDescriptionQuestion());
 
@@ -287,36 +288,112 @@ public class QuestionController {
 			edit.setIsQcm(false);
 		}
 		
+		//Coefficient
+		edit.setCoefficient(question.getCoefficient());
+		
+		// Traitement Reset
+		
+		if (question.getToReset()) {
+			edit.setNbnotes(0);
+			edit.setTauxreussite(100);
+		}
+		
 		questionService.save(edit);
 		// Sauvegarde question 
 		
-		Set<Reponse> listrep = edit.getReponses();
-		ArrayList<Reponse> arrayrep = new ArrayList<Reponse>();
-
-		for (Reponse r : listrep) {
-			arrayrep.add(r);
-		}
-		Collections.sort(arrayrep);
-		
-		for (Reponse r : arrayrep) {
-			System.out.println(r.getIdReponse());
-			System.out.println(r.getDescriptionReponse());
-			System.out.println(r.getIsBonneReponse());
-		}
-		
-		int nbrep = arrayrep.size();
+//		Set<Reponse> listrep = edit.getReponses();
+//		ArrayList<Reponse> arrayrep = new ArrayList<Reponse>();
+//
+//		for (Reponse r : listrep) {
+//			arrayrep.add(r);
+//		}
+//		Collections.sort(arrayrep);
+//		
+//		for (Reponse r : arrayrep) {
+//			System.out.println(r.getIdReponse());
+//			System.out.println(r.getDescriptionReponse());
+//			System.out.println(r.getIsBonneReponse());
+//		}
+//		
+//		int nbrep = arrayrep.size();
 		
 		// Combien de réponses avant ? 
 		// Si moins de réponses après, delete les réponses en trop
 		// Si plus, créer davantage
 		// Delete all / Create 2+ ?
 		
-		// Check rep1/2/3/4 - Delete/create en fonction puis update
+		Reponse n1 = new Reponse();
+		Reponse n2 = new Reponse();
+		Reponse n3 = new Reponse();
+		Reponse n4 = new Reponse();
+		
+		if (question.getIsQcm()) {
+
+			if (question.getRep1() != null) {
+				n1.setDescriptionReponse(question.getRep1());
+				if (question.getRep1br().equals("true"))
+					n1.setIsBonneReponse(true);
+				else
+					n1.setIsBonneReponse(false);
+				
+				n1.setQuestion(edit);
+				reponseService.save(n1);
+			}
+			if (question.getRep2() != null) {
+				n2.setDescriptionReponse(question.getRep2());
+				if (question.getRep2br()!= null)
+					n2.setIsBonneReponse(true);
+				else 
+					n2.setIsBonneReponse(false);
+				
+				n2.setQuestion(edit);
+				reponseService.save(n2);
+			}
+			if (question.getRep3() != null) {
+				n3.setDescriptionReponse(question.getRep3());
+				if (question.getRep3br()!= null)
+					n3.setIsBonneReponse(true);
+				else
+					n3.setIsBonneReponse(false);
+				
+				n3.setQuestion(edit);
+				reponseService.save(n3);
+			}
+			if (question.getRep4() != null) {
+				n4.setDescriptionReponse(question.getRep4());
+				if (question.getRep4br()!= null)
+					n4.setIsBonneReponse(true);
+				else
+					n4.setIsBonneReponse(false);
+				
+				n4.setQuestion(edit);
+				reponseService.save(n4);
+			}
+		}
+		
+		if (question.getIsQcm()==false) {
+
+				n1.setDescriptionReponse("Vrai");
+				if (question.getIsVrai())
+					n1.setIsBonneReponse(true);
+				else
+					n1.setIsBonneReponse(false);
+				
+				n1.setQuestion(edit);
+				reponseService.save(n1);
+		
+				n2.setDescriptionReponse("Faux");
+				if (question.getIsVrai()!=false)
+					n2.setIsBonneReponse(true);
+				else
+					n2.setIsBonneReponse(false);
+				
+				n2.setQuestion(edit);
+				reponseService.save(n2);
+			}
 		
 
-		
 
-		// Traitement Vrai/Faux
 
 		return "/protected/liste-question";
 	}
