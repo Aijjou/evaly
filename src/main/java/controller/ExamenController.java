@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import dto.ExamenDto;
+import dto.QuestionDto;
 import model.Examen;
 import service.ExamenService;
 import service.PromotionService;
@@ -67,6 +69,22 @@ public class ExamenController {
 
 		return "protected/creation-examen";
 
+	}
+	
+	@RequestMapping(value = "/protected/creation-examen-sub", method = RequestMethod.POST)
+	public String creationExamenSubmit(@ModelAttribute ExamenDto examen, Model model) {
+		if (examen.getDateExamen()==null || examen.getTitre()==null || examen.getSujet()==null || 
+				examen.getDureeExamen()==null || examen.getPromotion() ==null) {
+			model.addAttribute("examen", examen);
+			return "protected/creation-examen";
+		}
+		Examen nve = new Examen();
+		nve.setDateExamen(examen.getDateExamen());
+		nve.setTitre(examen.getTitre());
+		nve.setDureeExamen(examen.getDureeExamen());
+
+		
+		return "protected/liste-examen";
 	}
 
 }

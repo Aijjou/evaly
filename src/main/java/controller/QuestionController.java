@@ -265,17 +265,22 @@ public class QuestionController {
 		//Gestion Theme
 		Theme theme = new Theme();
 		//Creation
-		if (question.getNvthemebool() == "true" && question.getIdMatiere()!=null) {
+		if (question.getNvthemebool().equals("true") && question.getIdMatiere()!=null) {
 
 			theme.setNom(question.getNvtheme());
 			Optional<Matiere> recupmatiere = matiereService.findById(question.getIdMatiere());
 			theme.setMatiere(recupmatiere.get());
 			themeService.save(theme);
 		}
+		
+
 		//Recup theme existant
-		else if (question.getNvthemebool() == "false") {
+		else if (question.getNvthemebool() == null) {
 			Optional<Theme> themerec = themeService.findById(question.getTheme());
 			theme=themerec.get();
+			System.out.println(theme);
+			System.out.println(theme);
+			System.out.println(theme);
 		}
 		edit.setTheme(theme);
 		

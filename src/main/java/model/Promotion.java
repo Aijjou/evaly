@@ -31,6 +31,7 @@ public class Promotion implements java.io.Serializable {
 	private String nom;
 	private Date dateCreation;
 	private String anneeCreation;
+	private Set<Examen> examens = new HashSet<Examen>(0);
 	private Set<Apprenant> apprenants = new HashSet<Apprenant>(0);
 	private Set<PromotionFormateur> promotionFormateurs = new HashSet<PromotionFormateur>(0);
 
@@ -95,6 +96,15 @@ public class Promotion implements java.io.Serializable {
 
 	public void setAnneeCreation(String anneeCreation) {
 		this.anneeCreation = anneeCreation;
+	}
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "promotion")
+	public Set<Examen> getExamens() {
+		return this.examens;
+	}
+
+	public void setExamens(Set<Examen> examens) {
+		this.examens = examens;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "promotion")
