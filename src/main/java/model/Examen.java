@@ -32,9 +32,9 @@ public class Examen implements java.io.Serializable {
 	private Integer dureeExamen;
 	private Set<ReponseApprenantExamen> reponseApprenantExamens = new HashSet<ReponseApprenantExamen>(0);
 	private Set<ResultatExamen> resultatExamens = new HashSet<ResultatExamen>(0);
-	private Set<ExamenSujet> examenSujets = new HashSet<ExamenSujet>(0);
 	private Set<ReponseApprenant> reponseApprenants = new HashSet<ReponseApprenant>(0);
 	private Promotion promotion;
+	private Sujet sujet;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_promotion")
@@ -45,20 +45,30 @@ public class Examen implements java.io.Serializable {
 	public void setPromotion(Promotion promotion) {
 		this.promotion = promotion;
 	}
+	
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_sujet")
+	public Sujet getSujet() {
+		return sujet;
+	}
+
+	public void setSujet(Sujet sujet) {
+		this.sujet = sujet;
+	}
 
 	public Examen() {
 	}
 
 	public Examen(Formateur formateur, String titre, Date dateExamen, Integer dureeExamen,
 			Set<ReponseApprenantExamen> reponseApprenantExamens, Set<ResultatExamen> resultatExamens,
-			Set<ExamenSujet> examenSujets, Set<ReponseApprenant> reponseApprenants) {
+		 Set<ReponseApprenant> reponseApprenants) {
 		this.formateur = formateur;
 		this.titre = titre;
 		this.dateExamen = dateExamen;
 		this.dureeExamen = dureeExamen;
 		this.reponseApprenantExamens = reponseApprenantExamens;
 		this.resultatExamens = resultatExamens;
-		this.examenSujets = examenSujets;
 		this.reponseApprenants = reponseApprenants;
 	}
 
@@ -130,14 +140,6 @@ public class Examen implements java.io.Serializable {
 		this.resultatExamens = resultatExamens;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "examen")
-	public Set<ExamenSujet> getExamenSujets() {
-		return this.examenSujets;
-	}
-
-	public void setExamenSujets(Set<ExamenSujet> examenSujets) {
-		this.examenSujets = examenSujets;
-	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "examen")
 	public Set<ReponseApprenant> getReponseApprenants() {
