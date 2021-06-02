@@ -154,4 +154,36 @@ public class SujetController {
 		
 		return "/protected/liste-sujet";
 	}
+	
+	@RequestMapping(value = "/protected/recap", method = RequestMethod.POST)
+	public String creationQuesionnaire(Model model, @RequestParam List<Integer> ok) {
+		
+		isFormateur = true;
+		isApprenant = false;
+		isConnectBoolean = true;
+		isAdmin = false;
+		List<Question> questions = new ArrayList<Question>();
+		
+		System.err.println(ok);
+		
+		//recuperation des ids
+		List<Integer> questIds = ok;
+		//iteration dans la liste d'ids
+		for (int i=0;i<questIds.size();i++) {
+			//creation de la question et set l'id question
+			Question question = new Question();
+			question = questionService.findQuestionsById(questIds.get(i));
+			System.err.println(question.getDescriptionQuestion()+"<<<<<<<<<<");
+			//ajout de la quest a la liste de quests selectionnées
+			questions.add(question);
+		}
+		
+		model.addAttribute("connexion", isConnectBoolean);
+		model.addAttribute("apprenant", isApprenant);
+		model.addAttribute("admin", isAdmin);
+		model.addAttribute("formateur", isFormateur);
+		model.addAttribute("questions", questions);
+		
+		return "/protected/recap";
+	}
 }
