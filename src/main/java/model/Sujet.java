@@ -33,6 +33,7 @@ public class Sujet implements java.io.Serializable {
 	private Set<SujetQuestion> sujetQuestions = new HashSet<SujetQuestion>(0);
 	private Set<ReponseApprenant> reponseApprenants = new HashSet<ReponseApprenant>(0);
 
+	
 	public Sujet() {
 	}
 
@@ -60,6 +61,16 @@ public class Sujet implements java.io.Serializable {
 
 	public void setIdSujet(Integer idSujet) {
 		this.idSujet = idSujet;
+	}
+	
+	private Integer nbnotes;
+	@Column(name = "nbnotes")
+	public Integer getNbnotes() {
+		return nbnotes;
+	}
+
+	public void setNbnotes(Integer nbnotes) {
+		this.nbnotes = nbnotes;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -144,4 +155,6 @@ public class Sujet implements java.io.Serializable {
 		this.reponseApprenants = reponseApprenants;
 	}
 
+
+	
 }

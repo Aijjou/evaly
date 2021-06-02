@@ -34,6 +34,17 @@ public class Examen implements java.io.Serializable {
 	private Set<ResultatExamen> resultatExamens = new HashSet<ResultatExamen>(0);
 	private Set<ExamenSujet> examenSujets = new HashSet<ExamenSujet>(0);
 	private Set<ReponseApprenant> reponseApprenants = new HashSet<ReponseApprenant>(0);
+	private Promotion promotion;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_promotion")
+	public Promotion getPromotion() {
+		return promotion;
+	}
+
+	public void setPromotion(Promotion promotion) {
+		this.promotion = promotion;
+	}
 
 	public Examen() {
 	}

@@ -90,7 +90,7 @@ public class Matiere implements java.io.Serializable {
 	@Override
 	public String toString() {
 		return "Matiere [idMatiere=" + idMatiere + ", groupeFormateur=" + groupeFormateur + ", nom=" + nom
-				+", themes=" + themes + "]";
+				+"]";
 	}
 
 	
