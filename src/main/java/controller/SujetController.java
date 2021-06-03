@@ -2,6 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import model.Matiere;
 import model.Question;
 import model.Sujet;
+import model.SujetQuestion;
 import model.Theme;
 import service.MatiereService;
 import service.QuestionService;
+import service.SujetQuestionService;
 import service.SujetService;
 import service.ThemeService;
 
@@ -41,6 +44,9 @@ public class SujetController {
 	
 	@Autowired
 	SujetService sujetService;
+	
+	@Autowired
+	SujetQuestionService sujetQuestionService;
 	
 	
 	@RequestMapping(value = "/protected/creation-sujet", method = RequestMethod.GET)
@@ -195,5 +201,64 @@ public class SujetController {
 		model.addAttribute("sujet", sujet);
 		
 		return "/protected/creation-sujet-manu";
+	}
+	
+	@RequestMapping(value = "/protected/liste-sujet", method = RequestMethod.POST)
+	public String validationQuesionnaire(Model model, @RequestParam List<Integer> list, String nom, String description) {
+		
+		isFormateur = true;
+		isApprenant = false;
+		isConnectBoolean = true;
+		isAdmin = false;
+		List<Question> questions = new ArrayList<Question>();
+		HashSet<Theme> themes = new HashSet<Theme>();
+		Matiere matiere = new Matiere();
+		Sujet sujet = new Sujet();
+		Question question = new Question();
+		sujet.setNom(nom);
+		sujet.setdescriptionSujet(description);
+		
+		
+		System.err.println(list);
+		
+		//recuperation des ids
+		List<Integer> questIds = list;
+		//iteration dans la liste d'ids
+		for (int i=0;i<questIds.size();i++) {
+			//creation de la question et set l'id question
+			Optional<Question> questionOp = questionService.findById(questIds.get(i));
+			question = questionOp.get();
+			//ajout question et sujet a l'objet SujetQuestion puis save
+			SujetQuestion sujetQuestion = new SujetQuestion();
+			sujetQuestion.setSujet(sujet);
+			sujetQuestion.setQuestion(question);
+//			sujetQuestionService.save(sujetQuestion);
+			//ajout de la quest a la liste de quests selectionnées
+			questions.add(question);
+		}
+		
+		for(Sujet s : sujetService.sujets()) {
+			System.err.println(s.getdescriptionSujet());
+		}
+		System.err.println(sujet.getNom());
+		System.err.println(question.getIdQuestion());
+		
+		for(int j=0;j<questions.size();j++){
+			Theme theme = questions.get(j).getTheme();
+			matiere = questions.get(j).getTheme().getMatiere();
+			themes.add(theme);
+		}
+		
+		
+		model.addAttribute("connexion", isConnectBoolean);
+		model.addAttribute("apprenant", isApprenant);
+		model.addAttribute("admin", isAdmin);
+		model.addAttribute("formateur", isFormateur);
+		model.addAttribute("sujets", sujetService.sujets());
+		model.addAttribute("questions", questions);
+		model.addAttribute("themes", themes);
+		model.addAttribute("matiere", matiere);
+		
+		return "/protected/liste-sujet";
 	}
 }

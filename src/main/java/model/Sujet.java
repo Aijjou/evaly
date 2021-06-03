@@ -32,17 +32,6 @@ public class Sujet implements java.io.Serializable {
 	private Set<ReponseApprenantExamen> reponseApprenantExamens = new HashSet<ReponseApprenantExamen>(0);
 	private Set<SujetQuestion> sujetQuestions = new HashSet<SujetQuestion>(0);
 	private Set<ReponseApprenant> reponseApprenants = new HashSet<ReponseApprenant>(0);
-	private Integer nbnotes;
-	
-    @Column(name = "nbnotes")
-    public Integer getNbnotes() {
-        return nbnotes;
-    }
-    
-    public void setNbnotes(Integer nbnotes) {
-        this.nbnotes = nbnotes;
-    }
-
 	
 	public Sujet() {
 	}
