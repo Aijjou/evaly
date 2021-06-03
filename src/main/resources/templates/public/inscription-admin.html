@@ -47,7 +47,7 @@
 		</div>
 		<div class="d-flex flex-row justify-content-center mt-2">
 			<div class="card d-flex flex-row justify-content-center w-75 p-4 main">
-				<form class="w-75 mt-3">
+				<form class="w-75 mt-3" method="POST" th:object="${adminEtablissementDto}" th:action="@{/public/inscription-admin}" action="#">
 					<div class="row">
 						<div class="col-6">
 							<div class="form w-100">
@@ -56,37 +56,37 @@
 								</div>
 								<div class="mb-3">
 									<label for="nom" class="text-dark font-weight-bold mb-0">Organisation*</label>
-									<input type="text" class="form-control" id="nom"
+									<input th:fields="*{nom}" type="text" class="form-control" id="nom" name="nom"
 										placeholder="Ex : Afpa Roubaix" required>
 								</div>
 								<div class="mb-3">
-									<label for="nom" class="text-dark font-weight-bold mb-0">Numéro</label>
-									<input type="number" class="form-control" id="numero"
+									<label for="numero" class="text-dark font-weight-bold mb-0">Numéro</label>
+									<input th:fields="*{numero}" type="number" class="form-control" id="numero" name="numero"
 										placeholder="Ex : 46" required>
 								</div>
 								<div class="mb-3">
 									<label for="rue" class="text-dark font-weight-bold mb-0">Rue</label>
-									<input type="text" class="form-control" id="rue"
+									<input th:fields="*{rue}" type="text" class="form-control" id="rue" name="rue"
 										placeholder="Ex : Rue de la Paix" required>
 								</div>
 								<div class="mb-3">
 									<label for="ville" class="text-dark font-weight-bold mb-0">Ville</label>
-									<input type="text" class="form-control" id="ville"
+									<input th:fields="*{ville}" type="text" class="form-control" id="ville" name="ville"
 										placeholder="Ex : Armentières" required>
 								</div>
 								<div class="mb-3">
 									<label for="nom" class="text-dark mb-0 font-weight-bold">Code
-										postal</label> <input type="text" class="form-control" id="code"
+										postal</label> <input th:fields="*{code}" type="text" class="form-control" id="code" name="code"
 										placeholder="Ex : 59369" required>
 									<div class="pt-3">
 										<div class="form-check">
-											<input class="form-check-input" type="checkbox" value=""
+											<input class="form-check-input" type="checkbox" value="" th:fields="*{isAdmin}"
 												id="flexCheckDefault"> <label
 												class="form-check-label text-dark" for="flexCheckDefault">
 												Administateur </label>
 										</div>
 										<div class="form-check">
-											<input class="form-check-input" type="checkbox" value=""
+											<input class="form-check-input" type="checkbox" value="" th:fields="*{isFormateur}"
 												id="flexCheckChecked" checked> <label
 												class="form-check-label text-dark" for="flexCheckChecked">
 												Formateur </label>
@@ -102,40 +102,40 @@
 								</div>
 								<div class="mb-3">
 									<label for="nom" class="text-dark font-weight-bold mb-0">Nom</label>
-									<input type="text" class="form-control" id="nom"
-										placeholder="Ex : Safouane" required>
+									<input type="text" class="form-control" id="nom" th:fields="*{nomReferent}"
+										placeholder="Ex : Safouane" required name="nomReferent">
 								</div>
 								<div class="mb-2">
 									<label for="nom" class="text-dark font-weight-bold mb-0">Prénom</label>
-									<input type="text" class="form-control" id="prenom"
-										placeholder="Ex : Pierre" required>
+									<input type="text" class="form-control" id="prenom" th:fields="*{prenomReferent}"
+										placeholder="Ex : Pierre" required name="prenomReferent">
 								</div>
 								<div class="mb-3">
 									<label for="rue" class="text-dark font-weight-bold mb-0">Mail</label>
-									<input type="email" class="form-control" id="mail"
-										placeholder="Ex : maladedulosc59@gmail.fr" required>
+									<input type="email" class="form-control" id="mail" th:fields="*{mail}"
+										placeholder="Ex : maladedulosc59@gmail.fr" required name="mail">
 								</div>
 								<div class="mb-3">
 									<label for="ville" class="text-dark font-weight-bold mb-0">Mot
-										de passe</label> <input type="password" class="form-control"
-										id="password" placeholder="Ex: a&lm1256e@" required>
+										de passe</label> <input type="password" class="form-control" th:fields="*{password}"
+										id="password" placeholder="Ex: a&lm1256e@" required name="password">
 								</div>
 
 								<div class="mb-3">
 									<label for="nom" class="text-dark font-weight-bold mb-0">Question
-										secrète </label> <input type="text" class="form-control" id="question"
-										placeholder="Who is your father?" required>
+										secrète </label> <input type="text" class="form-control" id="question" th:fields="*{question}"
+										placeholder="Who is your father?" required name="question">
 								</div>
 								<div class="mb-3">
 									<label for="reponseSecrete" class="text-dark font-weight-bold">Réponse
 										secrète</label>
-									<textarea class="form-control" id="reponseSecrete" rows="3"></textarea>
+									<textarea class="form-control" id="reponseSecrete" rows="3" th:fields="*{reponse}" name="reponse"></textarea>
 								</div>
 							</div>
 						</div>
 						<div class="d-flex flex-row justify-content-end w-100">
 							<a class="btn annulerButton mr-2" href="/protected/liste-eleve">ANNULER</a>
-							<a type="submit" class="btn validerButton" href="/public/connexion">VALIDER</a>
+							<button type="submit" class="btn validerButton" >VALIDER</button>
 						</div>
 					</div>
 				</form>

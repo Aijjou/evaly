@@ -1,0 +1,151 @@
+<!-- <%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%> -->
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>Questionnaire</title>
+
+<!-- import de css -->
+<link href="questionnaireCss.css" rel="stylesheet">
+
+<!-- import header aside -->
+
+<meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	crossorigin="anonymous">
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+	integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+	crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+	integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+	crossorigin="anonymous"></script>
+
+<link href="../../css/questionnaire.css" rel="stylesheet"
+	th:href="@{/css/questionnaire.css}">
+<link rel="stylesheet" th:href="@{/css/header.css}">
+<link href="../../css/aside.css" rel="stylesheet"
+	th:href="@{/css/aside.css}">
+<link href="/fontawesome/css/all.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/v/dt/dt-1.10.24/datatables.min.css" />
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+<script type="text/javascript"
+	src="https://cdn.datatables.net/v/dt/dt-1.10.24/datatables.min.js"></script>
+
+<script
+	src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.js"></script>
+<script type="text/javascript" charset="utf8"
+	src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+
+<link rel="stylesheet" type="text/css"
+	th:href="@{/Buttons-1.7.0/css/buttons.dataTables.css}" />
+
+<script type="text/javascript"
+	th:href="@{/Buttons-1.7.0/js/buttons.jqueryui.min.js}"></script>
+<script type="text/javascript"
+	th:href="@{/Buttons-1.7.0/js/buttons.print.min.js}"></script>
+<script type="text/javascript"
+	th:href="@{/Buttons-1.7.0/js/dataTables.buttons.min.js}"></script>
+
+</head>
+
+<body>
+
+	<div th:replace="/shared/header :: header"></div>
+	<div th:replace="/shared/aside :: aside"></div>
+	<div class=" principal d-flex flex-column justify-content-around">
+		<div class="d-flex flex-row justify-content-center mb-4 titre">
+			<div
+				class="card connexion w-25 d-flex flex-column justify-content-between pt-1 pl-3 pr-4 pb-4 mb-4">
+				<small class="row d-flex flex-row justify-content-start promotion">
+					<i
+					class="fas fa-graduation-cap align-self-center ml-1 font-weight-bold"></i>&nbsp;
+					<div class="align-self-center pt-1">Examen</div>
+				</small>
+				<div class="row align-self-center ">Passage</div>
+			</div>
+		</div>
+		<div
+			class="d-flex flex-row justify-content-center mt-4 align-self-center w-100">
+			<div class="d-flex flex-row justify-content-center  p-4 main">
+				<form method="post" th:action="@{/questionnaire-sub}">
+					<div class="d-flex flex-row justify-content-center">
+
+						<div class="card w-75 align-self-center p-2  m-2">
+							<div class="row mt-4 w-75 align-self-center">
+
+								<main
+									class="d-flex flex-column justify-content-center align-items-center">
+									<div class="w-100  align-items-center tets">
+										<h3>Question 1</h3>
+										<h5>Comment s'appelle Pierre?</h5>
+										<div class="radio-toolbar">
+											<div class="row mb-4 w-100 mb20px">
+												<div
+													class="col-3 align-self-center d-flex flex-row justify-content-center">
+													<input type="checkbox" id="q1a" name="q1" value="apple" >
+													<label for="q1a">A</label>
+												</div>
+												<div class="col-9 align-self-center d-flex flex-row px-0">
+													<span class="vertical-center">Réponse 1</span>
+												</div>
+											</div>
+											<div class="row mb-4 w-100 mb20px">
+												<div
+													class="col-3 align-self-center d-flex flex-row justify-content-center">
+													<input type="checkbox" id="q2a" name="q1" value="apple">
+													<label for="q2a">B</label>
+												</div>
+
+												<div class="col-9 align-self-center d-flex flex-row px-0">
+													<span class="vertical-center">Réponse 2</span>
+												</div>
+											</div>
+											<div class="row mb-4 w-100 mb20px">
+												<div
+													class="col-3 align-self-center d-flex flex-row justify-content-center">
+													<input type="checkbox" id="q3a" name="q1" value="apple">
+													<label for="q3a">C</label>
+												</div>
+
+												<div class="col-9 align-self-center d-flex flex-row px-0">
+													<span class="vertical-center">Réponse 3</span>
+												</div>
+											</div>
+											<div class="row mb-4 w-100 mb20px">
+												<div
+													class="col-3 align-self-center d-flex flex-row justify-content-center">
+													<input type="checkbox" id="q4a" name="q1" value="apple">
+													<label for="q4a">D</label>
+												</div>
+
+												<div class="col-9 align-self-center d-flex flex-row px-0">
+													<span class="vertical-center">Réponse 4</span>
+												</div>
+											</div>
+											<p>&nbsp;</p>
+										</div>
+									</div>
+								</main>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

@@ -5,15 +5,14 @@ import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import fr.afpa.formation.model.VerifyAccount;
-import fr.afpa.formation.repository.VerifyAccountRepository;
 import model.VerifyUtilisateur;
+import repository.VerifyUtilisateurRepository;
 
 
 public class VerifyCodeValidator implements ConstraintValidator<ValidVerifyCode, String>{
 
 	@Autowired
-	private VerifyAccountRepository verifyAccountDao;
+	private VerifyUtilisateurRepository verifyUtilisateurRepository;
 	
 	@Override
 	public boolean isValid(String token, ConstraintValidatorContext context) {
@@ -23,7 +22,7 @@ public class VerifyCodeValidator implements ConstraintValidator<ValidVerifyCode,
 			context.buildConstraintViolationWithTemplate("Code not be empty")
 					.addConstraintViolation();
 			return false;
-		} else if(!verifyAccountDao.findByToken(token).isPresent()) {
+		} else if(!verifyUtilisateurRepository.findByToken(token).isPresent()) {
 			
 			context.disableDefaultConstraintViolation();
 			context.buildConstraintViolationWithTemplate("Code verification not found")
@@ -32,8 +31,8 @@ public class VerifyCodeValidator implements ConstraintValidator<ValidVerifyCode,
 			
 			
 		} else {
-			VerifyUtilisateur verifyUtilisateur = verifyAccountDao.findByToken(token).get();
-			if(verifyAccount.isExpired()) {
+			VerifyUtilisateur verifyUtilisateur = verifyUtilisateurRepository.findByToken(token).get();
+			if(verifyUtilisateur.isExpired()) {
 				context.disableDefaultConstraintViolation();
 				context.buildConstraintViolationWithTemplate("Verification code has expired")
 						.addConstraintViolation();

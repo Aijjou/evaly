@@ -17,7 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "verify_compte", catalog = "bd_rh")
+@Table(name = "verify_utilisateur", catalog = "evaly")
 public class VerifyUtilisateur {
 
 	@Id
