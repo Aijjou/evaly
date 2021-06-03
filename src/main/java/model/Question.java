@@ -1,6 +1,8 @@
 package model;
 // Generated 26 mars 2021 � 22:40:09 by Hibernate Tools 5.1.10.Final
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -34,6 +36,7 @@ public class Question implements java.io.Serializable, Comparable {
 	private Set<ReponseApprenant> reponseApprenants = new HashSet<ReponseApprenant>(0);
 	private double tauxreussite=100;
 	private Integer nbnotes=0;
+	private Integer nbreussite=0;
 	
 	
 	public Question() {
@@ -123,6 +126,16 @@ public class Question implements java.io.Serializable, Comparable {
 	public Set<Reponse> getReponses() {
 		return this.reponses;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<Reponse> reponsesArray() {
+		ArrayList<Reponse> arr = new ArrayList<Reponse>();
+		for(Reponse r : this.reponses ) {
+			arr.add(r);
+		}
+		Collections.sort(arr);
+		return arr;
+	}
 
 	public void setReponses(Set<Reponse> reponses) {
 		this.reponses = reponses;
@@ -140,8 +153,8 @@ public class Question implements java.io.Serializable, Comparable {
 	@Override
 	public String toString() {
 		return "Question [idQuestion=" + idQuestion + ", theme=" + theme + ", descriptionQuestion="
-				+ descriptionQuestion + ", coefficient=" + coefficient + ", isQcm=" + isQcm + ", reponses=" + reponses
-				+ "]";
+				+ descriptionQuestion + ", coefficient=" + coefficient + ", isQcm=" + isQcm + ", reponses=" 
+				+ reponses.size()+" "+reponses+ "]";
 	}
 
 	@Column(name = "tauxreussite")
@@ -156,6 +169,16 @@ public class Question implements java.io.Serializable, Comparable {
 	@Column(name = "nbnotes")
 	public Integer getNbnotes() {
 		return nbnotes;
+	}
+	
+	
+	@Column(name = "nbreussite")
+	public Integer getNbreussite() {
+		return nbreussite;
+	}
+
+	public void setNbreussite(Integer nbreussite) {
+		this.nbreussite = nbreussite;
 	}
 
 	public void setNbnotes(Integer nbnotes) {

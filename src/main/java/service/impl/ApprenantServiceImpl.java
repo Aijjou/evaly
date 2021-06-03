@@ -30,4 +30,16 @@ public class ApprenantServiceImpl implements ApprenantService{
 		return (List<Apprenant>) apprenantRepository.findAll();
 	}
 
+
+	@Override
+	public Optional<Apprenant> findById(Integer id) {
+		return apprenantRepository.findById(id);
+	}
+	
+	@Override
+	public void save(Apprenant s) {
+		apprenantRepository.save(s);
+
+	}
+
 }
