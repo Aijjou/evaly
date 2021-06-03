@@ -31,7 +31,6 @@ public class Sujet implements java.io.Serializable {
 	private Set<ReponseApprenantExamen> reponseApprenantExamens = new HashSet<ReponseApprenantExamen>(0);
 	private Set<SujetQuestion> sujetQuestions = new HashSet<SujetQuestion>(0);
 	private Set<ReponseApprenant> reponseApprenants = new HashSet<ReponseApprenant>(0);
-
 	
 	public Sujet() {
 	}
@@ -61,7 +60,7 @@ public class Sujet implements java.io.Serializable {
 		this.idSujet = idSujet;
 	}
 	
-	private Integer nbnotes;
+	private Integer nbnotes=0;
 	@Column(name = "nbnotes")
 	public Integer getNbnotes() {
 		return nbnotes;

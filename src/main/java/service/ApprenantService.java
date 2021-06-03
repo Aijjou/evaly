@@ -9,5 +9,10 @@ public interface ApprenantService {
 	
 
 	public List<Apprenant> apprenants();
+	
+	public Optional<Apprenant> findById(Integer id);
+	
+
+	void save(Apprenant t);
 
 }
