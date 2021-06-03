@@ -1,6 +1,7 @@
 package service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.annotation.Resource;
 
@@ -20,9 +21,20 @@ public class ExamenServiceImpl implements ExamenService{
 	private ExamenRepository examenRepository;
 	
 	@Override
-	public List<Examen> getListExamen() {
+	public List<Examen> examens() {
 		
 		return (List<Examen>) examenRepository.findAll();
+	}
+
+	@Override
+	public void save(Examen e) {
+		examenRepository.save(e);
+		
+	}
+
+	@Override
+	public Optional<Examen> findById(Integer id) {
+		return examenRepository.findById(id);
 	}
 	
 	

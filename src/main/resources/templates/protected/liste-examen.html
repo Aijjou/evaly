@@ -7,7 +7,7 @@
 <body>
 <div th:replace="/shared/aside :: aside"></div>
 	<div th:each="examen: ${examens}">
-		<div th:text=${examen.titre}></div>
+		<div th:text=${examen}></div>
 	</div>
 </body>
 </html>
