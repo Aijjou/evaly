@@ -71,8 +71,7 @@ public class ExamenController {
 	ReponseApprenantExamenService reponseApprenantExamenService;
 	@Autowired
 	ResultatExamenService resultatExamenService;
-	
-	
+
 	@RequestMapping(value = "protected/liste-examen", method = RequestMethod.GET)
 	public String afficheExamen(Model model) {
 
@@ -206,65 +205,91 @@ public class ExamenController {
 		Integer totalcoeff = 0;
 		Integer points = 0;
 		for (Question q : lq) {
+			for (int i = 0; i < 2; i++)
+				System.out.println(q);
 			totalcoeff += q.getCoefficient();
-
+			for (int i = 0; i < 2; i++)
+				System.out.println("ID" + q.getIdQuestion() + "TOTAL COEFF :" + totalcoeff);
 			Set<Reponse> lr = q.getReponses();
 			List<Integer> bonnesreponses = new ArrayList<Integer>();
 			for (Reponse rep : lr) {
 				if (rep.getIsBonneReponse() == true)
 					bonnesreponses.add(rep.getIdReponse());
 			}
+			for (int i = 0; i < 2; i++)
+				System.out.println("REPONSES BONNES :" + bonnesreponses);
 			List<Integer> reponsesdelapprenant = new ArrayList<Integer>();
 			for (ReponseApprenantExamen rep : listrae) {
 				if (rep.getQuestion().getIdQuestion().equals(q.getIdQuestion())) {
 					reponsesdelapprenant.add(rep.getReponse().getIdReponse());
 				}
 			}
-			
+			for (int i = 0; i < 2; i++)
+				System.out.println("REPONSES APPRENANTS :" + reponsesdelapprenant);
 			// Vérification bonnes réponses
 			Boolean point = true;
-			while (point) {
+			
 				for (Integer i : bonnesreponses) {
-					if (reponsesdelapprenant.contains(i)==false) {
-						point=false;
+					System.out.println("FOR "+i);
+					if (reponsesdelapprenant.contains(i) == false) {
+						point = false;
+						System.out.println("FOR "+i+" "+point);
 					}
 				}
+			
+			for (int i = 0; i < 2; i++)
+				System.out.println("COMPARE :" + reponsesdelapprenant.size() + " " + bonnesreponses.size());
+			if (reponsesdelapprenant.size() != bonnesreponses.size()) {
+				point = false;
 			}
-			if (reponsesdelapprenant.size()!=bonnesreponses.size()) {
-				point=false;
+
+			for (int i = 0; i < 2; i++)
+				System.out.println("CALCUL STATS :" + q.getIdQuestion() + " POINT ???" + point);
+
+			// Statistiques
+			q.setNbnotes(q.getNbnotes() + 1);
+			if (point == true) {
+				points += q.getCoefficient();
+				q.setNbreussite(q.getNbreussite() + 1);
+				
 			}
-			//Statistiques
-			q.setNbnotes(q.getNbnotes()+1);
-			if (point) {
-				points+=q.getCoefficient();
-				q.setNbreussite(q.getNbreussite()+1);
-				q.setTauxreussite(100*(q.getNbreussite())/q.getNbnotes());
-			}
+			
+			System.out.println("CALCUL " + 100 * (q.getNbreussite()) / q.getNbnotes());
+			System.out.println("CALCUL +100*" + "(" + q.getNbreussite() + ")/" + q.getNbnotes());
+			q.setTauxreussite(100 * (q.getNbreussite()) / q.getNbnotes());
+			
+			
+			for (int i = 0; i < 2; i++)
+				System.out.println(" Q :" + q.getIdQuestion() + " COEFF" + q.getCoefficient());
+			for (int i = 0; i < 2; i++)
+				System.out.println(" NOTES :" + q.getNbnotes() + " REUSSIES :" + q.getNbreussite() + " TAUX :"
+						+ q.getTauxreussite());
 			questionService.save(q);
+			for (int i = 0; i < 2; i++)
+				System.out.println(" POST SAVE :" + q.getIdQuestion());
 		}
-		
-		Double note = (double) ((20*points)/totalcoeff);
-		
+
+		Double note = (double) ((20 * points) / totalcoeff);
+
 		// Mise à jour sujet
-		
+
 		Double moy = sujet.getNoteMoyenne();
 		Integer nombrenotes = sujet.getNbnotes();
-		Double total = moy*nombrenotes;
-		sujet.setNbnotes(sujet.getNbnotes()+1);
-		nombrenotes+=1;
-		Double nvmoy = (total+note)/nombrenotes;
+		Double total = moy * nombrenotes;
+		sujet.setNbnotes(sujet.getNbnotes() + 1);
+		nombrenotes += 1;
+		Double nvmoy = (total + note) / nombrenotes;
 		sujet.setNoteMoyenne(nvmoy);
-		
+
 		sujetService.save(sujet);
 
-		
-		//Ajout Resultat
+		// Ajout Resultat
 		ResultatExamen re = new ResultatExamen();
 		re.setApprenant(app);
 		re.setExamen(exa);
 		re.setNote(note);
 		resultatExamenService.save(re);
-		
+
 		List<Examen> examens = examenService.examens();
 		model.addAttribute("examens", examens);
 		return "protected/liste-examen";
