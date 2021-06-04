@@ -60,7 +60,7 @@ public class Sujet implements java.io.Serializable {
 		this.idSujet = idSujet;
 	}
 	
-	private Integer nbnotes;
+	private Integer nbnotes=0;
 	@Column(name = "nbnotes")
 	public Integer getNbnotes() {
 		return nbnotes;
