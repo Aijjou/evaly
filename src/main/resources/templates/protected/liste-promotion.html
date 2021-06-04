@@ -90,6 +90,8 @@
 						<tr>
 							<th scope="col">Selection</th>
 							<th scope="col">Promotion</th>
+							<th scope="col">Date Création</th>
+							<th scope="col">Année Création</th>
 							<th scope="col">Liste Apprenants</th>
 							<th scope="col" class="text-center">Opération</th>
 						</tr>
@@ -100,6 +102,8 @@
 								<input type="checkbox" name="promotions" th:value="${promotion}">
 							</th>
 							<td th:text="${promotion.nom}"></td>
+							<td th:text="${promotion.dateCreation}"></td>
+							<td th:text="${promotion.anneeCreation}"></td>
 								<td>
 										<button type="submit" rel="noopener noreferrer"
 										class="btn btn-dark mr-2" name="promoSelect"  th:value="${promotion.idPromotion}"><i class="far fa-arrow-alt-circle-right"></i></button>

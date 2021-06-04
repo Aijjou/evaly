@@ -38,13 +38,13 @@
 						</ul>
 					</li>
 						<li class="mb-4 pb-0" th:if="${admin == true && apprenant == false}">
-								<a th:href="@{/protected/liste-eleve}" ><i class="fas fa-feather-alt"></i>&nbsp;Apprenants</a>
+								<a th:href="@{/protected/liste-apprenant}" ><i class="fas fa-feather-alt"></i>&nbsp;Apprenants</a>
 							</li>
 					<li class="mb-4 pb-0" th:if="${apprenant == false}">
-						<a th:href="@{/protected/promotion}"><i class="fas fa-graduation-cap"></i>&nbsp;Promotions</a>
+						<a th:href="@{/protected/liste-promotion}"><i class="fas fa-graduation-cap"></i>&nbsp;Promotions</a>
 					</li>
 					<li class="mb-4 pb-0" th:if="${apprenant == true}">
-						<a th:href="@{/protected/promotion}"><i class="fas fa-graduation-cap"></i>&nbsp;Promotions</a>
+						<a th:href="@{/protected/liste-promotion}"><i class="fas fa-graduation-cap"></i>&nbsp;Promotions</a>
 					</li>
 					<li class="mb-4 pb-0" th:if="${apprenant == false}">
 						<a th:href="@{/admin/groupe}"><i class="fas fa-users"></i>&nbsp;Groupe formateurs</a>
@@ -62,7 +62,7 @@
 								<a th:href="@{/protected/liste-sujet}"><i class="far fa-folder-open"></i>&nbsp;Sujets</a>
 							</li>
 							<li class="mb-4 pb-0">
-								<a href="/protected/liste-question"><i class="fas fa-question"></i>&nbsp;Questions</a>
+								<a href="@{/protected/liste-question}"><i class="fas fa-question"></i>&nbsp;Questions</a>
 							</li>
 						</ul>
 					</li>

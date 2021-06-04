@@ -55,8 +55,6 @@ public class ApprenantController {
 		Optional<Promotion> promo = promotionService.findById(promoSelect);
 		Promotion pro = promo.get();
 		
-		
-
 		List<Apprenant> apprenants = apprenantService.ApprenantsByPromotion(pro);
 		model.addAttribute("promonom", pro.getNom());
 		Boolean premierNom = true;

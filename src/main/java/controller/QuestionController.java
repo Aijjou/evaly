@@ -38,9 +38,25 @@ public class QuestionController {
 	
 	@Autowired
 	ReponseService reponseService;
+	
+	Boolean isConnectBoolean = false;
+	Boolean isAdmin = true;
+	Boolean isFormateur = true;
+	Boolean isApprenant = false;
 
 	@RequestMapping(value = "/protected/creation-question", method = RequestMethod.GET)
 	public String creationQuestion(QuestionDto question, Model model) {
+		
+		 isConnectBoolean = false;
+		 isAdmin = true;
+		 isFormateur = true;
+		 isApprenant = false;
+		 
+			model.addAttribute("connexion", isConnectBoolean);
+			model.addAttribute("apprenant", isApprenant);
+			model.addAttribute("admin", isAdmin);
+			model.addAttribute("formateur", isFormateur);
+		
 		QuestionDto qdto = new QuestionDto();
 		qdto.setDescriptionQuestion("dsc");
 		qdto.setIsQcm(true);
