@@ -1,9 +1,16 @@
+
+
+
 <!DOCTYPE html>
 <html>
 
 <head>
 <meta charset="UTF-8">
 <title>Questionnaire</title>
+
+
+<link href="questionnaireCss.css" rel="stylesheet">
+
 
 <!-- import header aside -->
 
@@ -56,7 +63,6 @@
 
 <script
 	src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.colVis.min.js"></script>
-
 </head>
 
 <body>
@@ -78,8 +84,11 @@
 		<div
 			class="d-flex flex-row justify-content-center mt-4 align-self-center w-100">
 			<div class="d-flex flex-row justify-content-center  p-4 main">
-				<form method="post" th:action="@{/protected/questionnaire-sub}"  th:object="${qdto}">
-				<input type="hidden"  name="idExamen"   th:value="*{idExamen}" >
+
+				<form method="post" th:action="@{/protected/questionnaire-sub}"
+					th:object="${qdto}">
+					<input type="hidden" name="idExamen" th:value="*{idExamen}">
+
 					<div class="d-flex flex-row justify-content-center">
 
 						<div class="card w-75 align-self-center p-2  m-2">
@@ -87,85 +96,97 @@
 
 								<main
 									class="d-flex flex-column justify-content-center align-items-center">
-									
+
+
 									<div class="w-100  align-items-center tets">
 										<h2 th:text="*{titre}"></h2>
 										<h4 th:text="*{nomSujet}"></h4>
 										<span th:text="*{descriptionSujet}"></span>
-										
-										<tr th:each="question, iStat : ${qdto.questions}" >
-										
-										<div class="radio-toolbar">
-										
-										<h5 th:text="${question.descriptionQuestion}"></h5><br>
-										<div class="d-flex flex-row" >
-									Coefficient : &nbsp; 
-									<div th:text=" ${question.coefficient}"></div>&nbsp;&nbsp;Index :&nbsp; <div th:text=" ${iStat.index}"></div>
-										</div>
-										<p></p>
-										
-											<div th:if="${question.rep1}">
-											<div class="row mb-4 w-100 mb20px">
-												<div
-													class="col-3 align-self-center d-flex flex-row justify-content-center" th:with="randomId=${#strings.randomAlphanumeric(10)}">
-													<input type="checkbox"  th:id="${randomId}"  name="ok"  th:value="${question.rep1id}"   >
-													<label th:for="${randomId}">A</label>
-												</div>
-												<div class="col-9 align-self-center d-flex flex-row px-0">
-													<span class="vertical-center" th:text="${question.rep1}"></span>
-												</div>
-											</div>
-										</div>		
-										<div th:if="${question.rep2}">
-											<div class="row mb-4 w-100 mb20px">
-												<div
-													class="col-3 align-self-center d-flex flex-row justify-content-center" th:with="randomId=${#strings.randomAlphanumeric(10)}">
-													<input type="checkbox"  th:id="${randomId}"   name="ok"  th:value="${question.rep2id}" >
-													<label th:for="${randomId}">B</label>
-												</div>
-												<div class="col-9 align-self-center d-flex flex-row px-0">
-													<span class="vertical-center" th:text="${question.rep2}"></span>
-												</div>
-											</div>
-										</div>		
-										<div th:if="${question.rep3}">
-											<div class="row mb-4 w-100 mb20px">
-												<div
-													class="col-3 align-self-center d-flex flex-row justify-content-center" th:with="randomId=${#strings.randomAlphanumeric(10)}">
-													<input type="checkbox"  th:id="${randomId}"    name="ok"  th:value="${question.rep3id}"  >
-													<label th:for="${randomId}">C</label>
-												</div>
-												<div class="col-9 align-self-center d-flex flex-row px-0">
-													<span class="vertical-center" th:text="${question.rep3}"></span>
-												</div>
-											</div>
-										</div>		
-										<div th:if="${question.rep4}">
-											<div class="row mb-4 w-100 mb20px">
-												<div
-													class="col-3 align-self-center d-flex flex-row justify-content-center" th:with="randomId=${#strings.randomAlphanumeric(10)}">
-													<input type="checkbox"  th:id="${randomId}"  name="ok"  th:value="${question.rep4id}" >
-													<label  th:for="${randomId}">D</label>
-												</div>
-												<div class="col-9 align-self-center d-flex flex-row px-0">
-													<span class="vertical-center" th:text="${question.rep4}"></span>
-												</div>
-											</div>
-										</div>		
-											<p>&nbsp;</p>
-										</div>
-										</tr>
-																	<div class="row w-100 mb5px">
-								<div class="col-4 d-flex flex-row justify-content-center">
 
-								</div>
-								<div class="col-7 d-flex flex-row justify-content-center">
-									<input class="btn validerButton" type="submit" value="Valider réponses">
-								</div>
-							</div>
+										<tr th:each="question, iStat : ${qdto.questions}">
+
+											<div class="radio-toolbar">
+
+												<h5 th:text="${question.descriptionQuestion}"></h5>
+												<br>
+												<div class="d-flex flex-row">
+													Coefficient : &nbsp;
+													<div th:text=" ${question.coefficient}"></div>
+													&nbsp;&nbsp;Index :&nbsp;
+													<div th:text=" ${iStat.index}"></div>
+												</div>
+												<p></p>
+
+												<div th:if="${question.rep1}">
+													<div class="row mb-4 w-100 mb20px">
+														<div
+															class="col-3 align-self-center d-flex flex-row justify-content-center"
+															th:with="randomId=${#strings.randomAlphanumeric(10)}">
+															<input type="checkbox" th:id="${randomId}" name="ok"
+																th:value="${question.rep1id}"> <label
+																th:for="${randomId}">A</label>
+														</div>
+														<div class="col-9 align-self-center d-flex flex-row px-0">
+															<span class="vertical-center" th:text="${question.rep1}"></span>
+														</div>
+													</div>
+												</div>
+												<div th:if="${question.rep2}">
+													<div class="row mb-4 w-100 mb20px">
+														<div
+															class="col-3 align-self-center d-flex flex-row justify-content-center"
+															th:with="randomId=${#strings.randomAlphanumeric(10)}">
+															<input type="checkbox" th:id="${randomId}" name="ok"
+																th:value="${question.rep2id}"> <label
+																th:for="${randomId}">B</label>
+														</div>
+														<div class="col-9 align-self-center d-flex flex-row px-0">
+															<span class="vertical-center" th:text="${question.rep2}"></span>
+														</div>
+													</div>
+												</div>
+												<div th:if="${question.rep3}">
+													<div class="row mb-4 w-100 mb20px">
+														<div
+															class="col-3 align-self-center d-flex flex-row justify-content-center"
+															th:with="randomId=${#strings.randomAlphanumeric(10)}">
+															<input type="checkbox" th:id="${randomId}" name="ok"
+																th:value="${question.rep3id}"> <label
+																th:for="${randomId}">C</label>
+														</div>
+														<div class="col-9 align-self-center d-flex flex-row px-0">
+															<span class="vertical-center" th:text="${question.rep3}"></span>
+														</div>
+													</div>
+												</div>
+												<div th:if="${question.rep4}">
+													<div class="row mb-4 w-100 mb20px">
+														<div
+															class="col-3 align-self-center d-flex flex-row justify-content-center"
+															th:with="randomId=${#strings.randomAlphanumeric(10)}">
+															<input type="checkbox" th:id="${randomId}" name="ok"
+																th:value="${question.rep4id}"> <label
+																th:for="${randomId}">D</label>
+														</div>
+														<div class="col-9 align-self-center d-flex flex-row px-0">
+															<span class="vertical-center" th:text="${question.rep4}"></span>
+														</div>
+													</div>
+												</div>
+												<p>&nbsp;</p>
+											</div>
+										</tr>
+										<div class="row w-100 mb5px">
+											<div class="col-4 d-flex flex-row justify-content-center">
+
+											</div>
+											<div class="col-7 d-flex flex-row justify-content-center">
+												<input class="btn validerButton" type="submit"
+													value="Valider réponses">
+											</div>
+										</div>
 									</div>
 								</main>
-								
 							</div>
 						</div>
 					</div>

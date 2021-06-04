@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 <meta charset="UTF-8">
@@ -24,7 +24,7 @@
 	th:href="@{/css/inscription-formateur-admin.css}" rel="stylesheet">
 <link href="../../css/header.css" rel="stylesheet"
 	th:href="@{/css/header.css}">
-	<link href="../../css/aside.css" rel="stylesheet"
+<link href="../../css/aside.css" rel="stylesheet"
 	th:href="@{/css/aside.css}">
 <link href="/fontawesome/css/all.css" rel="stylesheet">
 <title>Inscription</title>
@@ -37,80 +37,93 @@
 	</script>
 	<div th:replace="/shared/header :: header"></div>
 	<div th:replace="/shared/aside :: aside"></div>
-	<div
-		class=" principal d-flex flex-column justify-content-around">
-		
-			<div class="d-flex flex-row justify-content-center mb-4 titre">
-				<div
-					class="card connexion w-25 d-flex flex-column justify-content-between pt-1 pl-3 pr-4 pb-2 mb-4 ">
-					<small class="row d-flex flex-row justify-content-start promotion"><i
-						class="fas fa-users-cog align-self-center ml-1 font-weight-bold"></i>&nbsp;
-						<div class="align-self-center pt-1">Admin</div></small>
-					<div class="row align-self-center ">INSCRIPTION - FORMATEUR</div>
-				</div>
+	<div class=" principal d-flex flex-column justify-content-around">
+
+		<div class="d-flex flex-row justify-content-center mb-4 titre">
+			<div
+				class="card connexion w-25 d-flex flex-column justify-content-between pt-1 pl-3 pr-4 pb-2 mb-4 ">
+				<small class="row d-flex flex-row justify-content-start promotion"><i
+					class="fas fa-users-cog align-self-center ml-1 font-weight-bold"></i>&nbsp;
+					<div class="align-self-center pt-1">Admin</div></small>
+				<div class="row align-self-center ">INSCRIPTION - FORMATEUR</div>
 			</div>
-			<div class="d-flex flex-row justify-content-center mt-4">
-				<div class="card d-flex flex-row justify-content-center w-75 p-4 main">
-					<form class="w-75">
-						<div class="form-row">
-							<div class="form-group col-md-6">
-								<label for="nom" class="text-dark font-weight-bold">Nom</label>
-								<input type="text" class="form-control" id="nom"
-									placeholder="Ex : Safouane" required>
-							</div>
-							<div class="form-group col-md-6">
-								<label for="prenom" class="text-dark font-weight-bold">Prénom</label>
-								<input type="text" class="form-control" id="prenom"
-									placeholder="Ex : Pierre" required>
-							</div>
+		</div>
+		<div class="d-flex flex-row justify-content-center mt-4">
+			<div
+				class="card d-flex flex-row justify-content-center w-75 p-4 main">
+				<form class="w-75" th:action="@{/admin/inscription-formateur-admin}"
+					method="POST" th:object="${formateurDto}">
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<label for="nom" class="text-dark font-weight-bold">Nom</label> <input
+								type="text" class="form-control" id="nom" th:fiedls="*{nom}"
+								name="nom" placeholder="Ex : Safouane" required>
 						</div>
-						<div class="form-row">
-							<div class="form-group col-md-6">
-								<label for="mail" class="text-dark font-weight-bold">Mail</label>
-								<input type="email" class="form-control" id="email"
-									placeholder="Adresse mail" required>
-							</div>
-							<div class="form-group col-md-6 mb-0">
-								<label for="reponse" class="text-dark font-weight-bold">Date
-									d'inscription</label> <input type="date" id="datepicker"
-									class="form-control text-left mr-2">
+						<div class="form-group col-md-6">
+							<label for="prenom" class="text-dark font-weight-bold">Prénom</label>
+							<input type="text" class="form-control" id="prenom"
+								th:fiedls="*{prenom}" name="prenom" placeholder="Ex : Pierre"
+								required>
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<label for="mail" class="text-dark font-weight-bold">Mail</label>
+							<input type="email" class="form-control" id="mail"
+								th:fiedls="*{mail}" name="mail" placeholder="Adresse mail"
+								required>
+						</div>
+						<div class="form-group col-md-6 mb-0">
+							<label for="reponse" class="text-dark font-weight-bold">Date
+								d'inscription</label> <input type="date" id="datepicker"
+								th:fieds="${dateInscriptionDate}" name="dateInscriptionDate"
+								class="form-control text-left mr-2">
 
-							</div>
 						</div>
+					</div>
 
-						<div class="form-row mb-0">
-							<div class="form-group col-6">
-								<label for="exampleFormControlSelect1"
-									class="text-dark font-weight-bold">Selectionner un
-									groupe</label> <select class="form-control"
-									id="exampleFormControlSelect1">
-									<option>Marketing</option>
-									<option>Informatique</option>
-									<option>Vente</option>
-								</select>
-							</div>
-							<div class="form-group col-6">
-								<label for="exampleFormControlSelect2"
-									class="text-dark font-weight-bold">Selectionner une ou
-									plusieurs matières</label> <select multiple class="form-control"
-									id="exampleFormControlSelect2">
-									<option>Marketing digitale</option>
-									<option>Java</option>
-									<option>HTML/CSS</option>
-									<option>Communication commerciale</option>
-									<option>Base de donnée</option>
-								</select>
-							</div>
-						</div>
+					<div class="form-row mb-0">
+						<div class="form-group col-6">
+							<label for="exampleFormControlSelect1"
+								class="text-dark font-weight-bold">Selectionner un
+								groupe</label> <select class="form-control" th:fiedls="*{idGroupe}"
+								id="exampleFormControlSelect1">
+								<option th:each="groupe:${groupes}" th:text="${groupe.nom}"
+									th:value="${groupe.idGroupeFormateur}"></option>
 
-						<div class="d-flex flex-row justify-content-end">
-							<a type="submit"  href="#"  class="btn annulerButton mr-2">ANNULER</a>
-							<a type="submit" href="/public/verification-code" class="btn validerButton">VALIDER</a>
+							</select>
+
 						</div>
-					</form>
-				</div>
+						<div class="form-group col-6">
+							<label for="exampleFormControlSelect2"
+								class="text-dark font-weight-bold">Selectionner une ou
+								plusieurs matières</label> <select multiple class="form-control"
+								th:fiedls="*{idMatieres}" id="exampleFormControlSelect2">
+								<option th:each="matiere:${matieres}" th:text="${matiere.nom}"
+									th:value="${matiere.idMatiere}"></option>
+
+							</select>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="form-group col-6">
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox"
+									th:fields="*{isReferent}" name="isReferent" id="isReferent"
+									value="true"> <label class="form-check-label text-dark">
+									Referent </label>
+							</div>
+						</div>
+					</div>
+					<div class="d-flex flex-row justify-content-end">
+						<a type="submit" href="#" class="btn annulerButton mr-2">ANNULER</a>
+						<button type="submit" class="btn validerButton">VALIDER</button>
+					</div>
+				</form>
 			</div>
-	
+		</div>
+
 	</div>
 </body>
 

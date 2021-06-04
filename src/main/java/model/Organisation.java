@@ -19,19 +19,39 @@ import javax.persistence.Table;
 @Table(name = "organisation", catalog = "evaly")
 public class Organisation implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer idOrganisation;
 	private String name;
+	private Integer numero;
+	private String rue;
+	private String ville;
+	private String code;
+	
 	private Set<GroupeFormateur> groupeFormateurs = new HashSet<GroupeFormateur>(0);
 	private Set<Promotion> promotions = new HashSet<Promotion>(0);
 
 	public Organisation() {
 	}
 
-	public Organisation(String name, Set<GroupeFormateur> groupeFormateurs, Set<Promotion> promotions) {
+	
+
+	public Organisation(String name, Integer numero, String rue, String ville, String code,
+			Set<GroupeFormateur> groupeFormateurs, Set<Promotion> promotions) {
+		super();
+		this.idOrganisation = idOrganisation;
 		this.name = name;
+		this.numero = numero;
+		this.rue = rue;
+		this.ville = ville;
+		this.code = code;
 		this.groupeFormateurs = groupeFormateurs;
 		this.promotions = promotions;
 	}
+
+
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
@@ -70,6 +90,38 @@ public class Organisation implements java.io.Serializable {
 
 	public void setPromotions(Set<Promotion> promotions) {
 		this.promotions = promotions;
+	}
+
+	public Integer getNumero() {
+		return numero;
+	}
+
+	public void setNumero(Integer numero) {
+		this.numero = numero;
+	}
+
+	public String getRue() {
+		return rue;
+	}
+
+	public void setRue(String rue) {
+		this.rue = rue;
+	}
+
+	public String getVille() {
+		return ville;
+	}
+
+	public void setVille(String ville) {
+		this.ville = ville;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 }

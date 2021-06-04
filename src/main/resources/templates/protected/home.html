@@ -1,0 +1,55 @@
+
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+	integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
+	integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+	crossorigin="anonymous"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"
+	integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
+	crossorigin="anonymous"></script>
+<link href="../../css/home.css" rel="stylesheet"
+	th:href="@{/css/home.css}">
+<link rel="stylesheet" th:href="@{/css/header.css}">
+<link href="../../css/aside.css" rel="stylesheet"
+	th:href="@{/css/aside.css}">
+<link href="/fontawesome/css/all.css" rel="stylesheet">
+<title>Home</title>
+</head>
+<body>
+	<div th:replace="/shared/header :: header"></div>
+	<div th:replace="/shared/aside :: aside"></div>
+	<div
+		class="principal d-flex flex-column justify-content-center">
+
+		<div class="jumbotron shadow-lg main w-50 align-self-center">
+			<h1>
+				Bonjour, Monsieur <span th:text="${#authentication.getPrincipal().prenom}"></span> !
+			</h1>
+			<div sec:authorize="hasRole('ROLE_ADMIN')">
+				<p>Vous avez un rôle d'Admin</p>
+			</div>
+			<div sec:authorize="hasRole('ROLE_MEMBER')">
+				<p>Vous avez un rôle d'Utilisateur simple.</p>
+			</div>
+			<hr class="my-4">
+			<p class="lead">Bienvenue dans l'application de gestion des Examens "Evaly".</p>
+
+		</div>
+	</div>
+
+</body>
+</html>
