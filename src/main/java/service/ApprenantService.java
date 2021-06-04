@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import model.Apprenant;
+import model.Promotion;
 
 public interface ApprenantService {
 	
@@ -14,5 +15,7 @@ public interface ApprenantService {
 	
 
 	void save(Apprenant t);
+	
+	public List<Apprenant> findApprenantByPromo(Promotion promotion);
 
 }

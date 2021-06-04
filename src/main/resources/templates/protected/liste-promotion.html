@@ -82,54 +82,29 @@
 						</button>
 					</div>
 				</div>
+				<form th:action="@{/protected/liste-eleve}" method="post">
 				<table
 					class="table table-dark align-self-center shadow rounded bg-dark text-white"
 					id="datatable">
 					<thead class="bg-dark">
 						<tr>
-							<th scope="col">Selection</th>
 							<th scope="col">Promotion</th>
+							<th scope="col">Année</th>
 							<th scope="col" class="text-center">Opération</th>
 						</tr>
 					</thead>
 					<tbody class="bg-dark ">
 						<tr th:each="promotion : ${promotions}" class="bg-dark">
-							<th >
-								<input type="checkbox" name="promotions" th:value="${promotion}">
-							</th>
 							<td th:text="${promotion.nom}"></td>
+							<td th:text="${promotion.dateCreation}"></td>
 							<td class="d-flex flex-row justify-content-center">
-								<a href="http://" target="_blank" rel="noopener noreferrer"
-								class="mr-2"><i class="fas fa-edit"></i></a>&nbsp;
-								<a href="info_eleve.html" target="_blank" class="mr-2"
-								rel="noopener noreferrer" type="button" data-toggle="modal"
-								data-target="#myModal"><i class="far fa-arrow-alt-circle-right"></i></a>&nbsp;
-								<a href="http://" target="_blank" rel="noopener noreferrer"
-								class="mr-2"><i class="far fa-envelope-open"></i></a>
+								<button type="submit" class="btn btn-dark mr-2" name="promoSelect"
+								th:value="${promotion.idPromotion}"><i class="far fa-arrow-alt-circle-right"></i></button>
 							</td>
 						</tr>
 					</tbody>
-					<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-						aria-labelledby="myModalLabel" aria-hidden="true">
-						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h4 class="modal-title text-warning " id="myModalLabel">
-										<i class="fas fa-exclamation-triangle"></i>&nbsp;Modification
-										promotion
-									</h4>
-								</div>
-								<div class="modal-body">Êtes vous sur de vouloir modifier
-									cette promotion?</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary"
-										data-dismiss="modal">Close</button>
-									<button type="button" class="btn btn-primary">OK</button>
-								</div>
-							</div>
-						</div>
-					</div>
 				</table>
+				</form>
 			</div>
 		</div>
 	</div>

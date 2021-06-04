@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import model.Apprenant;
+import model.Promotion;
 import repository.ApprenantRepository;
 import service.ApprenantService;
 
@@ -40,6 +41,12 @@ public class ApprenantServiceImpl implements ApprenantService{
 	public void save(Apprenant s) {
 		apprenantRepository.save(s);
 
+	}
+
+
+	@Override
+	public List<Apprenant> findApprenantByPromo(Promotion promotion) {
+		return apprenantRepository.findByPromotion(promotion);
 	}
 
 }

@@ -87,7 +87,7 @@
 					id="datatable">
 					<thead class="bg-dark">
 						<tr>
-							<th scope="col">#</th>
+							<th scope="col" hidden>#</th>
 							<th scope="col">Nom</th>
 							<th scope="col">Prenom</th>
 							<th scope="col">Email</th>
@@ -97,7 +97,7 @@
 					</thead>
 					<tbody class="bg-dark ">
 						<tr th:each="apprenant : ${apprenants}" class="bg-dark">
-							<th class="bg-dark" scope="row">1</th>
+							<th class="bg-dark" scope="row" hidden>1</th>
 							<td th:text="${apprenant.nom}"></td>
 							<td th:text="${apprenant.prenom}"></td>
 							<td th:text="${apprenant.mail}"></td>

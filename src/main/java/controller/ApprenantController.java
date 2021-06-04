@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import model.Apprenant;
 import service.ApprenantService;
+import service.ExamenService;
 
 @Controller
 public class ApprenantController {
@@ -20,6 +21,8 @@ public class ApprenantController {
 
 	@Autowired
 	ApprenantService apprenantService;
+	@Autowired
+	ExamenService examenService;
 
 	@RequestMapping(value = "/protected/liste-eleve", method = RequestMethod.GET)
 	public String afficheApprenant(Model model) {
@@ -53,11 +56,4 @@ public class ApprenantController {
 		return "/protected/liste-eleve";
 
 	}
-
-	@RequestMapping(value = "/protected/liste-apprenant", method = RequestMethod.GET)
-	public List<Apprenant> afficheListApprenant() {
-		List<Apprenant> apprenants = apprenantService.apprenants();
-		return apprenants;
-	}
-
 }
