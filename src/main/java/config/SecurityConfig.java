@@ -35,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		System.out.println("config");
-		http.csrf().disable().authorizeRequests().antMatchers("/logout").hasAnyRole("ROLE_ADMIN")
+		http.csrf().disable().authorizeRequests().antMatchers("/admin/**").hasAnyRole("ROLE_FORMATEUR")
 				.antMatchers("/webjars/**", "/static/**", "/peritable/**", "/public/**", "/assets/**", "/css/**",
 						"/public/connexion/**", "/inscription/**", "/verification-code/**", "/images/**", "/admin/**",
 						"/protected/**", "/fontawesome/**", "/logout")

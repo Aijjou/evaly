@@ -2,6 +2,9 @@ package service;
 
 import java.util.Optional;
 
+import javax.mail.MessagingException;
+
+import dto.FormateurDto;
 import dto.UtilisateurDto;
 import dto.VerifyCodeDto;
 import model.Formateur;
@@ -12,6 +15,8 @@ public interface UtilisateurService  {
 	public Utilisateur createAdmin(UtilisateurDto admin) throws Exception;
 	
 	public Utilisateur createFormateur(UtilisateurDto formateur);
+	
+	public Formateur createFormateurParAdmin(FormateurDto formateur) throws MessagingException;
 	
 	Optional<Utilisateur> findByUsernameOrEmail(String username, String email);
 

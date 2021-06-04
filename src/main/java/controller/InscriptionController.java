@@ -1,5 +1,8 @@
 package controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -17,24 +20,38 @@ import org.springframework.validation.Validator;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import dto.AdminEtablissementDto;
+import dto.FormateurDto;
 import dto.UtilisateurDto;
+import dto.VerifyCodeDto;
 import model.Organisation;
 import model.Role;
 import model.Utilisateur;
 import repository.UtilisateurRepository;
+import service.GroupeService;
+import service.MatiereService;
 import service.OrganisationService;
 import service.RoleService;
 import service.UtilisateurService;
+import model.Formateur;
+import model.GroupeFormateur;
+import model.Matiere;
 
 @Controller
 public class InscriptionController {
 
 	Boolean isConnectBoolean = false;
 	Boolean isAdmin = false;
+
+	@Autowired
+	private GroupeService groupeService;
+
+	@Autowired
+	private MatiereService matiereService;
 
 	@Autowired
 	private OrganisationService organisationRepository;
@@ -47,7 +64,20 @@ public class InscriptionController {
 
 	@RequestMapping(value = "/public/verification-code", method = RequestMethod.GET)
 	public String verificationCode(Model model) {
+		
 		return "/public/verification-code";
+	}
+
+	@PostMapping("/public/verification-code")
+	public String verifyCodeAction(Model model, @Valid VerifyCodeDto verifyCodeDto, BindingResult result) {
+
+		if (result.hasErrors()) {
+			return "/public/verification-code";
+		}
+
+		utilisateurService.verifyCode(verifyCodeDto);
+
+		return "redirect:/public/inscription-final";
 	}
 
 	@RequestMapping(value = "/public/inscription-final", method = RequestMethod.GET)
@@ -64,20 +94,33 @@ public class InscriptionController {
 	}
 
 	@RequestMapping(value = "/admin/inscription-formateur-admin", method = RequestMethod.GET)
-	public String inscriptionFormateurAdmin(UtilisateurDto utilisateurDto, Model model) {
+	public String inscriptionFormateurAdmin(FormateurDto formateurDto, Model model) {
 
 		isConnectBoolean = true;
 		isAdmin = true;
 
-		model.addAttribute("connexion", isConnectBoolean);
-		model.addAttribute("admin", isAdmin);
+		List<GroupeFormateur> groupesList = groupeService.getListGroupeFormateur();
+		List<Matiere> matieres = matiereService.matieres();
+
+		model.addAttribute("groupes", groupesList);
+		model.addAttribute("matieres", matieres);
 
 		return "/admin/inscription-formateur-admin";
 	}
 
 	@RequestMapping(value = "/admin/inscription-formateur-admin", method = RequestMethod.POST)
-	public String registration(Model model, @Valid @ModelAttribute("utilisateurDto") UtilisateurDto utilisateurDto,
+	public String registration(Model model, @Valid @ModelAttribute("formateurDto") FormateurDto formateurDto,
 			BindingResult result, HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		if (formateurDto != null) {
+
+			Formateur formateur = utilisateurService.createFormateurParAdmin(formateurDto);
+
+			if (formateur != null) {
+				return "redirect:/public/verification-code";
+			}
+
+		}
 
 		return "/admin/inscription-formateur-admin";
 	}
@@ -105,8 +148,6 @@ public class InscriptionController {
 		System.out.println(" adminDto   " + adminEtablissementDto);
 
 		utilisateurService.test("coucou");
-
-	
 
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 

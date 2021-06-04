@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 
 @EnableAspectJAutoProxy
-@ComponentScan({ "controller", "service", "config", "principal", "aop", "mail", "service.impl", "dto", "repository"} )
+@ComponentScan({ "controller", "service", "config", "principal", "aop", "mail", "service.impl", "dto", "repository", "utils"} )
 @EntityScan("model")
 @EnableJpaRepositories("repository")
 public class EvalyApplication  {
