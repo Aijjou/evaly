@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import model.Apprenant;
+import model.Examen;
 import model.Promotion;
 import service.ApprenantService;
+import service.ExamenService;
 import service.PromotionService;
 
 @Controller
@@ -26,6 +28,8 @@ public class ApprenantController {
 	PromotionService promotionService;
 	@Autowired
 	ApprenantService apprenantService;
+	@Autowired
+	ExamenService examenService;
 
 	@RequestMapping(value = "/protected/liste-apprenant", method = RequestMethod.GET)
 	public String afficheApprenant(Model model) {
@@ -57,7 +61,7 @@ public class ApprenantController {
 		
 		
 
-		List<Apprenant> apprenants = apprenantService.ApprenantsByPromotion(pro);
+		List<Apprenant> apprenants = apprenantService.apprenantsByPromotion(pro);
 		model.addAttribute("promonom", pro.getNom());
 		Boolean premierNom = true;
 		isAdmin = false;
@@ -72,6 +76,30 @@ public class ApprenantController {
 		model.addAttribute("formateur", isFormateur);
 
 		return "/protected/liste-apprenant";
+
+	}
+	
+	@RequestMapping(value = "protected/liste-examen-apprenant", method = RequestMethod.POST)
+	public String afficheExamenApprenant(Model model, @RequestParam Integer idPromo) {
+
+		isAdmin = false;
+		isFormateur = false;
+		isApprenant = false;
+		isConnectBoolean = true;
+
+		Optional<Promotion> promoOp = promotionService.findById(idPromo);
+		Promotion promotion = promoOp.get();
+		List<Examen> examensForPromo = examenService.examenByPromotion(promotion);
+		
+		
+		
+		model.addAttribute("examens", examensForPromo);
+		model.addAttribute("connexion", isConnectBoolean);
+		model.addAttribute("apprenant", isApprenant);
+		model.addAttribute("admin", isAdmin);
+		model.addAttribute("formateur", isFormateur);
+
+		return "protected/liste-examen";
 
 	}
 }

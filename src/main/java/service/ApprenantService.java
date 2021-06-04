@@ -11,7 +11,7 @@ public interface ApprenantService {
 
 	public List<Apprenant> apprenants();
 	
-	public List<Apprenant> ApprenantsByPromotion(Promotion promotion);
+	public List<Apprenant> apprenantsByPromotion(Promotion promotion);
 	
 	public Optional<Apprenant> findById(Integer id);
 	
