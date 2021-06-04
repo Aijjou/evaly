@@ -23,10 +23,11 @@ public class Sujet implements java.io.Serializable {
 
 	private Integer idSujet;
 	private Formateur formateur;
+	private Matiere matiere;
 	private String nom;
 	private Boolean isAutomaticGenerated;
 	private String descriptionSujet;
-	private Double noteMoyenne;
+	private Double noteMoyenne=0D;
 	private Set<Examen> examens = new HashSet<Examen>(0);
 	private Set<ReponseApprenantExamen> reponseApprenantExamens = new HashSet<ReponseApprenantExamen>(0);
 	private Set<SujetQuestion> sujetQuestions = new HashSet<SujetQuestion>(0);
@@ -78,6 +79,16 @@ public class Sujet implements java.io.Serializable {
 
 	public void setFormateur(Formateur formateur) {
 		this.formateur = formateur;
+	}
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_matiere")
+	public Matiere getMatiere() {
+		return matiere;
+	}
+
+	public void setMatiere(Matiere matiere) {
+		this.matiere = matiere;
 	}
 
 	@Column(name = "nom", length = 100)

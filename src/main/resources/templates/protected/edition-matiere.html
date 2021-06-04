@@ -64,13 +64,14 @@
 				<small class="row d-flex flex-row justify-content-center promotion"><i
 					class="fas fa-graduation-cap align-self-center ml-1 font-weight-bold"></i>&nbsp;
 					<div class="align-self-center pt-1">MATIERE</div></small>
-				<div class="row align-self-center ">CREATION MATIERE</div>
+				<div class="row align-self-center ">EDITION MATIERE</div>
 			</div>
 		</div>
 		<div
 			class="d-flex flex-row justify-content-center mt-4 align-self-center w-75">
 			<div class="d-flex flex-row justify-content-center  p-4 main">
-				<form method="post" th:action="@{/protected/crea-matiere-sub}" th:object="${matiere}">
+				<form method="post" th:action="@{/protected/edit-matiere-sub}" th:object="${matiere}">
+				<input type="hidden"  name="idMatiere"   th:value="*{idMatiere}" >
 					<div class="d-flex flex-row justify-content-center">
 						<div class="card w-75 align-self-center p-2  m-2">
 							<div class="row mt-4 w-75 align-self-center">
@@ -79,7 +80,7 @@
 										Nom :</div>
 									<div
 										class="col-8 d-flex flex-row justify-content-center px-0 mb20px">
-									<textarea id="rep1" name="rep1" rows="1" cols="50" th:field="*{nom}"></textarea>
+										<textarea id="rep1" name="rep1" rows="1" cols="50" th:field="*{nom}"></textarea>
 									</div>
 								</div>
 								<div class="row mb-4 w-100 mb5px">
@@ -96,14 +97,14 @@
 										</select>
 									</div>
 								</div>
-								<div class="row mb-4 w-100 mb5px">
-																		<div class="row w-100 mb5px">
-										<div class="col-5 d-flex flex-row justify-content-center">
+<div class="row mb-4 w-100 mb5px">
+									<div class="row w-100 mb5px">
+										<div class="col-4 d-flex flex-row justify-content-center">
 											<button class="btn annulerButton"
-												onclick="location.href='liste-matiere'" type="button">Retour
-											</button>
+												onclick="location.href='liste-matiere'"  type="button">Retour
+												Liste</button>
 										</div>
-										<div class="col-7 d-flex flex-row justify-content-center">
+										<div class="col-8 d-flex flex-row justify-content-center">
 											<input class="btn validerButton" type="submit"
 												value="Valider">
 										</div>
