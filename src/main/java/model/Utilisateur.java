@@ -46,6 +46,7 @@ public class Utilisateur implements java.io.Serializable {
 	private String reponseSecrete;
 	private Date dateInscription;
 	private Boolean active;
+	private Boolean isAdmin;
 	private Set<Role> roles;
 	private Set<VerifyUtilisateur> verifyUtilisateurs;
 	private Set<Formateur> formateurs = new HashSet<Formateur>(0);
@@ -56,7 +57,7 @@ public class Utilisateur implements java.io.Serializable {
 
 	public Utilisateur(String nom, String prenom, String mail, String password, String questionSecrete,
 			String reponseSecrete, Date dateInscription, Set<Formateur> formateurs, Set<Apprenant> apprenants,
-			String photo) {
+			String photo, Boolean active,Set<Role> roles, Boolean isAdmin) {
 		this.nom = nom;
 		this.prenom = prenom;
 		this.mail = mail;
@@ -67,6 +68,9 @@ public class Utilisateur implements java.io.Serializable {
 		this.dateInscription = dateInscription;
 		this.formateurs = formateurs;
 		this.apprenants = apprenants;
+		this.active = active;
+		this.roles = roles;
+		this.isAdmin = isAdmin;
 	}
 	
 	
@@ -204,6 +208,25 @@ public class Utilisateur implements java.io.Serializable {
 
 	public void setApprenants(Set<Apprenant> apprenants) {
 		this.apprenants = apprenants;
+	}
+
+	
+	@Column(name="is_admin")
+	public Boolean getIsAdmin() {
+		return isAdmin;
+	}
+
+	public void setIsAdmin(Boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+
+	@Override
+	public String toString() {
+		return "Utilisateur [idUtilisateur=" + idUtilisateur + ", nom=" + nom + ", prenom=" + prenom + ", mail=" + mail
+				+ ", password=" + password + ", photo=" + photo + ", questionSecrete=" + questionSecrete
+				+ ", reponseSecrete=" + reponseSecrete + ", dateInscription=" + dateInscription + ", active=" + active
+				+ ", isAdmin=" + isAdmin + ", roles=" + roles + ", verifyUtilisateurs=" + verifyUtilisateurs
+				+ ", formateurs=" + formateurs + ", apprenants=" + apprenants + "]";
 	}
 
 

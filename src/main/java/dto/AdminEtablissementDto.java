@@ -2,13 +2,12 @@ package dto;
 
 public class AdminEtablissementDto {
 
-	private String nom;
+	private String name;
 	private Integer numero;
 	private String rue;
 	private String ville;
 	private String code;
-	private boolean isAdmin;
-	private boolean isFormateur;
+	private Boolean isFormateur;
 	private String nomReferent;
 	private String prenomReferent;
 	private String mail;
@@ -16,16 +15,15 @@ public class AdminEtablissementDto {
 	private String question;
 	private String reponse;
 
-	public AdminEtablissementDto(String nom, Integer numero, String rue, String ville, String code,
-			boolean isAdmin, boolean isFormateur, String nomReferent, String prenomReferent, String mail,
-			String password, String question, String reponse) {
+	public AdminEtablissementDto(String nom, Integer numero, String rue, String ville, String code, Boolean isFormateur,
+			String nomReferent, String prenomReferent, String mail, String password, String question, String reponse) {
 		super();
-		this.nom = nom;
+		this.name = nom;
 		this.numero = numero;
 		this.rue = rue;
 		this.ville = ville;
 		this.code = code;
-		this.isAdmin = isAdmin;
+
 		this.isFormateur = isFormateur;
 		this.nomReferent = nomReferent;
 		this.prenomReferent = prenomReferent;
@@ -34,17 +32,17 @@ public class AdminEtablissementDto {
 		this.question = question;
 		this.reponse = reponse;
 	}
-	
+
 	public AdminEtablissementDto() {
-		
+
 	}
 
 	public String getNom() {
-		return nom;
+		return name;
 	}
 
 	public void setNom(String nom) {
-		this.nom = nom;
+		this.name = nom;
 	}
 
 	public Integer getNumero() {
@@ -79,19 +77,11 @@ public class AdminEtablissementDto {
 		this.code = code;
 	}
 
-	public boolean isAdmin() {
-		return isAdmin;
-	}
-
-	public void setAdmin(boolean isAdmin) {
-		this.isAdmin = isAdmin;
-	}
-
-	public boolean isFormateur() {
+	public Boolean getIsFormateur() {
 		return isFormateur;
 	}
 
-	public void setFormateur(boolean isFormateur) {
+	public void setIsFormateur(Boolean isFormateur) {
 		this.isFormateur = isFormateur;
 	}
 
@@ -142,8 +132,13 @@ public class AdminEtablissementDto {
 	public void setReponse(String reponse) {
 		this.reponse = reponse;
 	}
-	
-	
-	
+
+	@Override
+	public String toString() {
+		return "AdminEtablissementDto [nom=" + name + ", numero=" + numero + ", rue=" + rue + ", ville=" + ville
+				+ ", code=" + code +  ", isFormateur=" + isFormateur + ", nomReferent="
+				+ nomReferent + ", prenomReferent=" + prenomReferent + ", mail=" + mail + ", password=" + password
+				+ ", question=" + question + ", reponse=" + reponse + "]";
+	}
 
 }

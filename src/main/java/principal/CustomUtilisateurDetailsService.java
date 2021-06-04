@@ -26,9 +26,12 @@ public class CustomUtilisateurDetailsService implements UserDetailsService {
 	@Override
 	@Transactional
 	public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
+		System.out.println("load-user" + usernameOrEmail);
 		Utilisateur utilisateur = utilisateurService.findByUsernameOrEmail(usernameOrEmail, usernameOrEmail).orElseThrow(
 				() -> new UsernameNotFoundException("User not found with username or email : " + usernameOrEmail));
 
+		System.out.println(utilisateur);
+		
 		if (utilisateur != null) {
 			return UserPrincipal.create(utilisateur);
 		}

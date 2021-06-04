@@ -4,13 +4,14 @@ import java.util.Optional;
 
 import dto.UtilisateurDto;
 import dto.VerifyCodeDto;
+import model.Formateur;
 import model.Utilisateur;
 
 public interface UtilisateurService  {
 
-	public Utilisateur createAdmin(UtilisateurDto utilisateurDto) throws Exception;
+	public Utilisateur createAdmin(UtilisateurDto admin) throws Exception;
 	
-	public Utilisateur createFormateur(UtilisateurDto utilisateurDto);
+	public Utilisateur createFormateur(UtilisateurDto formateur);
 	
 	Optional<Utilisateur> findByUsernameOrEmail(String username, String email);
 
@@ -23,6 +24,8 @@ public interface UtilisateurService  {
 	public void verifyCode(VerifyCodeDto verifyCodeDto);
 
 	public Utilisateur findByEmailAndPassword(String email, String password);
+	
+	public String test(String test);
 	
 	
 }

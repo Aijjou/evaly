@@ -8,6 +8,10 @@ import javax.validation.Validator;
 import javax.validation.executable.ExecutableValidator;
 import javax.validation.metadata.BeanDescriptor;
 
+import org.springframework.stereotype.Component;
+
+
+@Component
 public class UtilisateurValidator implements Validator{
 
 	

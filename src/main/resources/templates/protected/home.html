@@ -33,11 +33,11 @@
 	<div th:replace="/shared/header :: header"></div>
 	<div th:replace="/shared/aside :: aside"></div>
 	<div
-		class="container-fluid principal d-flex flex-column justify-content-center align-items-center">
+		class="principal d-flex flex-column justify-content-center">
 
-		<div class="jumbotron shadow-lg">
+		<div class="jumbotron shadow-lg main w-50 align-self-center">
 			<h1>
-				Hello, <span sec:authentication="name"></span> !
+				Bonjour, Monsieur <span th:text="${#authentication.getPrincipal().prenom}"></span> !
 			</h1>
 			<div sec:authorize="hasRole('ROLE_ADMIN')">
 				<p>Vous avez un rôle d'Admin</p>
@@ -46,11 +46,10 @@
 				<p>Vous avez un rôle d'Utilisateur simple.</p>
 			</div>
 			<hr class="my-4">
-			<p class="lead">Bienvenue dans l'application de gestion des
-				ressources humaines.</p>
+			<p class="lead">Bienvenue dans l'application de gestion des Examens "Evaly".</p>
 
 		</div>
 	</div>
-	<div th:replace="/shared/footer :: footer"></div>
+
 </body>
 </html>

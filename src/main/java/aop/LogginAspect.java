@@ -35,6 +35,12 @@ public class LogginAspect {
 	}
 	
 	
+	@Pointcut("execution(* repository.*Repository.*(..))")
+	public void pointCut3() {
+		
+		
+	}
+	
 	
 //	@Pointcut("within(fr.afpa.formation.service.DepartmentService*)")
 //	public void pointCut2() {
@@ -90,7 +96,7 @@ public class LogginAspect {
 //		
 //	}
 	
-	@Around(value="pointCut() || pointCut1() || pointCut2()")
+	@Around(value="pointCut() || pointCut1() || pointCut2() || pointCut3()")
 	public Object executionTime(ProceedingJoinPoint joinPoint2) throws Throwable {
 		
 		  long startTime = System.currentTimeMillis();
