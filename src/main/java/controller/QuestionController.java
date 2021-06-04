@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -265,17 +264,22 @@ public class QuestionController {
 		//Gestion Theme
 		Theme theme = new Theme();
 		//Creation
-		if (question.getNvthemebool() == "true" && question.getIdMatiere()!=null) {
+		if (question.getNvthemebool().equals("true") && question.getIdMatiere()!=null) {
 
 			theme.setNom(question.getNvtheme());
 			Optional<Matiere> recupmatiere = matiereService.findById(question.getIdMatiere());
 			theme.setMatiere(recupmatiere.get());
 			themeService.save(theme);
 		}
+		
+
 		//Recup theme existant
-		else if (question.getNvthemebool() == "false") {
+		else if (question.getNvthemebool() == null) {
 			Optional<Theme> themerec = themeService.findById(question.getTheme());
 			theme=themerec.get();
+			System.out.println(theme);
+			System.out.println(theme);
+			System.out.println(theme);
 		}
 		edit.setTheme(theme);
 		

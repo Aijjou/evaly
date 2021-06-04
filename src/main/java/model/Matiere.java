@@ -1,13 +1,15 @@
 package model;
 // Generated 26 mars 2021 � 22:40:09 by Hibernate Tools 5.1.10.Final
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -89,8 +91,8 @@ public class Matiere implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "Matiere [idMatiere=" + idMatiere + ", groupeFormateur=" + groupeFormateur + ", nom=" + nom
-				+", themes=" + themes + "]";
+		return "Matiere [idMatiere=" + idMatiere + ", groupeFormateur=" + groupeFormateur.getNom() + ", nom=" + nom
+				+"]";
 	}
 
 	

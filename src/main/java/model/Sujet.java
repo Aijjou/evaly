@@ -10,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -24,27 +23,27 @@ public class Sujet implements java.io.Serializable {
 
 	private Integer idSujet;
 	private Formateur formateur;
+	private Matiere matiere;
 	private String nom;
 	private Boolean isAutomaticGenerated;
-	private String descriptionSuejt;
-	private Double noteMoyenne;
-	private Set<ExamenSujet> examenSujets = new HashSet<ExamenSujet>(0);
+	private String descriptionSujet;
+	private Double noteMoyenne=0D;
+	private Set<Examen> examens = new HashSet<Examen>(0);
 	private Set<ReponseApprenantExamen> reponseApprenantExamens = new HashSet<ReponseApprenantExamen>(0);
 	private Set<SujetQuestion> sujetQuestions = new HashSet<SujetQuestion>(0);
 	private Set<ReponseApprenant> reponseApprenants = new HashSet<ReponseApprenant>(0);
-
+	
 	public Sujet() {
 	}
 
-	public Sujet(Formateur formateur, String nom, Boolean isAutomaticGenerated, String descriptionSuejt,
+	public Sujet(Formateur formateur, String nom, Boolean isAutomaticGenerated, String descriptionSujet,
 			Double noteMoyenne, Set<ExamenSujet> examenSujets, Set<ReponseApprenantExamen> reponseApprenantExamens,
 			Set<SujetQuestion> sujetQuestions, Set<ReponseApprenant> reponseApprenants) {
 		this.formateur = formateur;
 		this.nom = nom;
 		this.isAutomaticGenerated = isAutomaticGenerated;
-		this.descriptionSuejt = descriptionSuejt;
+		this.descriptionSujet = descriptionSujet;
 		this.noteMoyenne = noteMoyenne;
-		this.examenSujets = examenSujets;
 		this.reponseApprenantExamens = reponseApprenantExamens;
 		this.sujetQuestions = sujetQuestions;
 		this.reponseApprenants = reponseApprenants;
@@ -61,6 +60,16 @@ public class Sujet implements java.io.Serializable {
 	public void setIdSujet(Integer idSujet) {
 		this.idSujet = idSujet;
 	}
+	
+	private Integer nbnotes=0;
+	@Column(name = "nbnotes")
+	public Integer getNbnotes() {
+		return nbnotes;
+	}
+
+	public void setNbnotes(Integer nbnotes) {
+		this.nbnotes = nbnotes;
+	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_formateur")
@@ -70,6 +79,16 @@ public class Sujet implements java.io.Serializable {
 
 	public void setFormateur(Formateur formateur) {
 		this.formateur = formateur;
+	}
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_matiere")
+	public Matiere getMatiere() {
+		return matiere;
+	}
+
+	public void setMatiere(Matiere matiere) {
+		this.matiere = matiere;
 	}
 
 	@Column(name = "nom", length = 100)
@@ -91,12 +110,12 @@ public class Sujet implements java.io.Serializable {
 	}
 
 	@Column(name = "description_suejt", length = 1000)
-	public String getDescriptionSuejt() {
-		return this.descriptionSuejt;
+	public String getdescriptionSujet() {
+		return this.descriptionSujet;
 	}
 
-	public void setDescriptionSuejt(String descriptionSuejt) {
-		this.descriptionSuejt = descriptionSuejt;
+	public void setdescriptionSujet(String descriptionSujet) {
+		this.descriptionSujet = descriptionSujet;
 	}
 
 	@Column(name = "note_moyenne", precision = 22, scale = 0)
@@ -109,12 +128,12 @@ public class Sujet implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sujet")
-	public Set<ExamenSujet> getExamenSujets() {
-		return this.examenSujets;
+	public Set<Examen> getExamens() {
+		return this.examens;
 	}
 
-	public void setExamenSujets(Set<ExamenSujet> examenSujets) {
-		this.examenSujets = examenSujets;
+	public void setExamens(Set<Examen> examens) {
+		this.examens = examens;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sujet")
@@ -144,4 +163,6 @@ public class Sujet implements java.io.Serializable {
 		this.reponseApprenants = reponseApprenants;
 	}
 
+
+	
 }

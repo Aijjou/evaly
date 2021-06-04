@@ -1,11 +1,18 @@
 package repository;
 
+
+import java.util.List;
+
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
 
 import model.Apprenant;
+import model.Promotion;
 
-@Repository
-public interface ApprenantRepository extends CrudRepository<Apprenant, Long> {
+
+
+public interface ApprenantRepository extends CrudRepository<Apprenant, Integer>{
+
+	List<Apprenant> findByPromotion(Promotion promotion);
+
 
 }

@@ -30,7 +30,7 @@ public class ExamenDto implements java.io.Serializable {
 	private String titre;
 	private Integer promotion;
 	private Integer sujet;
-	private Date dateExamen;
+	private String dateExamen;
 	private Integer dureeExamen;
 
 
@@ -62,11 +62,11 @@ public class ExamenDto implements java.io.Serializable {
 		this.titre = titre;
 	}
 
-	public Date getDateExamen() {
+	public String getDateExamen() {
 		return this.dateExamen;
 	}
 
-	public void setDateExamen(Date dateExamen) {
+	public void setDateExamen(String dateExamen) {
 		this.dateExamen = dateExamen;
 	}
 

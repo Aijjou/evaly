@@ -24,6 +24,7 @@
 <link href="/fontawesome/css/all.css" rel="stylesheet">
 </head>
 <body>
+
 	<aside th:fragment="aside"
 		class="aside d-flex flex-column justify-content-start">
 		<ul class="p-2">
@@ -48,7 +49,7 @@
 				<a th:href="@{/protected/promotion}"><i
 					class="fas fa-graduation-cap"></i>&nbsp;Promotions</a>
 			</li>
-			<li class="mb-4 pb-0" sec:authorize="hasRole('ROLE_APPRENANT')" ><a
+			<li class="mb-4 pb-0" sec:authorize="hasRole('ROLE_APPRENANT')"><a
 				th:href="@{/protected/promotion}"><i
 					class="fas fa-graduation-cap"></i>&nbsp;Promotion</a></li>
 			<li class="mb-4 pb-0" sec:authorize="hasRole('ROLE_ADMIN') "><a
@@ -74,15 +75,17 @@
 							class="fas fa-question"></i>&nbsp;Questions</a></li>
 				</ul>
 			</li>
-			<li class="mb-4 pb-0" sec:authorize="hasRole('ROLE_ADMIN') || hasRole('ROLE_FORMATEUR') || hasRole('ROLE_APPRENANT')"><a
+			<li class="mb-4 pb-0"
+				sec:authorize="hasRole('ROLE_ADMIN') || hasRole('ROLE_FORMATEUR') || hasRole('ROLE_APPRENANT')"><a
 				href="/protected/liste-examen"><i class="far fa-calendar-alt"></i>&nbsp;Examens</a>
 			</li>
-			<li class="mb-4 pb-0"><a href="http://" sec:authorize="hasRole('ROLE_ADMIN') || hasRole('ROLE_FORMATEUR') || hasRole('ROLE_APPRENANT')"><i
+			<li class="mb-4 pb-0"><a href="http://"
+				sec:authorize="hasRole('ROLE_ADMIN') || hasRole('ROLE_FORMATEUR') || hasRole('ROLE_APPRENANT')"><i
 					class="fas fa-poll"></i>&nbsp;Resultats</a></li>
-			<li class="mb-4 pb-0" sec:authorize="hasRole('ROLE_ADMIN')"><a href="http://"><i
-					class="fas fa-user-cog"></i>&nbsp;Administration</a></li>
-			<li class="mb-4 pb-0"><a href="/logout" sec:authorize="isAuthenticated()"><i
-					class="fas fa-sign-out-alt"></i>&nbsp;Deconnexion</a></li>
+			<li class="mb-4 pb-0" sec:authorize="hasRole('ROLE_ADMIN')"><a
+				href="http://"><i class="fas fa-user-cog"></i>&nbsp;Administration</a></li>
+			<li class="mb-4 pb-0"><a href="/logout"
+				sec:authorize="isAuthenticated()"><i class="fas fa-sign-out-alt"></i>&nbsp;Deconnexion</a></li>
 		</ul>
 	</aside>
 </body>

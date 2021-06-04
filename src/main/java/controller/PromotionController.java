@@ -1,4 +1,5 @@
 package controller;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,12 +11,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import model.Apprenant;
+import model.Organisation;
 import model.Promotion;
 import service.ApprenantService;
 import service.PromotionService;
 
 @Controller
-public class ApprenantController {
+public class PromotionController {
 
 	Boolean isConnectBoolean = false;
 	Boolean isAdmin = false;
@@ -24,54 +26,65 @@ public class ApprenantController {
 
 	@Autowired
 	PromotionService promotionService;
+
 	@Autowired
 	ApprenantService apprenantService;
 
-	@RequestMapping(value = "/protected/liste-apprenant", method = RequestMethod.GET)
-	public String afficheApprenant(Model model) {
+	@RequestMapping(value = "/protected/liste-promotion", method = RequestMethod.GET)
+	public String affichePromotion(Model model) {
 
-		List<Apprenant> apprenants = apprenantService.apprenants();
-		String nomFormation = " ";
-		Boolean premierNom = true;
+		List<Promotion> promotions = promotionService.promotions();
+		Organisation org = promotions.get(0).getOrganisation();
+		String nomOrganisation = org.getName();
 		isAdmin = false;
 		isFormateur = false;
 		isApprenant = false;
 		isConnectBoolean = true;
-		model.addAttribute("promonom", "Liste de tout les apprenants");
+		
+		System.err.println(nomOrganisation);
+
 		model.addAttribute("connexion", isConnectBoolean);
-		model.addAttribute("apprenants", apprenants);
-		model.addAttribute("formation", nomFormation);
+		model.addAttribute("promotions", promotions);
+		model.addAttribute("organisation", nomOrganisation);
 		model.addAttribute("apprenant", isApprenant);
 		model.addAttribute("admin", isAdmin);
 		model.addAttribute("formateur", isFormateur);
 
-		return "/protected/liste-apprenant";
+		return "/protected/liste-promotion";
 
 	}
 	
-	@RequestMapping(value = "/protected/liste-apprenant-promotion", method = RequestMethod.POST)
-	public String afficheApprenantsPromo(Model model, @RequestParam Integer promoSelect) {
-		
-		Optional<Promotion> promo = promotionService.findById(promoSelect);
-		Promotion pro = promo.get();
-		
-		
+	@RequestMapping(value = "/protected/liste-eleve", method = RequestMethod.POST)
+	public String afficheEleves(Model model, @RequestParam Integer promoSelect) {
 
-		List<Apprenant> apprenants = apprenantService.ApprenantsByPromotion(pro);
-		model.addAttribute("promonom", pro.getNom());
-		Boolean premierNom = true;
+		Optional<Promotion> promoOp = promotionService.findById(promoSelect);
+		Promotion promotion = promoOp.get();
+		String nomFormation = promotion.getNom();
+		
+		
+		List<Apprenant> eleves = apprenantService.ApprenantsByPromotion(promotion);
+		
+		for (Apprenant apprenant : eleves) {
+
+			if (apprenant.getPromotion() != null) {
+				apprenant.setNomPromoString(apprenant.getPromotion().getNom());
+			}
+		}
+		
+		
 		isAdmin = false;
 		isFormateur = false;
 		isApprenant = false;
 		isConnectBoolean = true;
 
 		model.addAttribute("connexion", isConnectBoolean);
-		model.addAttribute("apprenants", apprenants);
 		model.addAttribute("apprenant", isApprenant);
 		model.addAttribute("admin", isAdmin);
 		model.addAttribute("formateur", isFormateur);
+		model.addAttribute("apprenants", eleves);
+		model.addAttribute("formation", nomFormation);
 
-		return "/protected/liste-apprenant";
+		return "/protected/liste-eleve";
 
 	}
 }

@@ -3,6 +3,8 @@ package model;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -23,7 +25,7 @@ public class Theme implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "Theme nom=" + nom;
+		return "Theme [idTheme=" + idTheme + ", matiere=" + matiere + ", nom=" + nom + "]";
 	}
 
 	private Integer idTheme;
@@ -71,7 +73,7 @@ public class Theme implements java.io.Serializable {
 		this.nom = nom;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "theme")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "theme", cascade=CascadeType.REFRESH)
 	public Set<Question> getQuestions() {
 		return this.questions;
 	}
@@ -80,4 +82,5 @@ public class Theme implements java.io.Serializable {
 		this.questions = questions;
 	}
 
+	
 }

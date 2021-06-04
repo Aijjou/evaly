@@ -71,7 +71,7 @@
 		</div>
 		<div class="d-flex flex-row justify-content-center mt-4 align-self-center w-75">
 			<div class="card d-flex flex-row justify-content-center  p-4 main">
-				<form method="post" th:action="@{/protected/creation-examen}" th:object="${examen}">
+				<form method="post" th:action="@{/protected/creation-examen-sub}" th:object="${examen}">
 					<div class="d-flex flex-column justify-content-center">
 						<div class="row">
 							<div class="col-3 d-flex flex-row justify-content-center">
@@ -99,9 +99,10 @@
 							<div
 								class="col-3 align-self-center d-flex flex-row justify-content-center">
 								Promotion :</div>
+							
 							<div
 								class="col-9 align-self-center d-flex flex-row px-0 justify-content-center">
-								<select name="title">
+								<select name="promotion"  th:field="*{promotion}">
 									<option value="">-- Choisir une promotion --</option>
 									<option th:each="promo : ${promotions}"
 										th:value="${promo.idPromotion}" th:text="${promo.nom}">
