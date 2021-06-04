@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import model.Examen;
+import model.Promotion;
+import model.Sujet;
 import repository.ExamenRepository;
 import service.ExamenService;
 
@@ -35,6 +37,16 @@ public class ExamenServiceImpl implements ExamenService{
 	@Override
 	public Optional<Examen> findById(Integer id) {
 		return examenRepository.findById(id);
+	}
+
+	@Override
+	public List<Examen> examenByPromotion(Promotion promotion) {
+		return examenRepository.findByPromotion(promotion);
+	}
+
+	@Override
+	public List<Examen> findBySujet(Sujet sujet) {
+		return examenRepository.findBySujet(sujet);
 	}
 	
 	

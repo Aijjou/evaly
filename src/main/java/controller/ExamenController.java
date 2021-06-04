@@ -23,6 +23,9 @@ import dto.QuestionDto;
 import dto.QuestionnaireDto;
 import model.Apprenant;
 import model.Examen;
+import model.Formateur;
+import model.FormateurMatiere;
+import model.Matiere;
 import model.Promotion;
 import model.Question;
 import model.Reponse;
@@ -32,6 +35,8 @@ import model.Sujet;
 import model.SujetQuestion;
 import service.ApprenantService;
 import service.ExamenService;
+import service.FormateurMatiereService;
+import service.FormateurService;
 import service.PromotionService;
 import service.QuestionService;
 import service.ReponseApprenantExamenService;
@@ -72,20 +77,53 @@ public class ExamenController {
 	ReponseApprenantExamenService reponseApprenantExamenService;
 	@Autowired
 	ResultatExamenService resultatExamenService;
+	@Autowired
+	FormateurService formateurService;
+	@Autowired
+	FormateurMatiereService formateurMatiereService;
 
+
+	
 	@RequestMapping(value = "protected/liste-examen", method = RequestMethod.GET)
-	public String afficheExamen(Model model) {
+	public String afficheExamenProf(Model model) {
 
 		isAdmin = false;
 		isFormateur = false;
 		isApprenant = false;
 		isConnectBoolean = true;
+		Integer idFormateur = 1;
 
-		List<Examen> examens = examenService.examens();
-		model.addAttribute("examens", examens);
-
+		//affichage de la liste des examens pour les matieres du formateur
+		
+		//recuperation du formateur et de ces matieres
+		Optional<Formateur> formateurOp = formateurService.findById(idFormateur);
+		Formateur formateur = formateurOp.get();
+		List<FormateurMatiere> profMat = formateurMatiereService.findByFormateur(formateur);
+		List<Matiere> matieres = new ArrayList<Matiere>();
+		
+		//ajout des matiere dans la liste "matieres" grace aux idMatiere dans la liste "profMat"
+		for (int i = 0; i < profMat.size(); i++) {
+			Matiere mat = profMat.get(i).getMatiere();
+			matieres.add(mat);
+		}
+		
+		//recuperation des sujets correspondants aux matieres du formateur
+		List<Sujet> sujetsProf = new ArrayList<Sujet>();
+		for (int j = 0; j < matieres.size(); j++) {
+			//chaque matiere peut avoir plusieurs sujets, donc ajout des listes sujets par matiere
+			List<Sujet> sujetByMat = sujetService.findByMatiere(matieres.get(j));
+			sujetsProf.addAll(sujetByMat);
+		}
+		
+		//recuperation de la liste des exams qui utilise les sujets de la matiere du formateur
+		List<Examen> examensForProf = new ArrayList<Examen>();
+		for (int k = 0; k < sujetsProf.size(); k++) {
+			List<Examen> examSujetProf = examenService.findBySujet(sujetsProf.get(k));
+			examensForProf.addAll(examSujetProf);
+		}
+		
+		model.addAttribute("examens", examensForProf);
 		model.addAttribute("connexion", isConnectBoolean);
-
 		model.addAttribute("apprenant", isApprenant);
 		model.addAttribute("admin", isAdmin);
 		model.addAttribute("formateur", isFormateur);

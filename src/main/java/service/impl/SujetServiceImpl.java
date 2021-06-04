@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
+import model.Matiere;
 import model.Sujet;
 import model.Theme;
 import repository.SujetRepository;
@@ -40,6 +41,11 @@ public class SujetServiceImpl implements SujetService{
 	public void save(Sujet s) {
 		sujetRepository.save(s);
 		
+	}
+
+	@Override
+	public List<Sujet> findByMatiere(Matiere matiere) {
+		return sujetRepository.findByMatiere(matiere);
 	}
 
 }
