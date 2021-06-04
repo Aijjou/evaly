@@ -74,6 +74,7 @@
 							id="datatable">
 							<thead class="bg-dark">
 								<tr>
+								<th scope="col">Id</th>
 									<th scope="col">Nom</th>
 									<th scope="col">Date</th>
 									<th scope="col">Durée (Minutes)</th>
@@ -82,11 +83,13 @@
 							</thead>
 							<tbody class="bg-dark ">
 								<tr th:each="examen : ${examens}" class="bg-dark">
+										<td th:text="${examen.idExamen}"></td>
 									<td th:text="${examen.titre}"></td>
 									<td th:text="${examen.dateExamen}"></td>
 									<td th:text="${examen.dureeExamen}"></td>
 									<td class="d-flex flex-row justify-content-center">
-										<button type="submit" class="btn btn-dark mr-2" name="sujetSelect"><i class="far fa-arrow-alt-circle-right"></i></button>
+										<a th:href="@{/protected/questionnaire/{idExamen}(idExamen = ${examen.idExamen})}"	class="btn btn-dark mr-2"  name="idExamen">
+										<i class="far fa-arrow-alt-circle-right"></i></a>
 									</td>
 								</tr>
 							</tbody>

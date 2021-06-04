@@ -75,22 +75,24 @@
 							id="datatable">
 							<thead class="bg-dark">
 								<tr>
+										<th scope="col">Nom</th>
+											<th scope="col">Prénom</th>
 									<th scope="col">Titre Examen</th>
 									<th scope="col">Date Examen</th>
-									<th scope="col">Durée Examen</th>
 									<th scope="col">Promotion</th>
-									<th scope="col">Moyenne du sujet</th>
+									<th scope="col">Moy. sujet</th>
 									<th scope="col">Note</th>
 									
 								</tr>
 							</thead>
 							<tbody class="bg-dark ">
 								<tr th:each="result : ${resultats}" class="bg-dark">
-									<td th:text="${result.examen.titre}"></td>
-									<td th:text="${result.examen.dateExamen}"></td>
-									<td th:text="${result.examen.dureeExamen}"></td>
-									<td th:text="${result.promotion.nom}"></td>
-									<td th:text="${result.examen.sujet.noteMoyenne}"></td>
+									<td class="text-center"   th:text="${result.apprenant.nom} "></td>
+									<td  class="text-center"  th:text="${result.apprenant.prenom} "></td>
+									<td  class="text-center"  th:text="${result.examen.titre}"></td>
+									<td  class="text-center"  th:text="${result.examen.dateExamen}"></td>
+									<td class="text-center"   th:text="${result.examen.promotion.nom}"></td>
+									<td class="text-center"  th:text="${result.examen.sujet.noteMoyenne}"></td>
 									<td th:text="${result.note}"></td>
 								</tr>
 							</tbody>
