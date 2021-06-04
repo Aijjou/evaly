@@ -100,8 +100,8 @@
 									<span th:if="${sujet.nbnotes > 0}"><td th:text="${sujet.noteMoyenne}"></td></span>
 									<span th:unless="${sujet.nbnotes > 0}"><td></td></span>
 									<td class="d-flex flex-row justify-content-center">
-										<button type="submit" rel="noopener noreferrer"
-										class="btn btn-dark mr-2" name="sujetSelect" th:value="${sujet.idSujet}"><i class="far fa-arrow-alt-circle-right"></i></button>
+										<button type="submit" class="btn btn-dark mr-2" name="sujetSelect"
+										th:value="${sujet.idSujet}"><i class="far fa-arrow-alt-circle-right"></i></button>
 									</td>
 									<td>
 										<a href="info_eleve.html" target="_blank" class="mr-2"

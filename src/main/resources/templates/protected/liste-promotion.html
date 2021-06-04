@@ -82,24 +82,34 @@
 						</a>
 					</div>
 				</div>
+<<<<<<< HEAD
+				<form th:action="@{/protected/liste-eleve}" method="post">
+=======
 					<form th:action="@{/protected/liste-apprenant-promotion}" method="post">
+>>>>>>> main
 				<table
 					class="table table-dark align-self-center shadow rounded bg-dark text-white"
 					id="datatable">
 					<thead class="bg-dark">
 						<tr>
-							<th scope="col">Selection</th>
 							<th scope="col">Promotion</th>
+<<<<<<< HEAD
+							<th scope="col">Année</th>
+=======
 							<th scope="col">Liste Apprenants</th>
+>>>>>>> main
 							<th scope="col" class="text-center">Opération</th>
 						</tr>
 					</thead>
 					<tbody class="bg-dark ">
 						<tr th:each="promotion : ${promotions}" class="bg-dark">
-							<th >
-								<input type="checkbox" name="promotions" th:value="${promotion}">
-							</th>
 							<td th:text="${promotion.nom}"></td>
+<<<<<<< HEAD
+							<td th:text="${promotion.dateCreation}"></td>
+							<td class="d-flex flex-row justify-content-center">
+								<button type="submit" class="btn btn-dark mr-2" name="promoSelect"
+								th:value="${promotion.idPromotion}"><i class="far fa-arrow-alt-circle-right"></i></button>
+=======
 								<td>
 										<button type="submit" rel="noopener noreferrer"
 										class="btn btn-dark mr-2" name="promoSelect"  th:value="${promotion.idPromotion}"><i class="far fa-arrow-alt-circle-right"></i></button>
@@ -112,29 +122,10 @@
 								data-target="#myModal"><i class="far fa-arrow-alt-circle-right"></i></a>&nbsp;
 								<a href="http://" target="_blank" rel="noopener noreferrer"
 								class="mr-2"><i class="far fa-envelope-open"></i></a>
+>>>>>>> main
 							</td>
 						</tr>
 					</tbody>
-					<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-						aria-labelledby="myModalLabel" aria-hidden="true">
-						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h4 class="modal-title text-warning " id="myModalLabel">
-										<i class="fas fa-exclamation-triangle"></i>&nbsp;Modification
-										promotion
-									</h4>
-								</div>
-								<div class="modal-body">Êtes vous sur de vouloir modifier
-									cette promotion?</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary"
-										data-dismiss="modal">Close</button>
-									<button type="button" class="btn btn-primary">OK</button>
-								</div>
-							</div>
-						</div>
-					</div>
 				</table>
 				</form>
 			</div>
