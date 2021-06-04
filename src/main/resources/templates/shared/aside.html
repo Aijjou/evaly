@@ -27,10 +27,10 @@
 	 <aside th:fragment="aside" class="aside d-flex flex-column justify-content-start">
 				<ul class="p-2">
 					<li class="mb-4 pb-0 nav-header" data-toggle="collapse" data-target="#user" th:if="${admin == true && apprenant == false}">
-						<div class="hvr"><i class="fas fa-list-ul"></i>&nbsp;Utilisateur</div>
+						<div class="hvr"><i class="fas fa-list-ul"></i>&nbsp;Utilisateurs</div>
 						<ul class="nav nav-list collapse ml-4 mb-0" id="user">
 							<li class="mb-4 pb-0">
-								<a th:href="@{/admin/liste-formateur}" ><i class="fas fa-user-tie"></i>&nbsp;Formateur</a>
+								<a th:href="@{/admin/liste-formateur}" ><i class="fas fa-user-tie"></i>&nbsp;Formateurs</a>
 							</li>
 							<li class="mb-4 pb-0">
 								<a th:href="@{/protected/liste-eleve}" ><i class="fas fa-feather-alt"></i>&nbsp;Apprenants</a>
@@ -44,22 +44,22 @@
 						<a th:href="@{/protected/promotion}"><i class="fas fa-graduation-cap"></i>&nbsp;Promotions</a>
 					</li>
 					<li class="mb-4 pb-0" th:if="${apprenant == true}">
-						<a th:href="@{/protected/promotion}"><i class="fas fa-graduation-cap"></i>&nbsp;Promotion</a>
+						<a th:href="@{/protected/promotion}"><i class="fas fa-graduation-cap"></i>&nbsp;Promotions</a>
 					</li>
 					<li class="mb-4 pb-0" th:if="${apprenant == false}">
 						<a th:href="@{/admin/groupe}"><i class="fas fa-users"></i>&nbsp;Groupe formateurs</a>
 					</li>
 					<li class="mb-4 pb-0" th:if="${apprenant == false}">
-						<a th:href="@{/protected/liste-matiere}"><i class="fas fa-book-open"></i>&nbsp;Matieres</a>
+						<a th:href="@{/protected/liste-matiere}"><i class="fas fa-book-open"></i>&nbsp;Matières</a>
 					</li>
 					<li class="mb-4 pb-0 nav-header" data-toggle="collapse" data-target="#resources" th:if="${apprenant == false}">
-						<div class="hvr"><i class="fas fa-file-alt mr-1"></i>&nbsp;Resources</div>
+						<div class="hvr"><i class="fas fa-file-alt mr-1"></i>&nbsp;Ressources</div>
 						<ul class="nav nav-list collapse ml-4 mb-0" id="resources">
 							<li class="mb-4 pb-0">
 								<a th:href="@{/protected/liste-examen}"><i class="far fa-calendar-alt"></i>&nbsp;Examens</a>
 							</li>
 							<li class="mb-4 pb-0">
-								<a th:href="@{/protected/liste-sujet}"><i class="far fa-folder-open"></i>&nbsp;Sujet</a>
+								<a th:href="@{/protected/liste-sujet}"><i class="far fa-folder-open"></i>&nbsp;Sujets</a>
 							</li>
 							<li class="mb-4 pb-0">
 								<a href="/protected/liste-question"><i class="fas fa-question"></i>&nbsp;Questions</a>
@@ -70,13 +70,13 @@
 								<a href="/protected/liste-examen"><i class="far fa-calendar-alt"></i>&nbsp;Examens</a>
 							</li>
 					<li class="mb-4 pb-0" >
-						<a href="http://"><i class="fas fa-poll"></i>&nbsp;Resultats</a>
+						<a href="http://"><i class="fas fa-poll"></i>&nbsp;Résultats</a>
 					</li>
 					<li class="mb-4 pb-0" th:if="${admin == true}">
 						<a href="http://"><i class="fas fa-user-cog"></i>&nbsp;Administration</a>
 					</li>
 					<li class="mb-4 pb-0">
-						<a  href="/public/connexion"><i class="fas fa-sign-out-alt"></i>&nbsp;Deconnexion</a>
+						<a  href="/public/connexion"><i class="fas fa-sign-out-alt"></i>&nbsp;Déconnexion</a>
 					</li>
 				</ul>
 			</aside>
