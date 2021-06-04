@@ -1,34 +1,35 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+                                         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
-    <session-factory>
-        <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
-        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.connection.password">MOHmoh1780</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/evaly</property>
-        <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-        <property name="hibernate.search.autoregister_listeners">true</property>
-        <property name="hibernate.validator.apply_to_ddl">false</property>
-        <mapping class="model.Sujet"/>
-        <mapping class="model.FormateurMatiere"/>
-        <mapping class="model.Reponse"/>
-        <mapping class="model.Matiere"/>
-        <mapping class="model.ResultatExamen"/>
-        <mapping class="model.Utilisateur"/>
-        <mapping class="model.Promotion"/>
-        <mapping class="model.ExamenSujet"/>
-        <mapping class="model.Question"/>
-        <mapping class="model.Examen"/>
-        <mapping class="model.SujetQuestion"/>
-        <mapping class="model.Formateur"/>
-        <mapping class="model.Organisation"/>
-        <mapping class="model.Apprenant"/>
-        <mapping class="model.GroupeFormateur"/>
-        <mapping class="model.PromotionFormateur"/>
-        <mapping class="model.FormateurGroupeFormateur"/>
-        <mapping class="model.ReponseApprenantExamen"/>
-        <mapping class="model.ReponseApprenant"/>
-        <mapping class="model.Theme"/>
-    </session-factory>
+ <session-factory name="">
+  <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
+  <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+  <property name="hibernate.connection.password">123456</property>
+  <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/evaly</property>
+  <property name="hibernate.connection.username">root</property>
+  <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+  <property name="hibernate.search.autoregister_listeners">true</property>
+  <property name="hibernate.validator.apply_to_ddl">false</property>
+  <mapping class="model.Sujet"/>
+  <mapping class="model.FormateurMatiere"/>
+  <mapping class="model.Reponse"/>
+  <mapping class="model.Matiere"/>
+  <mapping class="model.ResultatExamen"/>
+  <mapping class="model.Utilisateur"/>
+  <mapping class="model.Promotion"/>
+  <mapping class="model.ExamenSujet"/>
+  <mapping class="model.Question"/>
+  <mapping class="model.Examen"/>
+  <mapping class="model.SujetQuestion"/>
+  <mapping class="model.Formateur"/>
+  <mapping class="model.Organisation"/>
+  <mapping class="model.Apprenant"/>
+  <mapping class="model.GroupeFormateur"/>
+  <mapping class="model.PromotionFormateur"/>
+  <mapping class="model.FormateurGroupeFormateur"/>
+  <mapping class="model.ReponseApprenantExamen"/>
+  <mapping class="model.ReponseApprenant"/>
+  <mapping class="model.Theme"/>
+ </session-factory>
 </hibernate-configuration>

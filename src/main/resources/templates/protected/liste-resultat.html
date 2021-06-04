@@ -20,8 +20,8 @@
 	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
 	crossorigin="anonymous"></script>
 
-<link href="../../css/liste-eleve.css" rel="stylesheet"
-	th:href="@{/css/liste-eleve.css}">
+<link href="../../css/liste-sujet.css" rel="stylesheet"
+	th:href="@{/css/liste-sujet.css}">
 <link rel="stylesheet" th:href="@{/css/header.css}">
 <link href="../../css/aside.css" rel="stylesheet"
 	th:href="@{/css/aside.css}">
@@ -47,10 +47,10 @@
 	th:href="@{/Buttons-1.7.0/js/buttons.print.min.js}"></script>
 <script type="text/javascript"
 	th:href="@{/Buttons-1.7.0/js/dataTables.buttons.min.js}"></script>
-<!-- <link th:href="@{/css/headerAside.css}" rel="stylesheet"> -->
+
 <script
 	src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.colVis.min.js"></script>
-<title>Liste des promotions</title>
+<title>Liste des Sujets</title>
 </head>
 <body>
 	<div th:replace="/shared/header :: header"></div>
@@ -61,63 +61,45 @@
 				class="card connexion w-25 d-flex flex-column justify-content-between pt-1 pl-3 pr-4 pb-2 mb-4 ">
 				<small class="row d-flex flex-row justify-content-start promotion"><i
 					class="fas fa-graduation-cap align-self-center ml-1 font-weight-bold"></i>&nbsp;
-					<div class="align-self-center pt-1">PROMOTIONS</div></small>
-				<div class="row align-self-center " th:text="${organisation}"></div>
+					<div class="align-self-center pt-1">RESULTATS</div></small>
+				<div class="row align-self-center ">Liste des résultats</div>
 			</div>
 		</div>
-		<div class="card w-75 align-self-center p-2 main m-2">
-			<div class="row mt-4 w-75 align-self-center">
-				<div class="row mb-4 w-100">
-					<div
-						class="col-4 align-self-center d-flex flex-row justify-content-center">
-						<a class="btn ajoutButton shadow-lg"
-							href="/protected/inscription-apprenant-formateur"> <i
-							class="fas fa-user-plus"></i> &nbsp; Ajouter un Promotion
-						</a>
-					</div>
-					<div
-						class="col-4 align-self-center d-flex flex-row justify-content-center">
-						<a class="btn creerButton shadow-lg"
-							href="/protected/creation-examen"> <i
-							class="fas fa-folder-plus"></i> &nbsp; Créer un Examen
-						</a>
+		<div class="d-flex flex-row justify-content-center mt-4 align-self-center w-75">
+			<div class="d-flex flex-row justify-content-center  p-4 main w-100">
+				<div class="card  align-self-center p-2  m-2 w-100">
+					<div class="row mt-4 align-self-center w-100">
+					<form th:action="@{/protected/liste-promotion-select}" method="post">
+						<table
+							class="table table-dark align-self-center shadow rounded bg-dark text-white"
+							id="datatable">
+							<thead class="bg-dark">
+								<tr>
+										<th scope="col">Nom</th>
+											<th scope="col">Prénom</th>
+									<th scope="col">Titre Examen</th>
+									<th scope="col">Date Examen</th>
+									<th scope="col">Promotion</th>
+									<th scope="col">Moy. sujet</th>
+									<th scope="col">Note</th>
+									
+								</tr>
+							</thead>
+							<tbody class="bg-dark ">
+								<tr th:each="result : ${resultats}" class="bg-dark">
+									<td class="text-center"   th:text="${result.apprenant.nom} "></td>
+									<td  class="text-center"  th:text="${result.apprenant.prenom} "></td>
+									<td  class="text-center"  th:text="${result.examen.titre}"></td>
+									<td  class="text-center"  th:text="${result.examen.dateExamen}"></td>
+									<td class="text-center"   th:text="${result.examen.promotion.nom}"></td>
+									<td class="text-center"  th:text="${result.examen.sujet.noteMoyenne}"></td>
+									<td th:text="${result.note}"></td>
+								</tr>
+							</tbody>
+						</table>
+						</form>
 					</div>
 				</div>
-				<form th:action="@{/protected/liste-apprenant-promotion}"
-					method="post">
-					<table
-						class="table table-dark align-self-center shadow rounded bg-dark text-white"
-						id="datatable">
-						<thead class="bg-dark">
-							<tr>
-								<th scope="col">Promotion</th>
-								<th scope="col">Date Création</th>
-								<th scope="col">Année Création</th>
-								<th scope="col">Liste Apprenants</th>
-									<th scope="col">Opérations</th>
-							</tr>
-						</thead>
-						<tbody class="bg-dark ">
-							<tr th:each="promotion : ${promotions}" class="bg-dark">
-								<td th:text="${promotion.nom}"></td>
-								<td th:text="${promotion.dateCreation}"></td>
-								<td th:text="${promotion.anneeCreation}"></td>
-								<td>
-									<button type="submit" class="btn btn-dark mr-2"
-										name="promoSelect" th:value="${promotion.idPromotion}">
-										<i class="far fa-arrow-alt-circle-right"></i>
-									</button>
-								</td>
-								<td>
-									<button type="submit" class="btn btn-dark mr-2"
-										name="promoSelect" th:value="${promotion.idPromotion}">
-										<i class="far fa-arrow-alt-circle-right"></i>
-									</button>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</form>
 			</div>
 		</div>
 	</div>
