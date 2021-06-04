@@ -20,8 +20,8 @@
 	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
 	crossorigin="anonymous"></script>
 
-<link href="../../css/liste-sujet.css" rel="stylesheet"
-	th:href="@{/css/liste-sujet.css}">
+<link href="../../css/liste-eleve.css" rel="stylesheet"
+	th:href="@{/css/liste-eleve.css}">
 <link rel="stylesheet" th:href="@{/css/header.css}">
 <link href="../../css/aside.css" rel="stylesheet"
 	th:href="@{/css/aside.css}">
@@ -47,10 +47,10 @@
 	th:href="@{/Buttons-1.7.0/js/buttons.print.min.js}"></script>
 <script type="text/javascript"
 	th:href="@{/Buttons-1.7.0/js/dataTables.buttons.min.js}"></script>
-
+<!-- <link th:href="@{/css/headerAside.css}" rel="stylesheet"> -->
 <script
 	src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.colVis.min.js"></script>
-<title>Liste des Sujets</title>
+<title>Liste des promotions</title>
 </head>
 <body>
 	<div th:replace="/shared/header :: header"></div>
@@ -61,79 +61,75 @@
 				class="card connexion w-25 d-flex flex-column justify-content-between pt-1 pl-3 pr-4 pb-2 mb-4 ">
 				<small class="row d-flex flex-row justify-content-start promotion"><i
 					class="fas fa-graduation-cap align-self-center ml-1 font-weight-bold"></i>&nbsp;
-					<div class="align-self-center pt-1">SUJET</div></small>
-				<div class="row align-self-center ">Liste des sujets</div>
+					<div class="align-self-center pt-1">PROMOTIONS</div></small>
+				<div class="row align-self-center " th:text="${organisation}"></div>
 			</div>
 		</div>
-		<div class="d-flex flex-row justify-content-center mt-4 align-self-center w-75">
-			<div class="d-flex flex-row justify-content-center  p-4 main w-100">
-				<div class="card  align-self-center p-2  m-2 w-100">
-					<div class="row mt-4 align-self-center w-100">
-					<form th:action="@{/protected/liste-promotion-select}" method="post">
-						<table
-							class="table table-dark align-self-center shadow rounded bg-dark text-white"
-							id="datatable">
-							<thead class="bg-dark">
-								<tr>
-									<th scope="col">Nom sujet</th>
-									<th scope="col">Description</th>
-									<th scope="col">Matière</th>
-									<th scope="col">Thème(s)</th>
-									<th scope="col">Moyenne/20</th>
-									<th scope="col">Choix</th>
-									<th scope="col" class="text-center">Modification</th>
-								</tr>
-							</thead>
-							<tbody class="bg-dark ">
-								<tr th:each="sujet : ${sujets}" class="bg-dark">
-									<td th:text="${sujet.nom}"></td>
-									<td th:text="${sujet.getdescriptionSujet}"></td>
-									<td>
-										<th:block th:object="${matiere}">
-											<span th:text="${matiere.nom}">
-											</span>
-										</th:block>
-									</td>
-									<td>
-										<th:block th:each="theme : ${themes}">
-											<span th:text="${theme.nom}">
-											</span>
-										</th:block>
-									</td>
-									<td th:text="${sujet.noteMoyenne}"></td>
-									<td class="d-flex flex-row justify-content-center">
-										<button type="submit" rel="noopener noreferrer"
-										class="btn btn-dark mr-2" name="sujetSelect" th:value="${sujet.idSujet}"><i class="far fa-arrow-alt-circle-right"></i></button>
-									</td>
-									<td>
-										<a href="info_eleve.html" target="_blank" class="mr-2"
-										rel="noopener noreferrer" type="button" data-toggle="modal"
-										data-target="#myModal"><i class="fas fa-edit"></i></a>
-									</td>
-								</tr>
-							</tbody>
-							<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-								<div class="modal-dialog" role="document">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h4 class="modal-title text-warning " id="myModalLabel">
-												<i class="fas fa-exclamation-triangle"></i>&nbsp;Modification
-												Sujet
-											</h4>
-										</div>
-										<div class="modal-body">Êtes vous sur de vouloir modifier ce sujet ?</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-secondary"
-												data-dismiss="modal">Close</button>
-											<button type="button" class="btn btn-primary">OK</button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</table>
-						</form>
+		<div class="card w-75 align-self-center p-2 main m-2">
+			<div class="row mt-4 w-75 align-self-center">
+				<div class="row mb-4 w-100">
+					<div
+						class="col-4 align-self-center d-flex flex-row justify-content-center">
+						<a class="btn ajoutButton shadow-lg"
+							href="/protected/inscription-apprenant-formateur"> <i
+							class="fas fa-user-plus"></i> &nbsp; Ajouter un Promotion
+						</a>
+					</div>
+					<div
+						class="col-4 align-self-center d-flex flex-row justify-content-center">
+						<button class="btn creerButton shadow-lg">
+							<i class="fas fa-folder-plus"></i> &nbsp; Créer un Examen
+						</button>
 					</div>
 				</div>
+				<table
+					class="table table-dark align-self-center shadow rounded bg-dark text-white"
+					id="datatable">
+					<thead class="bg-dark">
+						<tr>
+							<th scope="col">Selection</th>
+							<th scope="col">Promotion</th>
+							<th scope="col" class="text-center">Opération</th>
+						</tr>
+					</thead>
+					<tbody class="bg-dark ">
+						<tr th:each="promotion : ${promotions}" class="bg-dark">
+							<th >
+								<input type="checkbox" name="promotions" th:value="${promotion}">
+							</th>
+							<td th:text="${promotion.nom}"></td>
+							<td class="d-flex flex-row justify-content-center">
+								<a href="http://" target="_blank" rel="noopener noreferrer"
+								class="mr-2"><i class="fas fa-edit"></i></a>&nbsp;
+								<a href="info_eleve.html" target="_blank" class="mr-2"
+								rel="noopener noreferrer" type="button" data-toggle="modal"
+								data-target="#myModal"><i class="far fa-arrow-alt-circle-right"></i></a>&nbsp;
+								<a href="http://" target="_blank" rel="noopener noreferrer"
+								class="mr-2"><i class="far fa-envelope-open"></i></a>
+							</td>
+						</tr>
+					</tbody>
+					<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+						aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h4 class="modal-title text-warning " id="myModalLabel">
+										<i class="fas fa-exclamation-triangle"></i>&nbsp;Modification
+										promotion
+									</h4>
+								</div>
+								<div class="modal-body">Êtes vous sur de vouloir modifier
+									cette promotion?</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary"
+										data-dismiss="modal">Close</button>
+									<button type="button" class="btn btn-primary">OK</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</table>
 			</div>
 		</div>
 	</div>
