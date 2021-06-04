@@ -9,7 +9,7 @@ import model.Promotion;
 
 
 public interface ApprenantRepository extends CrudRepository<Apprenant, Integer>{
-	
+
 	List<Apprenant> findByPromotion(Promotion promotion);
 
 }

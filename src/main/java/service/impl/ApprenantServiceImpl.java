@@ -40,12 +40,11 @@ public class ApprenantServiceImpl implements ApprenantService{
 	@Override
 	public void save(Apprenant s) {
 		apprenantRepository.save(s);
-
 	}
 
 
 	@Override
-	public List<Apprenant> findApprenantByPromo(Promotion promotion) {
+	public List<Apprenant> ApprenantsByPromotion(Promotion promotion) {
 		return apprenantRepository.findByPromotion(promotion);
 	}
 

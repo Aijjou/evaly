@@ -11,11 +11,11 @@ public interface ApprenantService {
 
 	public List<Apprenant> apprenants();
 	
+	public List<Apprenant> ApprenantsByPromotion(Promotion promotion);
+	
 	public Optional<Apprenant> findById(Integer id);
 	
 
 	void save(Apprenant t);
-	
-	public List<Apprenant> findApprenantByPromo(Promotion promotion);
 
 }

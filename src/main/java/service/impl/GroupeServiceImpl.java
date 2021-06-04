@@ -1,6 +1,7 @@
 package service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.annotation.Resource;
 
@@ -25,6 +26,17 @@ public class GroupeServiceImpl implements GroupeService{
 		
 		return (List<GroupeFormateur>) groupeRepository.findAll();
 	
+	}
+	
+	@Override
+	public Optional<GroupeFormateur> findById(Integer id) {
+		return groupeRepository.findById(id);
+	}
+	
+	@Override
+	public void save(GroupeFormateur s) {
+		groupeRepository.save(s);
+
 	}
 
 }

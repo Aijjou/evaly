@@ -144,9 +144,8 @@ public class ExamenController {
 
 		examenService.save(nve);
 
-		model.addAttribute("examens", examenService.examens());
 
-		return "protected/liste-examen";
+		return "redirect:/protected/liste-examen";
 	}
 
 	@RequestMapping(value = "protected/questionnaire", method = RequestMethod.GET, params = { "idExamen" })
@@ -226,6 +225,8 @@ public class ExamenController {
 			}
 			for (int i = 0; i < 2; i++)
 				System.out.println("REPONSES APPRENANTS :" + reponsesdelapprenant);
+			
+			
 			// Vérification bonnes réponses
 			Boolean point = true;
 			
@@ -290,8 +291,7 @@ public class ExamenController {
 		re.setNote(note);
 		resultatExamenService.save(re);
 
-		List<Examen> examens = examenService.examens();
-		model.addAttribute("examens", examens);
-		return "protected/liste-examen";
+
+		return "redirect:/protected/liste-examen";
 	}
 }
