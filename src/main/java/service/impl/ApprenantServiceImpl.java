@@ -44,7 +44,7 @@ public class ApprenantServiceImpl implements ApprenantService{
 
 
 	@Override
-	public List<Apprenant> ApprenantsByPromotion(Promotion promotion) {
+	public List<Apprenant> apprenantsByPromotion(Promotion promotion) {
 		return apprenantRepository.findByPromotion(promotion);
 	}
 

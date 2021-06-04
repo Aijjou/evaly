@@ -62,7 +62,7 @@ public class PromotionController {
 		String nomFormation = promotion.getNom();
 		
 		
-		List<Apprenant> eleves = apprenantService.ApprenantsByPromotion(promotion);
+		List<Apprenant> eleves = apprenantService.apprenantsByPromotion(promotion);
 		
 		for (Apprenant apprenant : eleves) {
 

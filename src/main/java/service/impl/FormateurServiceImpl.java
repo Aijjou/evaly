@@ -1,6 +1,8 @@
 package service.impl;
 
 import java.util.List;
+import java.util.Optional;
+
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,11 @@ public class FormateurServiceImpl implements FormateurService {
 	public List<Formateur> formateurs() {
 
 		return (List<Formateur>) formateurRepository.findAll();
+	}
+
+	@Override
+	public Optional<Formateur> findById(Integer id) {
+		return formateurRepository.findById(id);
 	}
 
 }
