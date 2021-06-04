@@ -7,7 +7,7 @@ import model.Formateur;
 
 
 @Repository
-public interface FormateurRepository extends CrudRepository<Formateur, Long>{
+public interface FormateurRepository extends CrudRepository<Formateur, Integer>{
 	
 	
 
