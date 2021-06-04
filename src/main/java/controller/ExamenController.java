@@ -226,6 +226,8 @@ public class ExamenController {
 			}
 			for (int i = 0; i < 2; i++)
 				System.out.println("REPONSES APPRENANTS :" + reponsesdelapprenant);
+			
+			
 			// Vérification bonnes réponses
 			Boolean point = true;
 			
