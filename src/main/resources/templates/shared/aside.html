@@ -24,6 +24,7 @@
 <link href="/fontawesome/css/all.css" rel="stylesheet">
 </head>
 <body>
+<<<<<<< HEAD
 	 <aside th:fragment="aside" class="aside d-flex flex-column justify-content-start">
 				<ul class="p-2">
 					<li class="mb-4 pb-0 nav-header" data-toggle="collapse" data-target="#user" th:if="${admin == true && apprenant == false}">
@@ -78,7 +79,68 @@
 					<li class="mb-4 pb-0">
 						<a  href="/public/connexion"><i class="fas fa-sign-out-alt"></i>&nbsp;Déconnexion</a>
 					</li>
+	<aside th:fragment="aside"
+		class="aside d-flex flex-column justify-content-start">
+		<ul class="p-2">
+			<li class="mb-4 pb-0 nav-header" data-toggle="collapse"
+				data-target="#user" sec:authorize="hasRole('ROLE_ADMIN')">
+				<div class="hvr">
+					<i class="fas fa-list-ul"></i>&nbsp;Utilisateur
+				</div>
+				<ul class="nav nav-list collapse ml-4 mb-0" id="user">
+					<li class="mb-4 pb-0"><a th:href="@{/admin/liste-formateur}"><i
+							class="fas fa-user-tie"></i>&nbsp;Formateur</a></li>
+					<li class="mb-4 pb-0"><a th:href="@{/protected/liste-eleve}"><i
+							class="fas fa-feather-alt"></i>&nbsp;Apprenants</a></li>
 				</ul>
-			</aside>
+			</li>
+			<li class="mb-4 pb-0" sec:authorize="hasRole('ROLE_FORMATEUR')">
+				<a th:href="@{/protected/liste-eleve}"><i
+					class="fas fa-feather-alt"></i>&nbsp;Apprenants</a>
+			</li>
+			<li class="mb-4 pb-0"
+				sec:authorize="hasRole('ROLE_FORMATEUR') || hasRole('ROLE_ADMIN') ">
+				<a th:href="@{/protected/promotion}"><i
+					class="fas fa-graduation-cap"></i>&nbsp;Promotions</a>
+			</li>
+			<li class="mb-4 pb-0" sec:authorize="hasRole('ROLE_APPRENANT')"><a
+				th:href="@{/protected/promotion}"><i
+					class="fas fa-graduation-cap"></i>&nbsp;Promotion</a></li>
+			<li class="mb-4 pb-0" sec:authorize="hasRole('ROLE_ADMIN') "><a
+				th:href="@{/admin/groupe}"><i class="fas fa-users"></i>&nbsp;Groupe
+					formateurs</a></li>
+			<li class="mb-4 pb-0"
+				sec:authorize="hasRole('ROLE_APPRENANT') || hasRole('ROLE_FORMATEUR')">
+				<a th:href="@{/protected/liste-matiere}"><i
+					class="fas fa-book-open"></i>&nbsp;Matieres</a>
+			</li>
+			<li class="mb-4 pb-0 nav-header" data-toggle="collapse"
+				data-target="#resources"
+				sec:authorize="hasRole('ROLE_ADMIN') || hasRole('ROLE_FORMATEUR')">
+				<div class="hvr">
+					<i class="fas fa-file-alt mr-1"></i>&nbsp;Resources
+				</div>
+				<ul class="nav nav-list collapse ml-4 mb-0" id="resources">
+					<li class="mb-4 pb-0"><a th:href="@{/protected/liste-examen}"><i
+							class="far fa-calendar-alt"></i>&nbsp;Examens</a></li>
+					<li class="mb-4 pb-0"><a th:href="@{/protected/liste-sujet}"><i
+							class="far fa-folder-open"></i>&nbsp;Sujet</a></li>
+					<li class="mb-4 pb-0"><a href="/protected/liste-question"><i
+							class="fas fa-question"></i>&nbsp;Questions</a></li>
+				</ul>
+			</li>
+			<li class="mb-4 pb-0"
+				sec:authorize="hasRole('ROLE_ADMIN') || hasRole('ROLE_FORMATEUR') || hasRole('ROLE_APPRENANT')"><a
+				href="/protected/liste-examen"><i class="far fa-calendar-alt"></i>&nbsp;Examens</a>
+			</li>
+			<li class="mb-4 pb-0"><a href="http://"
+				sec:authorize="hasRole('ROLE_ADMIN') || hasRole('ROLE_FORMATEUR') || hasRole('ROLE_APPRENANT')"><i
+					class="fas fa-poll"></i>&nbsp;Resultats</a></li>
+			<li class="mb-4 pb-0" sec:authorize="hasRole('ROLE_ADMIN')"><a
+				href="http://"><i class="fas fa-user-cog"></i>&nbsp;Administration</a></li>
+			<li class="mb-4 pb-0"><a href="/logout"
+				sec:authorize="isAuthenticated()"><i class="fas fa-sign-out-alt"></i>&nbsp;Deconnexion</a></li>
+		</ul>
+	</aside>
 </body>
 </html>

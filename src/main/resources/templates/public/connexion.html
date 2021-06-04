@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 <meta charset="UTF-8">
@@ -42,17 +42,17 @@
 			
 			<div class="d-flex flex-row justify-content-center mt-4">
 				<div class="card d-flex flex-row justify-content-center w-75 p-4 main">
-					<form class="w-50 align-items-center">
+					<form class="w-50 align-items-center" method="POST" th:action="@{/public/connexion}">
 						<div class="form-group">
 							<label for="exampleInputEmail1" class="text-dark">Email</label> <input
-								type="email" class="form-control" id="exampleInputEmail1"
+								type="email" class="form-control" id="exampleInputEmail1" name="email"
 								aria-describedby="emailHelp" placeholder="Saisir votre email"
 								required>
 
 						</div>
 						<div class="form-group mb-4">
 							<label for="exampleInputPassword1" class="text-dark">Password</label>
-							<input type="password" class="form-control"
+							<input type="password" class="form-control" name="password"
 								id="exampleInputPassword1" placeholder="Saisir mot de passe"
 								required>
 						</div>
@@ -63,7 +63,7 @@
 							</div>
 							<div class="d-flex flex-row justify-content-center">
 								<a type="submit" href="#" class="btn annulerButton mr-2">ANNULER</a>
-								<a type="submit" href="/admin/liste-formateur" class="btn validerButton">VALIDER</a>
+								<button type="submit"  class="btn validerButton">VALIDER</button>
 							</div>
 						</div>
 					</form>

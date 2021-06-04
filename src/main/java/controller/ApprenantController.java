@@ -72,6 +72,4 @@ public class ApprenantController {
 		return "/protected/liste-apprenant";
 
 	}
-
-
 }
