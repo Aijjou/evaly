@@ -77,56 +77,46 @@
 					</div>
 					<div
 						class="col-4 align-self-center d-flex flex-row justify-content-center">
-						<a class="btn creerButton shadow-lg" href="/protected/creation-examen">
-							<i class="fas fa-folder-plus"></i> &nbsp; Créer un Examen
+						<a class="btn creerButton shadow-lg"
+							href="/protected/creation-examen"> <i
+							class="fas fa-folder-plus"></i> &nbsp; Créer un Examen
 						</a>
 					</div>
 				</div>
-<<<<<<< HEAD
-				<form th:action="@{/protected/liste-eleve}" method="post">
-=======
-					<form th:action="@{/protected/liste-apprenant-promotion}" method="post">
->>>>>>> main
-				<table
-					class="table table-dark align-self-center shadow rounded bg-dark text-white"
-					id="datatable">
-					<thead class="bg-dark">
-						<tr>
-							<th scope="col">Promotion</th>
-<<<<<<< HEAD
-							<th scope="col">Année</th>
-=======
-							<th scope="col">Liste Apprenants</th>
->>>>>>> main
-							<th scope="col" class="text-center">Opération</th>
-						</tr>
-					</thead>
-					<tbody class="bg-dark ">
-						<tr th:each="promotion : ${promotions}" class="bg-dark">
-							<td th:text="${promotion.nom}"></td>
-<<<<<<< HEAD
-							<td th:text="${promotion.dateCreation}"></td>
-							<td class="d-flex flex-row justify-content-center">
-								<button type="submit" class="btn btn-dark mr-2" name="promoSelect"
-								th:value="${promotion.idPromotion}"><i class="far fa-arrow-alt-circle-right"></i></button>
-=======
+				<form th:action="@{/protected/liste-apprenant-promotion}"
+					method="post">
+					<table
+						class="table table-dark align-self-center shadow rounded bg-dark text-white"
+						id="datatable">
+						<thead class="bg-dark">
+							<tr>
+								<th scope="col">Promotion</th>
+								<th scope="col">Date Création</th>
+								<th scope="col">Année Création</th>
+								<th scope="col">Liste Apprenants</th>
+									<th scope="col">Opérations</th>
+							</tr>
+						</thead>
+						<tbody class="bg-dark ">
+							<tr th:each="promotion : ${promotions}" class="bg-dark">
+								<td th:text="${promotion.nom}"></td>
+								<td th:text="${promotion.dateCreation}"></td>
+								<td th:text="${promotion.anneeCreation}"></td>
 								<td>
-										<button type="submit" rel="noopener noreferrer"
-										class="btn btn-dark mr-2" name="promoSelect"  th:value="${promotion.idPromotion}"><i class="far fa-arrow-alt-circle-right"></i></button>
+									<button type="submit" class="btn btn-dark mr-2"
+										name="promoSelect" th:value="${promotion.idPromotion}">
+										<i class="far fa-arrow-alt-circle-right"></i>
+									</button>
 								</td>
-							<td class="d-flex flex-row justify-content-center">
-								<a href="http://" target="_blank" rel="noopener noreferrer"
-								class="mr-2"><i class="fas fa-edit"></i></a>&nbsp;
-								<a href="" target="_blank" class="mr-2"
-								rel="noopener noreferrer" type="button" data-toggle="modal"
-								data-target="#myModal"><i class="far fa-arrow-alt-circle-right"></i></a>&nbsp;
-								<a href="http://" target="_blank" rel="noopener noreferrer"
-								class="mr-2"><i class="far fa-envelope-open"></i></a>
->>>>>>> main
-							</td>
-						</tr>
-					</tbody>
-				</table>
+								<td>
+									<button type="submit" class="btn btn-dark mr-2"
+										name="promoSelect" th:value="${promotion.idPromotion}">
+										<i class="far fa-arrow-alt-circle-right"></i>
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
 				</form>
 			</div>
 		</div>

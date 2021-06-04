@@ -4,6 +4,7 @@ package model;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -22,6 +23,7 @@ public class Formateur extends Utilisateur {
 
 
 	private Utilisateur utilisateur;
+	private Boolean isReferent; 
 	private Set<Examen> examens = new HashSet<Examen>(0);
 	private Set<FormateurMatiere> formateurMatieres = new HashSet<FormateurMatiere>(0);
 	private Set<Sujet> sujets = new HashSet<Sujet>(0);
@@ -35,10 +37,11 @@ public class Formateur extends Utilisateur {
 		this.utilisateur = utilisateur;
 	}
 
-	public Formateur(Utilisateur utilisateur, Set<Examen> examens,
+	public Formateur(Utilisateur utilisateur, Boolean isReferent, Set<Examen> examens,
 			Set<FormateurMatiere> formateurMatieres, Set<Sujet> sujets,
 			Set<FormateurGroupeFormateur> formateurGroupeFormateurs, Set<PromotionFormateur> promotionFormateurs) {
 		this.utilisateur = utilisateur;
+		this.isReferent = isReferent;
 		this.examens = examens;
 		this.formateurMatieres = formateurMatieres;
 		this.sujets = sujets;
@@ -56,6 +59,18 @@ public class Formateur extends Utilisateur {
 
 	public void setUtilisateur(Utilisateur utilisateur) {
 		this.utilisateur = utilisateur;
+	}
+
+	
+	
+	
+	@Column(name="is_referent")
+	public Boolean getIsReferent() {
+		return isReferent;
+	}
+
+	public void setIsReferent(Boolean isReferent) {
+		this.isReferent = isReferent;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "formateur")

@@ -81,7 +81,7 @@
 									<th scope="col">Thème(s)</th>
 										<th scope="col">Nombre notes</th>
 									<th scope="col">Moyenne/20</th>
-									<th scope="col">Choix</th>
+						
 									<th scope="col" class="text-center">Modification</th>
 								</tr>
 							</thead>
@@ -99,10 +99,6 @@
 									<td th:text="${sujet.nbnotes}"></td>
 									<span th:if="${sujet.nbnotes > 0}"><td th:text="${sujet.noteMoyenne}"></td></span>
 									<span th:unless="${sujet.nbnotes > 0}"><td></td></span>
-									<td class="d-flex flex-row justify-content-center">
-										<button type="submit" class="btn btn-dark mr-2" name="sujetSelect"
-										th:value="${sujet.idSujet}"><i class="far fa-arrow-alt-circle-right"></i></button>
-									</td>
 									<td>
 										<a href="info_eleve.html" target="_blank" class="mr-2"
 										rel="noopener noreferrer" type="button" data-toggle="modal"

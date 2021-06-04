@@ -1,7 +1,9 @@
 package controller;
 
+
 import java.util.List;
 import java.util.Optional;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+
 import model.GroupeFormateur;
 import model.Matiere;
 import service.GroupeService;
+
 import service.MatiereService;
 
 @Controller
@@ -28,10 +32,9 @@ public class MatiereController {
 	Boolean isAdmin = false;
 	Boolean isFormateur = false;
 	Boolean isApprenant = false;
-
+	
 	@RequestMapping(value = "/protected/creation-matiere", method = RequestMethod.GET)
 	public String creationMatiere(Model model) {
-
 
 		isAdmin = false;
 		isFormateur = false;
@@ -126,10 +129,7 @@ public class MatiereController {
 
 		for (int i=0;i<10;i++) System.out.println(matiere.getIdMatiere());
 		for (int i=0;i<10;i++) System.out.println(matiere);
-		
-		
 			
-		
 		Optional<Matiere> newm = matiereService.findById(matiere.getIdMatiere());
 		Matiere mat = newm.get();
 		

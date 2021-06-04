@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -186,9 +187,16 @@ public class ExamenController {
 		return "redirect:/protected/liste-examen";
 	}
 
-	@RequestMapping(value = "protected/questionnaire", method = RequestMethod.GET, params = { "idExamen" })
-	public String passageExamen(Model model, @RequestParam(name = "idExamen", required = true) String idExamen) {
+	@RequestMapping(value = "protected/questionnaire/{idExamen}", method = RequestMethod.GET)
+	public String passageExamen(Model model, @PathVariable(name = "idExamen") String idExamen) {
 
+		// Vérification d'un résultat existant
+		//
+		// Find ResultatExamenByApprenantAndExamen
+		// si trouvé redirect liste-examen // else affichage
+		//
+		
+		
 		Integer idex = Integer.parseInt(idExamen);
 		Optional<Examen> examenopt = examenService.findById(idex);
 		Examen examen = examenopt.get();
@@ -330,6 +338,6 @@ public class ExamenController {
 		resultatExamenService.save(re);
 
 
-		return "redirect:/protected/liste-examen";
+		return "redirect:/protected/liste-resultat";
 	}
 }
