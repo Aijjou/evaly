@@ -89,44 +89,11 @@
 									<td th:text="${result.examen.titre}"></td>
 									<td th:text="${result.examen.dateExamen}"></td>
 									<td th:text="${result.examen.dureeExamen}"></td>
-									<td>
-										<th:block th:each="theme : ${themes}">
-											<span th:text="${theme.nom}">
-											</span>
-										</th:block>
-									</td>
-									<td th:text="${sujet.nbnotes}"></td>
-									<span th:if="${sujet.nbnotes > 0}"><td th:text="${sujet.noteMoyenne}"></td></span>
-									<span th:unless="${sujet.nbnotes > 0}"><td></td></span>
-									<td class="d-flex flex-row justify-content-center">
-										<button type="submit" rel="noopener noreferrer"
-										class="btn btn-dark mr-2" name="sujetSelect" th:value="${sujet.idSujet}"><i class="far fa-arrow-alt-circle-right"></i></button>
-									</td>
-									<td>
-										<a href="info_eleve.html" target="_blank" class="mr-2"
-										rel="noopener noreferrer" type="button" data-toggle="modal"
-										data-target="#myModal"><i class="fas fa-edit"></i></a>
-									</td>
+									<td th:text="${result.promotion.nom}"></td>
+									<td th:text="${result.examen.sujet.noteMoyenne}"></td>
+									<td th:text="${result.note}"></td>
 								</tr>
 							</tbody>
-							<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-								<div class="modal-dialog" role="document">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h4 class="modal-title text-warning " id="myModalLabel">
-												<i class="fas fa-exclamation-triangle"></i>&nbsp;Modification
-												Sujet
-											</h4>
-										</div>
-										<div class="modal-body">Êtes vous sur de vouloir modifier ce sujet ?</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-secondary"
-												data-dismiss="modal">Close</button>
-											<button type="button" class="btn btn-primary">OK</button>
-										</div>
-									</div>
-								</div>
-							</div>
 						</table>
 						</form>
 					</div>
