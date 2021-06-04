@@ -99,9 +99,10 @@
 							<div
 								class="col-3 align-self-center d-flex flex-row justify-content-center">
 								Promotion :</div>
+							
 							<div
 								class="col-9 align-self-center d-flex flex-row px-0 justify-content-center">
-								<select name="title">
+								<select name="promotion"  th:field="*{promotion}">
 									<option value="">-- Choisir une promotion --</option>
 									<option th:each="promo : ${promotions}"
 										th:value="${promo.idPromotion}" th:text="${promo.nom}">

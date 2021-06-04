@@ -70,12 +70,10 @@
 				<div class="row align-self-center ">Création Sujet Manuel</div>
 			</div>
 		</div>
-		<div
-			class="d-flex flex-row justify-content-center mt-4 align-self-center w-75">
+		<div class="d-flex flex-row justify-content-center mt-4 align-self-center w-75">
 			<div class="d-flex flex-row justify-content-center  p-4 main">
 				<form method="post" th:action="@{/protected/liste-sujet}">
 					<div class="d-flex flex-row justify-content-center">
-
 						<div class="card w-75 align-self-center p-2  m-2">
 							<div class="row mt-4 w-75 align-self-center">
 								<div class="row w-100 mb5px">
@@ -90,7 +88,8 @@
 									<div class="col-3 d-flex flex-row justify-content-center">
 										Description : (affichée aux apprenants)</div>
 									<div class="col-9 d-flex flex-row justify-content-center px-0">
-										<textarea id="description" rows="5" cols="80" name="description"></textarea>
+										<textarea id="description" rows="5" cols="80"
+											name="description"></textarea>
 									</div>
 
 								</div>
@@ -126,7 +125,8 @@
 												<td th:text="${question.descriptionQuestion}"></td>
 												<td th:utext="${question.coefficient}"></td>
 												<td th:utext="${question.tauxreussite}"></td>
-												<input type="hidden"  name="list" th:value="${question.idQuestion}"/>
+												<input type="hidden" name="list"
+													th:value="${question.idQuestion}" />
 											</tr>
 										</tbody>
 									</table>
