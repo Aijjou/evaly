@@ -87,16 +87,16 @@
 							</thead>
 							<tbody class="bg-dark ">
 								<tr th:each="sujet : ${sujets}" class="bg-dark">
-									<td th:text="${sujet.nom}"></td>
-									<td th:text="${sujet.getdescriptionSujet}"></td>
-									<td th:text="${sujet.matiere.nom}"></td>
+									<td class="text-center"   th:text="${sujet.nom}"></td>
+									<td class="text-center"   th:text="${sujet.getdescriptionSujet}"></td>
+									<td class="text-center"   th:text="${sujet.matiere.nom}"></td>
 									<td>
 										<th:block th:each="theme : ${themes}">
 											<span th:text="${theme.nom}">
 											</span>
 										</th:block>
 									</td>
-									<td th:text="${sujet.nbnotes}"></td>
+									<td class="text-center"   th:text="${sujet.nbnotes}"></td>
 									<span th:if="${sujet.nbnotes > 0}"><td th:text="${sujet.noteMoyenne}"></td></span>
 									<span th:unless="${sujet.nbnotes > 0}"><td></td></span>
 									<td>

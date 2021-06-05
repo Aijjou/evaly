@@ -20,7 +20,7 @@ public class UserPrincipal implements UserDetails {
 	private Integer id;
 
 	private String username;
-	
+
 	private String prenom;
 
 	@JsonIgnore
@@ -36,21 +36,22 @@ public class UserPrincipal implements UserDetails {
 
 	}
 
-	public UserPrincipal(Integer id, String username, String email, 
-			Collection<? extends GrantedAuthority> authorities,String prenom) {
+	public UserPrincipal(Integer id, String username, String email, String password,
+			Collection<? extends GrantedAuthority> authorities, String prenom) {
 		super();
 		this.id = id;
 		this.username = username;
 		this.prenom = prenom;
 		this.mail = email;
-		
+		this.password = password;
 		this.authorities = authorities;
 	}
 
 	public static UserDetails create(Utilisateur utilisateur) {
 		List<GrantedAuthority> authorities = utilisateur.getRoles().stream()
 				.map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
-		return new UserPrincipal(utilisateur.getIdUtilisateur(), utilisateur.getNom(), utilisateur.getMail(), authorities, utilisateur.getPrenom());
+		return new UserPrincipal(utilisateur.getIdUtilisateur(), utilisateur.getNom(), utilisateur.getMail(),
+				utilisateur.getPassword(), authorities, utilisateur.getPrenom());
 	}
 
 	public Integer getId() {
@@ -60,7 +61,6 @@ public class UserPrincipal implements UserDetails {
 	public String getEmail() {
 		return mail;
 	}
-	
 
 	public String getPrenom() {
 		return prenom;
@@ -116,8 +116,5 @@ public class UserPrincipal implements UserDetails {
 
 		return Objects.hash(id);
 	}
-	
-	
-	
-	
+
 }

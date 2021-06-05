@@ -8,6 +8,8 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
+import model.Apprenant;
+import model.Examen;
 import model.ResultatExamen;
 import repository.ResultatExamenRepository;
 import service.ResultatExamenService;
@@ -40,6 +42,12 @@ public class ResultatExamenImpl implements ResultatExamenService{
 	public void save(ResultatExamen s) {
 		resultatExamenRepository.save(s);
 
+	}
+
+
+	@Override
+	public Optional<ResultatExamen> findByApprenantAndExamen(Apprenant a, Examen e) {
+		return resultatExamenRepository.findByApprenantAndExamen(a, e);
 	}
 
 }
