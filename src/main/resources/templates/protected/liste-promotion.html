@@ -94,14 +94,14 @@
 								<th scope="col">Date Création</th>
 								<th scope="col">Année Création</th>
 								<th scope="col">Liste Apprenants</th>
-									<th scope="col">Opérations</th>
+								<th scope="col">Opérations</th>
 							</tr>
 						</thead>
 						<tbody class="bg-dark ">
 							<tr th:each="promotion : ${promotions}" class="bg-dark">
-								<td th:text="${promotion.nom}"></td>
-								<td th:text="${promotion.dateCreation}"></td>
-								<td th:text="${promotion.anneeCreation}"></td>
+								<td class="text-center"   th:text="${promotion.nom}"></td>
+								<td class="text-center"   th:text="${promotion.dateCreation}"></td>
+								<td class="text-center"   th:text="${promotion.anneeCreation}"></td>
 								<td>
 									<button type="submit" class="btn btn-dark mr-2"
 										name="promoSelect" th:value="${promotion.idPromotion}">

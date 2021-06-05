@@ -1,5 +1,7 @@
 package controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -122,6 +125,10 @@ public class ExamenController {
 			examensForProf.addAll(examSujetProf);
 		}
 		
+		for (Examen e : examensForProf) {
+			System.out.println(e.getDateExamen());
+		}
+		
 		model.addAttribute("examens", examensForProf);
 		model.addAttribute("connexion", isConnectBoolean);
 		model.addAttribute("apprenant", isApprenant);
@@ -159,6 +166,10 @@ public class ExamenController {
 			return "protected/creation-examen";
 		}
 		Examen nve = new Examen();
+		
+		// FORMATEUR PAR DEFAUT
+		Optional<Formateur> f = formateurService.findById(1);
+		nve.setFormateur(f.get());
 
 		System.out.println(examen.getDateExamen());
 		nve.setTitre(examen.getTitre());
@@ -177,10 +188,23 @@ public class ExamenController {
 		}
 		Date out = Date.from(dateTime.atZone(ZoneId.systemDefault()).toInstant());
 		for (int i = 0; i < 10; i++) {
-			System.out.println(out);
+			System.out.println("DATE GOING TO SAVE : "+out);
 		}
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		String datetosave = sdf.format(out);
+		nve.setDateExamenString(datetosave);
 		nve.setDateExamen(out);
-
+		Date fromstring = null;
+		try {
+			fromstring = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(datetosave);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for (int i = 0; i < 10; i++) {
+			System.out.println("DATE GOING TO SAVE FROM STRING : "+fromstring);
+		}
 		examenService.save(nve);
 
 
@@ -190,16 +214,67 @@ public class ExamenController {
 	@RequestMapping(value = "protected/questionnaire/{idExamen}", method = RequestMethod.GET)
 	public String passageExamen(Model model, @PathVariable(name = "idExamen") String idExamen) {
 
-		// Vérification d'un résultat existant
-		//
-		// Find ResultatExamenByApprenantAndExamen
-		// si trouvé redirect liste-examen // else affichage
-		//
-		
-		
 		Integer idex = Integer.parseInt(idExamen);
 		Optional<Examen> examenopt = examenService.findById(idex);
 		Examen examen = examenopt.get();
+		
+		
+		Integer idapprenant = 2;
+		Optional<Apprenant> a = apprenantService.findById(idapprenant);
+		Apprenant app = a.get();
+		
+		// Vérification d'un résultat existant
+				//
+				// Find ResultatExamenByApprenantAndExamen
+				// si trouvé redirect liste-examen // else affichage
+				//
+		
+//		if (resultatExamenService.findByApprenantAndExamen(app, examen)!=null) {
+//			return "redirect:/protected/liste-examen";
+//		}
+		
+		String depart = examen.getDateExamenString();
+		String fin = null;
+		Date datedebutexamen = null;
+		try {
+			datedebutexamen = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(depart);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Long departmillisec = datedebutexamen.getTime();
+		Integer duree = examen.getDureeExamen();
+		Long dureemillisec = (long) (duree*60*1000);
+		Date datefinexamen = new Date(departmillisec+dureemillisec);
+		
+		for (int i = 0; i < 10; i++) {
+			System.out.println("DEPART"+depart+" FIN "+datefinexamen);
+		}
+		
+		String pattern = "yyyy-MM-dd HH:mm";
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+		String timeleftstring = simpleDateFormat.format(datefinexamen);
+		System.out.println(timeleftstring);
+		
+		Date now = new Date();
+		Long nowmilli = now.getTime();
+		Long finmilli = datefinexamen.getTime();
+		Long timeleftmilli = finmilli-nowmilli;
+		
+//	    try {
+//			model.addAttribute("endDate", new SimpleDateFormat("yyyy-MM-dd").parse("2022-01-01"));
+//		} catch (ParseException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		 try {
+			model.addAttribute("endDate", new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(timeleftstring));
+			model.addAttribute("timeleftmilli", timeleftmilli);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		QuestionnaireDto qdto = new QuestionnaireDto(examen);
 		qdto.questionsExam(examen);
@@ -315,7 +390,7 @@ public class ExamenController {
 			for (int i = 0; i < 2; i++)
 				System.out.println(" POST SAVE :" + q.getIdQuestion());
 		}
-
+		
 		Double note = (double) ((20 * points) / totalcoeff);
 
 		// Mise à jour sujet

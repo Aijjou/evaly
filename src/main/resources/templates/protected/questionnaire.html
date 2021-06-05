@@ -1,19 +1,13 @@
-
-
-
 <!DOCTYPE html>
 <html>
 
 <head>
 <meta charset="UTF-8">
 <title>Questionnaire</title>
-
-
-<link href="questionnaireCss.css" rel="stylesheet">
-
-
 <!-- import header aside -->
-
+  <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/5.11.2/css/all.css} "/>
+    <link th:rel="stylesheet" th:href="@{/assets/styles/custom.css} "/>
 <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -63,6 +57,13 @@
 
 <script
 	src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.colVis.min.js"></script>
+	
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/assets/jquery-countdown/jquery.countdown.min.js}"></script>
+
+
 </head>
 
 <body>
@@ -87,7 +88,7 @@
 
 				<form method="post" th:action="@{/protected/questionnaire-sub}"
 					th:object="${qdto}">
-					<input type="hidden" name="idExamen" th:value="*{idExamen}">
+					<input type="hidden"  id="questionnaireform" name="idExamen" th:value="*{idExamen}">
 
 					<div class="d-flex flex-row justify-content-center">
 
@@ -99,10 +100,13 @@
 
 
 									<div class="w-100  align-items-center tets">
-										<h2 th:text="*{titre}"></h2>
-										<h4 th:text="*{nomSujet}"></h4>
-										<span th:text="*{descriptionSujet}"></span>
-
+										<h2  class="text-center"   th:text="*{titre}"></h2>
+										<h4 class="text-center"   th:text="*{nomSujet}"></h4>
+										<span class="text-center"  th:text="*{descriptionSujet}"></span>
+											<div class="rounded bg-gradient text-white shadow p-5 text-center mb-5">
+               								 <p class="mb-0 font-weight-bold">Fin de l'examen dans :&nbsp;</p>
+                							<div id="clock" class="countdown pt-4"></div>
+            								</div>
 										<tr th:each="question, iStat : ${qdto.questions}">
 
 											<div class="radio-toolbar">
@@ -112,8 +116,7 @@
 												<div class="d-flex flex-row">
 													Coefficient : &nbsp;
 													<div th:text=" ${question.coefficient}"></div>
-													&nbsp;&nbsp;Index :&nbsp;
-													<div th:text=" ${iStat.index}"></div>
+													&nbsp;&nbsp;
 												</div>
 												<p></p>
 
@@ -194,6 +197,33 @@
 			</div>
 		</div>
 	</div>
+<script th:inline="javascript">
+    var endDate = [[${#calendars.format(endDate,'yyyy-MM-dd HH:mm')}]];
 
+    $('#clock').countdown(endDate).on('update.countdown', function (event) {
+        var $this = $(this).html(event.strftime(''
+            + '<span class="h1 font-weight-bold">%D</span> Day%!d'
+            + '<span class="h1 font-weight-bold">%H</span> Hr'
+            + '<span class="h1 font-weight-bold">%M</span> Min'
+            + '<span class="h1 font-weight-bold">%S</span> Sec'));
+    });
+</script>
+<script type="text/javascript">
+function formAutoSubmit () {
+var frm = document.getElementById("questionnaireform");
+/*<![CDATA[*/
+
+var timeleft = /*[[${timeleftmilli}]]*/ 'default';
+console.log(message);
+
+/*]]>*/
+
+document.forms[0].submit();
+}
+function validate() {
+    return true;
+}
+setTimeout(function() { formAutoSubmit(); } , 5000);
+</script>
 </body>
 </html>

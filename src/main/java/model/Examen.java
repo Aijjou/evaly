@@ -30,6 +30,7 @@ public class Examen implements java.io.Serializable {
 	private Formateur formateur;
 	private String titre;
 	private Date dateExamen;
+	private String dateExamenString;
 	private Integer dureeExamen;
 	private Set<ReponseApprenantExamen> reponseApprenantExamens = new HashSet<ReponseApprenantExamen>(0);
 	private Set<ResultatExamen> resultatExamens = new HashSet<ResultatExamen>(0);
@@ -158,5 +159,16 @@ public class Examen implements java.io.Serializable {
 	public void setReponseApprenants(Set<ReponseApprenant> reponseApprenants) {
 		this.reponseApprenants = reponseApprenants;
 	}
+	
+	@Column(name = "date_examen_string")
+	public String getDateExamenString() {
+		return dateExamenString;
+	}
+
+	public void setDateExamenString(String dateExamenString) {
+		this.dateExamenString = dateExamenString;
+	}
+	
+	
 
 }
