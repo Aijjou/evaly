@@ -30,14 +30,16 @@
 		<nav class="navbar">
 			<div class="container-fluid ">
 				<img class="navbar-branda col-1" src="/images/evaly3.png" />
-				<form class="d-flex flex-row justify-content-center col-6 mr-0">
-					<div class="bienvenue text-center">Bienvenue sur Evaly</div>
+				<form class="d-flex flex-row justify-content-center col-9 mr-0">
+					<div class="bienvenue text-center"
+						th:if="${titre == 'Bienvenue sur Evaly'}" th:text="${titre}"></div>
+					<div class="bienvenue text-center"
+						th:if="${titre == 'Decouvrez Evaly'}" th:text="${titre}"></div>
+					<div class="bienvenue text-center" th:if="${titre} == null">
+						Evaly, <i><span class="h3">testez vos limites</span></i>
+					</div>
 				</form>
-				<div class="col-1 d-flex flex-row justify-content-end mr-0"
-					th:if="${connexion != false}">
-					<i class="far fa-bell position-relative mr-0 pr-0"><sup><span
-							class="badge border border-light rounded-circle bg-success">1</span></sup></i>
-				</div>
+
 				<div class="col-2 ml-0" sec:authorize="isAuthenticated()">
 					<div class="row">
 
@@ -55,10 +57,12 @@
 							<div class="row ml-0 mr-0" sec:authorize="hasRole('ROLE_ADMIN')">
 								<label for="" class="role mt-1 mb-0 text-white">Admin</label>
 							</div>
-							<div class="row ml-0 mr-0" sec:authorize="hasRole('ROLE_FORMATEUR')">
+							<div class="row ml-0 mr-0"
+								sec:authorize="hasRole('ROLE_FORMATEUR')">
 								<label for="" class="role mt-1 mb-0 text-white">Formateur</label>
 							</div>
-							<div class="row ml-0 mr-0" sec:authorize="hasRole('ROLE_APPRENANT')">
+							<div class="row ml-0 mr-0"
+								sec:authorize="hasRole('ROLE_APPRENANT')">
 								<label for="" class="role mt-1 mb-0 text-white">Apprenant</label>
 							</div>
 

@@ -11,8 +11,8 @@ import org.springframework.stereotype.Repository;
 import model.Utilisateur;
 
 
-@Repository
-public interface UtilisateurRepository extends JpaRepository<Utilisateur, Integer>{
+
+public interface UtilisateurRepository extends CrudRepository<Utilisateur, Integer>{
 
 	
 	

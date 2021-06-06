@@ -155,6 +155,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		return formateur3;
 	}
 
+	
+	
+	
+	
+	
 	@Override
 	public Optional<Utilisateur> findByUsernameOrEmail(String username, String email) {
 
@@ -180,9 +185,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	}
 
 	@Override
-	public Optional<Utilisateur> findById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Optional<Formateur> findById1(Integer id) {
+		
+		return formateurRepository.findById(id);
 	}
 
 	@Override
@@ -202,10 +207,12 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		return null;
 	}
 
-	public String test(String test) {
-
-		System.out.println(test);
-		return test;
+	@Override
+	public Optional<Utilisateur> findById(Integer id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
+
+	
 
 }

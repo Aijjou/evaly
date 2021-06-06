@@ -25,12 +25,16 @@ public interface UtilisateurService  {
 	Optional<Utilisateur> findByUsername(String username);
 
 	Optional<Utilisateur> findById(Integer id);
+	
+	Optional<Formateur> findById1(Integer id);
 
 	public void verifyCode(VerifyCodeDto verifyCodeDto);
 
 	public Utilisateur findByEmailAndPassword(String email, String password);
 	
-	public String test(String test);
+	
+	
+	
 	
 	
 }
