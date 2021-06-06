@@ -69,20 +69,42 @@
 			<div class="d-flex flex-row justify-content-center  p-4 main w-100">
 				<div class="card  align-self-center p-2  m-2 w-100">
 					<div class="row mt-4 align-self-center w-100">
+					<div class="row mb-4 w-100">
+					<div
+						class="col-4 align-self-center d-flex flex-row justify-content-center">
+						<a class="btn ajoutButton shadow-lg"
+							href="/protected/creation-question"> <i
+							class="fas fa-folder-plus"></i> &nbsp; Créer une Question
+						</a>
+					</div>
+					<div
+						class="col-4 align-self-center d-flex flex-row justify-content-center">
+						<a class="btn creerButton shadow-lg"
+							href="/protected/creation-sujet"> <i
+							class="fas fa-folder-plus"></i> &nbsp; Créer un Sujet
+						</a>
+					</div>
+						<div
+						class="col-4 align-self-center d-flex flex-row justify-content-center">
+						<a class="btn creerButton shadow-lg"
+							href="/protected/creation-examen"> <i
+							class="fas fa-folder-plus"></i> &nbsp; Créer un Examen
+						</a>
+					</div>
+				</div>
 					<form th:action="@{/protected/liste-promotion-select}" method="post">
 						<table
 							class="table table-dark align-self-center shadow rounded bg-dark text-white"
 							id="datatable">
 							<thead class="bg-dark">
 								<tr>
-									<th scope="col">Nom sujet</th>
-									<th scope="col">Description</th>
-									<th scope="col">Matière</th>
-									<th scope="col">Thème(s)</th>
-										<th scope="col">Nombre notes</th>
-									<th scope="col">Moyenne/20</th>
-						
-									<th scope="col" class="text-center">Modification</th>
+									<th class="text-center"   scope="col">Nom sujet</th>
+									<th  class="text-center"  scope="col">Description</th>
+									<th  class="text-center"  scope="col">Matière</th>
+									<th  class="text-center"  scope="col">Thème(s)</th>
+										<th class="text-center"   scope="col">Nombre notes</th>
+									<th  class="text-center"  scope="col">Moyenne/20</th>
+									<th class="text-center"   scope="col" >Modification</th>
 								</tr>
 							</thead>
 							<tbody class="bg-dark ">
@@ -97,9 +119,9 @@
 										</th:block>
 									</td>
 									<td class="text-center"   th:text="${sujet.nbnotes}"></td>
-									<span th:if="${sujet.nbnotes > 0}"><td th:text="${sujet.noteMoyenne}"></td></span>
+									<span  class="text-center"   th:if="${sujet.nbnotes > 0}"><td th:text="${sujet.noteMoyenne}"></td></span>
 									<span th:unless="${sujet.nbnotes > 0}"><td></td></span>
-									<td>
+									<td  class="text-center"  >
 										<a href="info_eleve.html" target="_blank" class="mr-2"
 										rel="noopener noreferrer" type="button" data-toggle="modal"
 										data-target="#myModal"><i class="fas fa-edit"></i></a>

@@ -20,8 +20,8 @@
 	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
 	crossorigin="anonymous"></script>
 
-<link href="../../css/liste-sujet.css" rel="stylesheet"
-	th:href="@{/css/liste-sujet.css}">
+<link href="../../css/liste-examen.css" rel="stylesheet"
+	th:href="@{/css/liste-examen.css}">
 <link rel="stylesheet" th:href="@{/css/header.css}">
 <link href="../../css/aside.css" rel="stylesheet"
 	th:href="@{/css/aside.css}">
@@ -69,22 +69,45 @@
 			<div class="d-flex flex-row justify-content-center  p-4 main w-100">
 				<div class="card  align-self-center p-2  m-2 w-100">
 					<div class="row mt-4 align-self-center w-100">
+						<div class="row mb-4 w-100">
+					<div
+						class="col-4 align-self-center d-flex flex-row justify-content-center">
+						<a class="btn ajoutButton shadow-lg"
+							href="/protected/creation-question"> <i
+							class="fas fa-folder-plus"></i> &nbsp; Créer une Question
+						</a>
+					</div>
+					<div
+						class="col-4 align-self-center d-flex flex-row justify-content-center">
+						<a class="btn creerButton shadow-lg"
+							href="/protected/creation-sujet"> <i
+							class="fas fa-folder-plus"></i> &nbsp; Créer un Sujet
+						</a>
+					</div>
+						<div
+						class="col-4 align-self-center d-flex flex-row justify-content-center">
+						<a class="btn creerButton shadow-lg"
+							href="/protected/creation-examen"> <i
+							class="fas fa-folder-plus"></i> &nbsp; Créer un Examen
+						</a>
+					</div>
+				</div>
 						<table
 							class="table table-dark align-self-center shadow rounded bg-dark text-white"
 							id="datatable">
 							<thead class="bg-dark">
 								<tr>
-								<th scope="col">Id</th>
-									<th scope="col">Titre</th>
-									<th scope="col">Promotion</th>
-									<th scope="col">Date</th>
-									<th scope="col">Durée (Minutes)</th>
-									<th scope="col">Action</th>
+									<th  class="text-center"  scope="col">Id</th>
+									<th  class="text-center"  scope="col">Titre</th>
+									<th  class="text-center"  scope="col">Promotion</th>
+									<th  class="text-center"  scope="col">Date</th>
+									<th  class="text-center"  scope="col">Durée (Minutes)</th>
+									<th  class="text-center"  scope="col">Action</th>
 								</tr>
 							</thead>
 							<tbody class="bg-dark ">
 								<tr th:each="examen : ${examens}" class="bg-dark">
-										<td class="text-center"   th:text="${examen.idExamen}"></td>
+									<td class="text-center"   th:text="${examen.idExamen}"></td>
 									<td class="text-center"   th:text="${examen.titre}"></td>
 									<td class="text-center"   th:text="${examen.promotion.nom}"></td>
 									<td class="text-center"   th:text="${examen.dateExamenString}"></td>

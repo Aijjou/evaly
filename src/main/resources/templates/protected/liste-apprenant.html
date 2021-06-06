@@ -81,7 +81,7 @@
 					id="datatable">
 					<thead class="bg-dark">
 						<tr>
-							<th scope="col" hidden>#</th>
+							<th scope="col" >#</th>
 							<th scope="col">Nom</th>
 							<th scope="col">Prenom</th>
 							<th scope="col">Email</th>
@@ -95,7 +95,7 @@
 							<td th:text="${apprenant.nom}"></td>
 							<td th:text="${apprenant.prenom}"></td>
 							<td th:text="${apprenant.mail}"></td>
-							<td th:utext="${apprenant.nomPromoString}"></td>
+							<td th:utext="${apprenant.promotion.nom}"></td>
 							<td class="d-flex flex-row justify-content-center"><a
 								href="http://" target="_blank" rel="noopener noreferrer"
 								class="mr-2"><i class="fas fa-edit"></i></a> &nbsp; <a
@@ -104,7 +104,8 @@
 								data-target="#myModal"><i
 									class="far fa-arrow-alt-circle-right"></i></a> &nbsp; <a
 								href="http://" target="_blank" rel="noopener noreferrer"
-								class="mr-2"><i class="far fa-envelope-open"></i></a></td>
+								class="mr-2"><i class="far fa-envelope-open"></i></a>
+								</td>
 						</tr>
 					</tbody>
 					<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
