@@ -38,6 +38,7 @@ public class UserPrincipal implements UserDetails {
 
 	public UserPrincipal(Integer id, String username, String email, String password,
 
+
 			Collection<? extends GrantedAuthority> authorities, String prenom) {
 
 		super();
