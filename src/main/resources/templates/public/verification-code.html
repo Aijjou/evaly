@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 <meta charset="UTF-8">
@@ -32,10 +32,11 @@
 	<div
 		class="container-fluid principal d-flex flex-row justify-content-center">
 		<main class="col-10 d-flex flex-column justify-content-center">
-				<div class="d-flex flex-row justify-content-center mb-4">
+			<div class="d-flex flex-row justify-content-center mb-4">
 				<div
 					class="card connexion w-25 d-flex flex-column justify-content-between pt-1 pl-3 pr-4 pb-2 mb-4 ">
-					<small class="row d-flex flex-row justify-content-start promotion"><i class="fas fa-plug align-self-center ml-1 font-weight-bold"></i>&nbsp;
+					<small class="row d-flex flex-row justify-content-start promotion"><i
+						class="fas fa-plug align-self-center ml-1 font-weight-bold"></i>&nbsp;
 						<div class="align-self-center pt-1">CONNEXION</div></small>
 					<div class="row align-self-center ">AUTHENTIFICATION</div>
 				</div>
@@ -44,21 +45,26 @@
 				<div class="card d-flex flex-row justify-content-center w-75 p-4">
 
 					<div class="card-body">
-						<form class="" method="post">
-							<h5 class="text-center"><u>Vous avez reçu un
-								mail</u></h5>
+						<form class="" th:action="@{/public/verification-code}"
+							th:object="${verifyCodeDto}" method="post">
+							<h5 class="text-center">
+								<u>Vous avez reçu un mail</u>
+							</h5>
 
-							<div class="d-flex flex-row justify-content-center w-100 my-4" data-validate>
-								<label class="d-flex flex-column justify-content-center text-dark mr-4 mb-0 infoCode">Merci de saisir le code de
-									vérification</label> <input class="" type="text"
-									placeholder="ex : H2BI96Y"> <span
-									class="focus-input100" data-symbol="&#xf206;"></span> 
+							<div class="d-flex flex-row justify-content-center w-100 my-4"
+								data-validate>
+								<label
+									class="d-flex flex-column justify-content-around text-dark mr-4 mb-0 infoCode">Merci
+									de saisir le code de vérification</label> <input class="" type="text"
+									th:field="*{token}" placeholder="ex : H2BI96Y"> <span
+									class="focus-input100" data-symbol="&#xf206;"></span> <span
+									th:each="error : ${#fields.errors('token')}" th:text="${error}" class="text-danger"></span>
 							</div>
 
 							<div class="d-flex flex-row justify-content-center w-100">
 								<div class="">
 
-									<a class="btn btn-outline-light validerButton" href="/public/inscription-final">Validation</a>
+									<button class="btn btn-outline-light validerButton">Validation</button>
 								</div>
 							</div>
 						</form>

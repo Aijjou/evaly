@@ -20,8 +20,6 @@ import principal.CustomUtilisateurDetailsService;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	
-
 	@Autowired
 	private CustomUtilisateurDetailsService userDetailsService;
 
@@ -35,13 +33,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		System.out.println("config");
-		http.csrf().disable().authorizeRequests().antMatchers("/admin/**").hasAnyRole("ROLE_FORMATEUR")
+		http.csrf().disable().authorizeRequests().antMatchers("/admin/**", "/protected/**")
+				.hasAuthority("ROLE_ADMIN").antMatchers("/protected/**").hasAnyAuthority("ROLE_FORMATEUR")
 				.antMatchers("/webjars/**", "/static/**", "/peritable/**", "/public/**", "/assets/**", "/css/**",
-						"/public/connexion/**", "/inscription/**", "/verification-code/**", "/images/**", "/admin/**",
-						"/protected/**", "/fontawesome/**", "/logout")
+						"/images/**", "/fontawesome/**", "/logout")
 				.permitAll().anyRequest().authenticated().and().formLogin().loginPage("/public/connexion")
 				.defaultSuccessUrl("/protected/home").usernameParameter("email").passwordParameter("password").and()
-				.logout().logoutSuccessUrl("/public/connexion");
+				.logout().logoutSuccessUrl("/public/connexion").and().exceptionHandling()
+				.accessDeniedPage("/public/accessDenied");
+		;
 
 	}
 

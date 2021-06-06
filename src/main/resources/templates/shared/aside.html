@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -25,17 +25,21 @@
 </head>
 <body>
 	<aside th:fragment="aside"
-		class="aside d-flex flex-column justify-content-start">
+		class="aside d-flex flex-column justify-content-start"
+		sec:authorize="isAuthenticated()">
+
 		<ul class="p-2">
+
+			<li class="mb-4 pb-0"><a href="/protected/home"><i class="fas fa-home"></i>&nbsp;Home</a></li>
 			<li class="mb-4 pb-0 nav-header" data-toggle="collapse"
 				data-target="#user" sec:authorize="hasRole('ROLE_ADMIN')">
 				<div class="hvr">
 					<i class="fas fa-list-ul"></i>&nbsp;Utilisateur
 				</div>
 				<ul class="nav nav-list collapse ml-4 mb-0" id="user">
-					<li class="mb-4 pb-0"><a th:href="@{/admin/liste-formateur}"><i
+					<li class="mb-4 pb-0"><a href="/admin/liste-formateur"><i
 							class="fas fa-user-tie"></i>&nbsp;Formateur</a></li>
-					<li class="mb-4 pb-0"><a th:href="@{/protected/liste-eleve}"><i
+					<li class="mb-4 pb-0"><a href="/protected/liste-apprenant"><i
 							class="fas fa-feather-alt"></i>&nbsp;Apprenants</a></li>
 				</ul>
 			</li>
@@ -82,7 +86,10 @@
 				sec:authorize="hasRole('ROLE_ADMIN') || hasRole('ROLE_FORMATEUR') || hasRole('ROLE_APPRENANT')"><i
 					class="fas fa-poll"></i>&nbsp;Résultats</a></li>
 			<li class="mb-4 pb-0" sec:authorize="hasRole('ROLE_ADMIN')"><a
-				href="http://"><i class="fas fa-user-cog"></i>&nbsp;Administration</a></li>
+				href="http://" class="btn btn-info" data-toggle="collapse"
+				role="button" aria-expanded="false"
+				aria-controls="multiCollapseExample3"><i class="fas fa-user-cog"></i>&nbsp;
+					Administration</a></li>
 			<li class="mb-4 pb-0"><a href="/logout"
 				sec:authorize="isAuthenticated()"><i class="fas fa-sign-out-alt"></i>&nbsp;Déconnexion</a></li>
 		</ul>

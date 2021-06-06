@@ -1,24 +1,19 @@
 package controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.apache.tomcat.util.descriptor.web.ContextResourceEnvRef;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,26 +21,26 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import dto.AdminEtablissementDto;
 import dto.FormateurDto;
+import dto.FormateurDtoFinal;
 import dto.UtilisateurDto;
 import dto.VerifyCodeDto;
-import model.Organisation;
-import model.Role;
-import model.Utilisateur;
-import repository.UtilisateurRepository;
-import service.GroupeService;
-import service.MatiereService;
-import service.OrganisationService;
-import service.RoleService;
-import service.UtilisateurService;
 import model.Formateur;
 import model.GroupeFormateur;
 import model.Matiere;
+import model.Organisation;
+import model.Promotion;
+import model.Utilisateur;
+import model.VerifyUtilisateur;
+import service.GroupeService;
+import service.MatiereService;
+import service.OrganisationService;
+import service.PromotionService;
+import service.RoleService;
+import service.UtilisateurService;
+import service.VerifyUtilisateurService;
 
 @Controller
 public class InscriptionController {
-
-	Boolean isConnectBoolean = false;
-	Boolean isAdmin = false;
 
 	@Autowired
 	private GroupeService groupeService;
@@ -60,24 +55,47 @@ public class InscriptionController {
 	private UtilisateurService utilisateurService;
 
 	@Autowired
+	private VerifyUtilisateurService verifyUtilisateurService;
+
+	@Autowired
 	private RoleService roleService;
+
+	@Autowired
+	private PromotionService promotionService;
 
 	@RequestMapping(value = "/public/verification-code", method = RequestMethod.GET)
 	public String verificationCode(Model model) {
-		
+
+		model.addAttribute("verifyCodeDto", new VerifyCodeDto());
+
 		return "/public/verification-code";
 	}
 
 	@PostMapping("/public/verification-code")
 	public String verifyCodeAction(Model model, @Valid VerifyCodeDto verifyCodeDto, BindingResult result) {
 
+		List<Promotion> promotions = promotionService.promotions();
+		System.err.println("verifiy code" + verifyCodeDto);
+
 		if (result.hasErrors()) {
 			return "/public/verification-code";
 		}
 
+		VerifyUtilisateur verifyutilisateur = verifyUtilisateurService.findByToken(verifyCodeDto.getToken()).get();
+
+		System.out.println("verifyUtilisateur " + verifyutilisateur.getUtilisateur().getIdUtilisateur());
+
+		Formateur formateur = utilisateurService.findById1(verifyutilisateur.getUtilisateur().getIdUtilisateur()).get();
+
+		FormateurDtoFinal formateurDtoFinal = new FormateurDtoFinal(formateur.getIdUtilisateur(), formateur.getNom(),
+				formateur.getPrenom(), formateur.getMail(), null, null, null, null, null);
+
 		utilisateurService.verifyCode(verifyCodeDto);
 
-		return "redirect:/public/inscription-final";
+		model.addAttribute("formateurDtoFinal", formateurDtoFinal);
+		model.addAttribute("promotions", promotions);
+
+		return "/public/inscription-final";
 	}
 
 	@RequestMapping(value = "/public/inscription-final", method = RequestMethod.GET)
@@ -87,17 +105,23 @@ public class InscriptionController {
 	}
 
 	@RequestMapping(value = "/public/inscription-final", method = RequestMethod.POST)
-	public String inscriptionFinal(Model model, @Valid @ModelAttribute("compteCreateDao") UtilisateurDto utilisateurDto,
-			BindingResult result, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public String inscriptionFinal(Model model,
+			@Valid @ModelAttribute("formateurDtoFinal") FormateurDtoFinal formateurDtoFinal, BindingResult result,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		System.err.println("formateurDtoFinal " + formateurDtoFinal.getIdFormateurDto());
+		
+		
+		Formateur formateur = new Formateur();
+		
+		
+		
 
 		return "/public/inscription-final";
 	}
 
 	@RequestMapping(value = "/admin/inscription-formateur-admin", method = RequestMethod.GET)
 	public String inscriptionFormateurAdmin(FormateurDto formateurDto, Model model) {
-
-		isConnectBoolean = true;
-		isAdmin = true;
 
 		List<GroupeFormateur> groupesList = groupeService.getListGroupeFormateur();
 		List<Matiere> matieres = matiereService.matieres();
@@ -147,8 +171,6 @@ public class InscriptionController {
 
 		System.out.println(" adminDto   " + adminEtablissementDto);
 
-		utilisateurService.test("coucou");
-
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
 		if (adminEtablissementDto.getIsFormateur() != null) {
@@ -187,11 +209,10 @@ public class InscriptionController {
 	@RequestMapping(value = "/protected/inscription-apprenant-formateur", method = RequestMethod.GET)
 	public String inscriptionApprenantFormateur(Model model) {
 
-		isConnectBoolean = true;
-		isAdmin = true;
-
-		model.addAttribute("connexion", isConnectBoolean);
-		model.addAttribute("admin", isAdmin);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (auth == null) {
+			return "redirect:/public/connexion";
+		}
 
 		return "/protected/inscription-apprenant-formateur";
 	}

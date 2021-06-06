@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 <meta charset="UTF-8">
@@ -34,9 +34,8 @@
 		$('.datepicker').datepicker();
 	</script>
 	<div th:replace="/shared/header :: header"></div>
-	<div
-		class="principal d-flex flex-column justify-content-around">
-	<div class="d-flex flex-row justify-content-center mb-4 titre">
+	<div class="principal d-flex flex-column justify-content-around">
+		<div class="d-flex flex-row justify-content-center mb-4 titre">
 			<div
 				class="card connexion w-25 d-flex flex-column justify-content-between pt-1 pl-3 pr-4 pb-2 mb-4 ">
 				<small class="row d-flex flex-row justify-content-start promotion"><i
@@ -45,75 +44,79 @@
 				<div class="row align-self-center">INSCRIPTION - FINAL</div>
 			</div>
 		</div>
-		
-			<div class="d-flex flex-row justify-content-center mt-4">
-				<div class="card d-flex flex-row justify-content-center w-75 p-4 main">
-					<form class="w-75">
-						<div class="form-row">
-							<div class="form-group col-md-6">
-								<label for="nom" class="text-dark font-weight-bold">Nom</label>
-								<input type="text" class="form-control" id="nom"
-									placeholder="Ex : Safouane" required>
-							</div>
-							<div class="form-group col-md-6">
-								<label for="prenom" class="text-dark font-weight-bold">Prénom</label>
-								<input type="text" class="form-control" id="prenom"
-									placeholder="Ex : Pierre" required>
-							</div>
-						</div>
-						<div class="form-row">
-							<div class="form-group col-md-6">
-								<label for="mail" class="text-dark font-weight-bold">Mail</label>
-								<input type="email" class="form-control" id="email"
-									placeholder="Adresse mail" required>
-							</div>
-							<div class="form-group col-md-6">
-								<label for="password" class="text-dark font-weight-bold">Mot
-									de passe</label> <input type="password" class="form-control"
-									id="password" placeholder="Password" required>
-							</div>
-						</div>
-						<div class="form-row mb-0">
-							<div class="form-group col-md-6 mb-0">
-								<label for="reponse" class="text-dark font-weight-bold">Date
-									de naissance</label> <input type="date" id="datepicker"
-									class="form-control text-left mr-2"> 
 
-							</div>
-							<div class="form-group col-md-6 mb-0">
-								<label for="question" class="text-dark font-weight-bold">Question
-									Secrète</label> <input type="text" class="form-control" id="reponse"
-									placeholder="Qui est mon père?" required>
-							</div>
+		<div class="d-flex flex-row justify-content-center mt-4">
+			<div
+				class="card d-flex flex-row justify-content-center w-75 p-4 main">
+				<form class="w-75" th:object="${formateurDtoFinal}"
+					th:action="@{/public/inscription-final}" method="POST">
+					<input th:field="*{idFormateurDto}" id="idFormateurDto"
+						class="d-none" />
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<label for="nom" class="text-dark font-weight-bold">Nom</label> <input
+								type="text" class="form-control" id="nom" th:field="*{nom}"
+								placeholder="Ex : Safouane" required>
 						</div>
-						<div class="form-row mt-3">
-							<div class="form-group col-md-6">
-								<label for="exampleFormControlSelect2"
-									class="text-dark font-weight-bold">Selectionner une ou
-									plusieurs promotions</label> <select multiple class="form-control"
-									id="exampleFormControlSelect2">
-									<option>CDA_2020</option>
-									<option>WEB_2021</option>
-									<option>CDA2_2021</option>
-									<option>MARKETING_2021</option>
-									
-								</select>
-							</div>
-							<div class="form-group col-md-6">
-								<label for="reponseSecrete" class="text-dark font-weight-bold">Réponse
-									secrète</label>
-								<textarea class="form-control" id="reponseSecrete" rows="3" placeholder="ex : Dark Vador"
-									required></textarea>
-							</div>
+						<div class="form-group col-md-6">
+							<label for="prenom" class="text-dark font-weight-bold">Prénom</label>
+							<input type="text" class="form-control" id="prenom"
+								th:field="*{prenom}" placeholder="Ex : Pierre" required>
 						</div>
-						<div class="d-flex flex-row justify-content-end">
-							<a type="submit" href="#" class="btn annulerButton mr-2">ANNULER</a>
-							<a type="submit" href="/public/connexion" class="btn validerButton">VALIDER</a>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<label for="mail" class="text-dark font-weight-bold">Mail</label>
+							<input type="email" class="form-control" id="email"
+								th:field="*{mail}" placeholder="Adresse mail" disabled>
 						</div>
-					</form>
-				</div>
+						<div class="form-group col-md-6">
+							<label for="password" class="text-dark font-weight-bold">Mot
+								de passe</label> <input type="password" class="form-control"
+								th:field="*{password}" id="password" placeholder="Password"
+								required>
+						</div>
+					</div>
+					<div class="form-row mb-0">
+						<div class="form-group col-md-6 mb-0">
+							<label for="reponse" class="text-dark font-weight-bold">Date
+								de naissance</label> <input type="date" id="datepicker"
+								th:field="*{dateNaissance}" class="form-control text-left mr-2">
+
+						</div>
+						<div class="form-group col-md-6 mb-0">
+							<label for="question" class="text-dark font-weight-bold">Question
+								Secrète</label> <input type="text" class="form-control" id="reponse"
+								th:field="*{question}" placeholder="Qui est mon père?" required>
+						</div>
+					</div>
+					<div class="form-row mt-3">
+						<div class="form-group col-md-6">
+							<label for="exampleFormControlSelect2"
+								class="text-dark font-weight-bold">Selectionner une ou
+								plusieurs promotions</label> <select multiple class="form-control"
+								th:field="*{idPromotion}" id="exampleFormControlSelect2">
+								<option th:each="promotion: ${promotions}"
+									th:value="${promotion.idPromotion}" th:text="${promotion.nom}"></option>
+
+							</select>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="reponseSecrete" class="text-dark font-weight-bold">Réponse
+								secrète</label>
+							<textarea class="form-control" id="reponseSecrete" rows="3"
+								placeholder="ex : Dark Vador" th:field="*{reponse}" required></textarea>
+						</div>
+					</div>
+					<div class="d-flex flex-row justify-content-end">
+						<a type="submit" href="/public/connexion"
+							class="btn annulerButton mr-2">ANNULER</a> <button type="submit"
+							class="btn validerButton">VALIDER</button>
+					</div>
+				</form>
 			</div>
-	
+		</div>
+
 	</div>
 </body>
 

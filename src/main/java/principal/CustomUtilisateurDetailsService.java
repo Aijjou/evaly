@@ -30,7 +30,7 @@ public class CustomUtilisateurDetailsService implements UserDetailsService {
 		Utilisateur utilisateur = utilisateurService.findByUsernameOrEmail(usernameOrEmail, usernameOrEmail).orElseThrow(
 				() -> new UsernameNotFoundException("User not found with username or email : " + usernameOrEmail));
 
-		System.out.println(utilisateur);
+		System.out.println( "coucou user" + utilisateur);
 		
 		if (utilisateur != null) {
 			return UserPrincipal.create(utilisateur);

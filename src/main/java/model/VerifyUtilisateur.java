@@ -29,7 +29,7 @@ public class VerifyUtilisateur {
 	@org.hibernate.annotations.Type(type = "org.hibernate.type.TextType")
 	private String token;
 
-	@Column
+	@Column(name="expired_data_token")
 	private LocalDateTime expiredDataToken;
 
 	@Column(name="created_date")
@@ -91,5 +91,13 @@ public class VerifyUtilisateur {
 		return LocalDateTime.now().isAfter(expiredDataToken);
 	}
 
+	@Override
+	public String toString() {
+		return "VerifyUtilisateur [id=" + id + ", token=" + token + ", expiredDataToken=" + expiredDataToken
+				+ ", createdDate=" + createdDate + ", utilisateur=" + utilisateur + "]";
+	}
+
+	
+	
 }
 

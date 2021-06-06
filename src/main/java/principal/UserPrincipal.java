@@ -37,7 +37,10 @@ public class UserPrincipal implements UserDetails {
 	}
 
 	public UserPrincipal(Integer id, String username, String email, String password,
+
+
 			Collection<? extends GrantedAuthority> authorities, String prenom) {
+
 		super();
 		this.id = id;
 		this.username = username;
@@ -50,8 +53,10 @@ public class UserPrincipal implements UserDetails {
 	public static UserDetails create(Utilisateur utilisateur) {
 		List<GrantedAuthority> authorities = utilisateur.getRoles().stream()
 				.map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+
 		return new UserPrincipal(utilisateur.getIdUtilisateur(), utilisateur.getNom(), utilisateur.getMail(),
 				utilisateur.getPassword(), authorities, utilisateur.getPrenom());
+
 	}
 
 	public Integer getId() {

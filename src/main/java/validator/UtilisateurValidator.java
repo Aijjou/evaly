@@ -1,61 +1,63 @@
 package validator;
 
-import java.util.Set;
 import java.util.regex.Pattern;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validator;
-import javax.validation.executable.ExecutableValidator;
-import javax.validation.metadata.BeanDescriptor;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
+import org.springframework.validation.Validator;
 
+import dto.UtilisateurDto;
+import service.UtilisateurService;
 
 @Component
-public class UtilisateurValidator implements Validator{
+public class UtilisateurValidator implements Validator {
 
-	
-	
 	private static final Pattern EMAIL_REGEX = Pattern.compile("^[\\w\\d._-]+@[\\w\\d.-]+\\.[\\w\\d]{2,6}$");
 	private static final Pattern PASSWORD_REGEX = Pattern
 			.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$");
 	private static final Pattern NAME_REGEX = Pattern.compile("^[A-Za-z]*$");
-	
+
+	@Autowired
+	UtilisateurService utilisateurService;
+
 	@Override
-	public <T> Set<ConstraintViolation<T>> validate(T object, Class<?>... groups) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean supports(Class<?> clazz) {
+
+		return UtilisateurDto.class.equals(clazz);
 	}
 
 	@Override
-	public <T> Set<ConstraintViolation<T>> validateProperty(T object, String propertyName, Class<?>... groups) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public void validate(Object target, Errors errors) {
+		ValidationUtils.rejectIfEmpty(errors, "nom", "compte.nom.empty");
+		ValidationUtils.rejectIfEmpty(errors, "prenom", "compte.prenom.empty");
+		ValidationUtils.rejectIfEmpty(errors, "email", "compte.email.empty");
+		ValidationUtils.rejectIfEmpty(errors, "password", "compte.password.empty");
 
-	@Override
-	public <T> Set<ConstraintViolation<T>> validateValue(Class<T> beanType, String propertyName, Object value,
-			Class<?>... groups) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		UtilisateurDto compte = (UtilisateurDto) target;
 
-	@Override
-	public BeanDescriptor getConstraintsForClass(Class<?> clazz) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		if (compte.getMail() != null && !EMAIL_REGEX.matcher(compte.getMail()).matches()) {
 
-	@Override
-	public <T> T unwrap(Class<T> type) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+			errors.rejectValue("email", "compte.email", "Le format du mail est incorrect");
 
-	@Override
-	public ExecutableValidator forExecutables() {
-		// TODO Auto-generated method stub
-		return null;
+		}
+
+		if (compte.getPassword() != null && !PASSWORD_REGEX.matcher(compte.getPassword()).matches()) {
+
+			errors.rejectValue("password", "compte.password", "Le mot de passe est incorrect");
+		}
+
+		if (compte.getNom() != null && !NAME_REGEX.matcher(compte.getNom()).matches()) {
+
+			errors.rejectValue("name", "compte.nom", "Uniquement des caractères alphabétiques");
+		}
+
+		if (compte.getPrenom() != null && !NAME_REGEX.matcher(compte.getPrenom()).matches()) {
+
+			errors.rejectValue("name", "compte.nom", "Uniquement des caractères alphabétiques");
+		}
+
 	}
 
 }

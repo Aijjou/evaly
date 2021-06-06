@@ -24,16 +24,17 @@ import service.UtilisateurService;
 @Controller
 @Scope("session")
 public class ConnexionController {
-	
-
 
 	@Autowired
 	private UtilisateurService utilisateurService;
 
-	
 	@RequestMapping(value = "/public/connexion", method = RequestMethod.GET)
 	public String login(Model model, HttpServletRequest request) {
-		System.out.println("connexion");
+		
+		String titreString = "Decouvrez Evaly";
+
+		model.addAttribute("titre", titreString);
+		
 
 		return "/public/connexion";
 	}
@@ -41,9 +42,18 @@ public class ConnexionController {
 	@RequestMapping(value = "/protected/home", method = RequestMethod.GET)
 	public String getHome(Model model) {
 
-		
+		String titreString = "Bienvenue sur Evaly";
+
+		model.addAttribute("titre", titreString);
 
 		return "/protected/home";
+
+	}
+
+	@RequestMapping(value = "/public/accessDenied", method = RequestMethod.GET)
+	public String accessDenied(Model model) {
+
+		return "/public/accessDenied";
 
 	}
 
