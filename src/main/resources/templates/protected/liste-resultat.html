@@ -71,12 +71,11 @@
 					<div class="row mt-4 align-self-center w-100">
 					<form th:action="@{/protected/liste-promotion-select}" method="post">
 						<table
-							class="table table-dark align-self-center shadow rounded bg-dark text-white"
-							id="datatable">
+							class="table table-dark align-self-center shadow rounded bg-dark text-white justify-content-center" 
+							id="datatable" >
 							<thead class="bg-dark">
 								<tr>
 										<th scope="col">Nom</th>
-											<th scope="col">Prénom</th>
 									<th scope="col">Titre Examen</th>
 									<th scope="col">Date Examen</th>
 									<th scope="col">Promotion</th>
@@ -87,8 +86,7 @@
 							</thead>
 							<tbody class="bg-dark ">
 								<tr th:each="result : ${resultats}" class="bg-dark">
-									<td class="text-center"   th:text="${result.apprenant.nom} "></td>
-									<td  class="text-center"  th:text="${result.apprenant.prenom} "></td>
+									<td class="text-center"   th:text="${result.apprenant.nom}+' '+${result.apprenant.prenom}"></td>
 									<td  class="text-center"  th:text="${result.examen.titre}"></td>
 									<td  class="text-center"  th:text="${result.examen.dateExamen}"></td>
 									<td class="text-center"   th:text="${result.examen.promotion.nom}"></td>

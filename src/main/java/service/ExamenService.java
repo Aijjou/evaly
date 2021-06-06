@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import model.Examen;
+import model.Promotion;
+import model.Sujet;
 
 public interface ExamenService  {
 	
@@ -13,6 +15,9 @@ public interface ExamenService  {
 	
 	public Optional<Examen> findById(Integer id);
 	
+	public List<Examen> examenByPromotion(Promotion promotion);
 	
+	List<Examen> findBySujet(Sujet sujet);
+
 
 }

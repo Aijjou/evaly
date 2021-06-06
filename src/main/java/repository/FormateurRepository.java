@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import model.Formateur;
 
-
 @Repository
 public interface FormateurRepository extends CrudRepository<Formateur, Integer>{
 	
