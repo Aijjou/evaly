@@ -33,10 +33,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		System.out.println("config");
-		http.csrf().disable().authorizeRequests().antMatchers("/admin/**", "/protected/**")
+		http.csrf().disable().authorizeRequests().antMatchers("/admin/**") //  "/protected/**")
 				.hasAuthority("ROLE_ADMIN").antMatchers("/protected/**").hasAnyAuthority("ROLE_FORMATEUR")
 				.antMatchers("/webjars/**", "/static/**", "/peritable/**", "/public/**", "/assets/**", "/css/**",
-						"/images/**", "/fontawesome/**", "/logout")
+						"/images/**", "/fontawesome/**", "/logout","/protected/**")
 				.permitAll().anyRequest().authenticated().and().formLogin().loginPage("/public/connexion")
 				.defaultSuccessUrl("/protected/home").usernameParameter("email").passwordParameter("password").and()
 				.logout().logoutSuccessUrl("/public/connexion").and().exceptionHandling()

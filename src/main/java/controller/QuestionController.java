@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +23,7 @@ import model.Theme;
 import service.MatiereService;
 import service.QuestionService;
 import service.ReponseService;
+import service.SujetService;
 import service.ThemeService;
 
 @Controller
@@ -35,6 +37,9 @@ public class QuestionController {
 
 	@Autowired
 	MatiereService matiereService;
+	
+	@Autowired
+	SujetService sujetService;
 	
 	@Autowired
 	ReponseService reponseService;
@@ -72,8 +77,8 @@ public class QuestionController {
 		return "/protected/creation-question";
 	}
 	
-	@RequestMapping(value = "/protected/edition-question", method = RequestMethod.GET, params = { "idQuestion" })
-	public String editionQuestion(QuestionDto question, Model model, @RequestParam(name = "idQuestion", required = true) String idQuestion) {
+	@RequestMapping(value = "/protected/edition-question/{idQuestion}", method = RequestMethod.GET)
+	public String editionQuestion(QuestionDto question, Model model, @PathVariable(name = "idQuestion") String idQuestion) {
 		Integer idq = Integer.parseInt(idQuestion);
 		
 		Optional<Question> edited = questionService.findById(idq);
@@ -424,6 +429,7 @@ public class QuestionController {
 
 		List<Question> questions = questionService.questions();
 		model.addAttribute("questions", questions);
+		model.addAttribute("sujets", sujetService.sujets());
 		
 		return "/protected/liste-question";
 	}
