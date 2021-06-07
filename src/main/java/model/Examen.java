@@ -113,15 +113,7 @@ public class Examen implements java.io.Serializable {
 		this.titre = titre;
 	}
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "date_examen", length = 10)
-	public Date getDateExamen() {
-		return this.dateExamen;
-	}
 
-	public void setDateExamen(Date dateExamen) {
-		this.dateExamen = dateExamen;
-	}
 
 	@Column(name = "duree_examen")
 	public Integer getDureeExamen() {

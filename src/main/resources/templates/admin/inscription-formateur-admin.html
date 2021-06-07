@@ -56,13 +56,13 @@
 					<div class="form-row">
 						<div class="form-group col-md-6">
 							<label for="nom" class="text-dark font-weight-bold">Nom</label> <input
-								type="text" class="form-control" id="nom" th:fiedls="*{nom}"
+								type="text" class="form-control" id="nom" th:field="*{nom}"
 								name="nom" placeholder="Ex : Safouane" required>
 						</div>
 						<div class="form-group col-md-6">
 							<label for="prenom" class="text-dark font-weight-bold">Prénom</label>
 							<input type="text" class="form-control" id="prenom"
-								th:fiedls="*{prenom}" name="prenom" placeholder="Ex : Pierre"
+								th:field="*{prenom}" name="prenom" placeholder="Ex : Pierre"
 								required>
 						</div>
 					</div>
@@ -70,13 +70,13 @@
 						<div class="form-group col-md-6">
 							<label for="mail" class="text-dark font-weight-bold">Mail</label>
 							<input type="email" class="form-control" id="mail"
-								th:fiedls="*{mail}" name="mail" placeholder="Adresse mail"
+								th:field="*{mail}" name="mail" placeholder="Adresse mail"
 								required>
 						</div>
 						<div class="form-group col-md-6 mb-0">
 							<label for="reponse" class="text-dark font-weight-bold">Date
 								d'inscription</label> <input type="date" id="datepicker"
-								th:fieds="${dateInscriptionDate}" name="dateInscriptionDate"
+								th:field="*{dateInscriptionDate}" name="dateInscriptionDate"
 								class="form-control text-left mr-2">
 
 						</div>
@@ -86,8 +86,8 @@
 						<div class="form-group col-6">
 							<label for="exampleFormControlSelect1"
 								class="text-dark font-weight-bold">Selectionner un
-								groupe</label> <select class="form-control" th:fiedls="*{idGroupe}"
-								id="exampleFormControlSelect1">
+								groupe</label> <select class="form-control" th:field="*{idGroupe}"
+								>
 								<option th:each="groupe:${groupes}" th:text="${groupe.nom}"
 									th:value="${groupe.idGroupeFormateur}"></option>
 
@@ -98,7 +98,7 @@
 							<label for="exampleFormControlSelect2"
 								class="text-dark font-weight-bold">Selectionner une ou
 								plusieurs matières</label> <select multiple class="form-control"
-								th:fiedls="*{idMatieres}" id="exampleFormControlSelect2">
+								th:field="*{idMatieres}" >
 								<option th:each="matiere:${matieres}" th:text="${matiere.nom}"
 									th:value="${matiere.idMatiere}"></option>
 
@@ -110,7 +110,7 @@
 						<div class="form-group col-6">
 							<div class="form-check">
 								<input class="form-check-input" type="checkbox"
-									th:fields="*{isReferent}" name="isReferent" id="isReferent"
+									th:field="*{isReferent}" name="isReferent" id="isReferent"
 									value="true"> <label class="form-check-label text-dark">
 									Referent </label>
 							</div>

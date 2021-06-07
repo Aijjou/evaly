@@ -37,13 +37,16 @@
 
 		<div class="jumbotron shadow-lg main w-50 align-self-center">
 			<h1>
-				Bonjour,<span th:text="${#authentication.getPrincipal().prenom}"></span> !
+				Bonjour, &nbsp;<span th:text="${#authentication.getPrincipal().prenom}"></span> !
 			</h1>
 			<div sec:authorize="hasRole('ROLE_ADMIN')">
-				<p>Vous avez un rôle d'Admin</p>
+				<p>Vous disposez des droits d'accès Admin</p>
 			</div>
-			<div sec:authorize="hasRole('ROLE_MEMBER')">
-				<p>Vous avez un rôle d'Utilisateur simple.</p>
+			<div sec:authorize="hasRole('ROLE_FORMATEUR')">
+				<p>Vous disposez des droits d'accès Formateur.</p>
+			</div>
+			<div sec:authorize="hasRole('ROLE_APPRENANT')">
+				<p>Vous disposez des droits d'accès Apprenant.</p>
 			</div>
 			<hr class="my-4">
 			<p class="lead">Bienvenue dans l'application de gestion des Examens "Evaly".</p>

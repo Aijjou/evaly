@@ -128,6 +128,14 @@ public class FormateurDto {
 	public void setIsReferent(Boolean isReferent) {
 		this.isReferent = isReferent;
 	}
+
+
+	@Override
+	public String toString() {
+		return "FormateurDto [nom=" + nom + ", prenom=" + prenom + ", mail=" + mail + ", dateInscriptionDate="
+				+ dateInscriptionDate + ", idGroupe=" + idGroupe + ", idMatieres=" + idMatieres + ", active=" + active
+				+ ", isAdmin=" + isAdmin + ", isReferent=" + isReferent + "]";
+	}
 	
 	
 	

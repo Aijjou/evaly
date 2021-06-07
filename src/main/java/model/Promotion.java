@@ -125,6 +125,12 @@ public class Promotion implements java.io.Serializable {
 		this.promotionFormateurs = promotionFormateurs;
 	}
 
+	@Override
+	public String toString() {
+		return "Promotion [idPromotion=" + idPromotion + ", organisation=" + organisation + ", nom=" + nom
+				+ ", dateCreation=" + dateCreation + ", anneeCreation=" + anneeCreation + ", examens=" + examens + ", promotionFormateurs=" + promotionFormateurs + "]";
+	}
+
 	
 	
 
