@@ -36,7 +36,7 @@ public class Utilisateur implements java.io.Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Integer idUtilisateur;
+	protected Integer idUtilisateur;
 	private String nom;
 	private String prenom;
 	private String mail;
@@ -44,6 +44,7 @@ public class Utilisateur implements java.io.Serializable {
 	private String photo;
 	private String questionSecrete;
 	private String reponseSecrete;
+	private Date dateNaissance;
 	private Date dateInscription;
 	private Boolean active;
 	private Boolean isAdmin;
@@ -71,6 +72,7 @@ public class Utilisateur implements java.io.Serializable {
 		this.active = active;
 		this.roles = roles;
 		this.isAdmin = isAdmin;
+		
 	}
 	
 	
@@ -218,6 +220,17 @@ public class Utilisateur implements java.io.Serializable {
 
 	public void setIsAdmin(Boolean isAdmin) {
 		this.isAdmin = isAdmin;
+	}
+
+	
+
+	@Column(name = "date_naissance", length = 200)
+	public Date getDateNaissance() {
+		return dateNaissance;
+	}
+
+	public void setDateNaissance(Date dateNaissance) {
+		this.dateNaissance = dateNaissance;
 	}
 
 	@Override

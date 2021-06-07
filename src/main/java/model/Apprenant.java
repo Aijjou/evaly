@@ -19,9 +19,8 @@ import javax.persistence.Transient;
 @Entity
 @Table(name = "apprenant", catalog = "evaly")
 @PrimaryKeyJoinColumn(name = "id_utilisateur")
-public class Apprenant extends Utilisateur{
+public class Apprenant extends Utilisateur {
 
-	private static final long serialVersionUID = 613789007876810439L;
 	private Promotion promotion;
 	private String nomPromoString;
 	private Utilisateur utilisateur;
@@ -29,16 +28,21 @@ public class Apprenant extends Utilisateur{
 	private Set<ResultatExamen> resultatExamens = new HashSet<ResultatExamen>(0);
 	private Set<ReponseApprenant> reponseApprenants = new HashSet<ReponseApprenant>(0);
 
+	public Apprenant(Integer idUtilisateur) {
+		this.idUtilisateur = idUtilisateur;
+
+	}
+
 	public Apprenant() {
+
 	}
 
 	public Apprenant(Utilisateur utilisateur) {
 		this.utilisateur = utilisateur;
 	}
 
-	public Apprenant(Promotion promotion, Utilisateur utilisateur,
-			Set<ReponseApprenantExamen> reponseApprenantExamens, Set<ResultatExamen> resultatExamens,
-			Set<ReponseApprenant> reponseApprenants) {
+	public Apprenant(Promotion promotion, Utilisateur utilisateur, Set<ReponseApprenantExamen> reponseApprenantExamens,
+			Set<ResultatExamen> resultatExamens, Set<ReponseApprenant> reponseApprenants) {
 
 		this.promotion = promotion;
 		this.utilisateur = utilisateur;
@@ -47,21 +51,8 @@ public class Apprenant extends Utilisateur{
 		this.reponseApprenants = reponseApprenants;
 	}
 
-//	@EmbeddedId
-//
-//	@AttributeOverrides({
-//			@AttributeOverride(name = "idUtilisateur", column = @Column(name = "id_utilisateur", nullable = false)),
-//			@AttributeOverride(name = "idPromotion", column = @Column(name = "id_promotion")) })
-//	public ApprenantId getId() {
-//		return this.id;
-//	}
-//
-//	public void setId(ApprenantId id) {
-//		this.id = id;
-//	}
-
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_promotion", insertable = false, updatable = false)
+	@JoinColumn(name = "id_promotion")
 	public Promotion getPromotion() {
 		return this.promotion;
 	}
@@ -69,7 +60,7 @@ public class Apprenant extends Utilisateur{
 	public void setPromotion(Promotion promotion) {
 		this.promotion = promotion;
 	}
-	
+
 	@Transient
 	public String getNomPromoString() {
 		return nomPromoString;
@@ -114,6 +105,12 @@ public class Apprenant extends Utilisateur{
 
 	public void setReponseApprenants(Set<ReponseApprenant> reponseApprenants) {
 		this.reponseApprenants = reponseApprenants;
+	}
+
+	@Override
+	public String toString() {
+		return "Apprenant [ nomPromoString=" + nomPromoString + ", reponseApprenantExamens=" + reponseApprenantExamens
+				+ ", resultatExamens=" + resultatExamens + ", reponseApprenants=" + reponseApprenants + "]";
 	}
 
 }

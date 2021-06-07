@@ -126,7 +126,7 @@ public class ExamenController {
 		}
 		
 		for (Examen e : examensForProf) {
-			System.out.println(e.getDateExamen());
+			System.out.println(e.getDateExamenString());
 		}
 		
 		model.addAttribute("examens", examensForProf);
