@@ -100,6 +100,8 @@ public class QuestionController {
 		
 		qdto.setToReset(false);
 		
+		qdto.setCoefficient(edit.getCoefficient());
+		
 		Set<Reponse> listrep = edit.getReponses();
 		ArrayList<Reponse> arrayrep = new ArrayList<Reponse>();
 
@@ -285,8 +287,19 @@ public class QuestionController {
 		//Gestion Theme
 		Theme theme = new Theme();
 		//Creation
-		if (question.getNvthemebool().equals("true") && question.getIdMatiere()!=null) {
-
+		System.out.println(question.getNvthemebool()+" MAT "+question.getIdMatiere());
+		System.out.println(question.getNvthemebool()+" "+question.getIdMatiere());
+		System.out.println(question.getNvthemebool()+" "+question.getIdMatiere());
+		System.out.println("REP1BR "+question.getRep1br());
+		System.out.println("REP2BR "+question.getRep2br());
+		System.out.println("REP3BR "+question.getRep3br());
+		System.out.println("REP4BR "+question.getRep4br());
+		
+		if (question.getNvthemebool()!=null && question.getIdMatiere()!=null) {
+			
+			for (int i=0;i<10;i++) System.out.println("ENTREE CREATION THEME");
+			
+			System.out.println(question.getNvtheme()+" MAT "+question.getIdMatiere());
 			theme.setNom(question.getNvtheme());
 			Optional<Matiere> recupmatiere = matiereService.findById(question.getIdMatiere());
 			theme.setMatiere(recupmatiere.get());
@@ -327,21 +340,21 @@ public class QuestionController {
 		questionService.save(edit);
 		// Sauvegarde question 
 		
-//		Set<Reponse> listrep = edit.getReponses();
-//		ArrayList<Reponse> arrayrep = new ArrayList<Reponse>();
-//
-//		for (Reponse r : listrep) {
-//			arrayrep.add(r);
-//		}
-//		Collections.sort(arrayrep);
-//		
-//		for (Reponse r : arrayrep) {
-//			System.out.println(r.getIdReponse());
-//			System.out.println(r.getDescriptionReponse());
-//			System.out.println(r.getIsBonneReponse());
-//		}
-//		
-//		int nbrep = arrayrep.size();
+		Set<Reponse> listrep = edit.getReponses();
+		ArrayList<Reponse> arrayrep = new ArrayList<Reponse>();
+
+		for (Reponse r : listrep) {
+			arrayrep.add(r);
+		}
+		Collections.sort(arrayrep);
+		
+		for (Reponse r : arrayrep) {
+			r.setQuestion(null);
+			System.out.println(r.getDescriptionReponse());
+			System.out.println(r.getIsBonneReponse());
+			reponseService.save(r);
+		}
+		
 		
 		// Combien de réponses avant ? 
 		// Si moins de réponses après, delete les réponses en trop
@@ -357,7 +370,7 @@ public class QuestionController {
 
 			if (question.getRep1() != null) {
 				n1.setDescriptionReponse(question.getRep1());
-				if (question.getRep1br().equals("true"))
+				if (question.getRep1br()!= null)
 					n1.setIsBonneReponse(true);
 				else
 					n1.setIsBonneReponse(false);
@@ -421,7 +434,7 @@ public class QuestionController {
 
 
 
-		return "/protected/liste-question";
+		return "redirect:/protected/liste-question";
 	}
 
 	@RequestMapping(value = "/protected/liste-question", method = RequestMethod.GET)

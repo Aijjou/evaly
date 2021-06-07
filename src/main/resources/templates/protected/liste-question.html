@@ -102,9 +102,10 @@
 										<th class="text-center"    scope="col">Matière</th>
 										<th class="text-center"    scope="col">Thème</th>
 										<th class="text-center"    scope="col">Intitulé</th>
+										<th class="text-center"    scope="col">Coefficient</th>
 										<th class="text-center"    scope="col">Passages / Taux réussite</th>
 										<th class="text-center"    scope="col">Edition</th>
-										<th class="text-center"    scope="col">Box</th>
+					
 									</tr>
 							</thead>
 							<tbody class="bg-dark ">
@@ -112,14 +113,13 @@
 										<td class="text-center"    th:text="${question.theme.matiere.nom}"></td>
 										<td class="text-center"    th:text="${question.theme.nom}"></td>
 										<td  th:text="${question.descriptionQuestion}"></td>
+										<td class="text-center"    th:text="${question.coefficient}"></td>
 										<td class="text-center"    th:utext="${question.nbnotes}+' fois / '+${question.tauxreussite}+'%'"></td>
 										<td class="text-center"    >
 											<a th:href="@{/protected/edition-question/{idQuestion}(idQuestion = ${question.idQuestion})}"	class="btn btn-dark mr-2"  name="idQuestion">
 											<i class="far fa-arrow-alt-circle-right"></i></a>
 										</td>
-										<td class="text-center"   >
-											<input type="checkbox" name="ok" th:value="${question.idQuestion}"/>
-										</td>
+					
 									</tr>
 							</tbody>
 						</table>

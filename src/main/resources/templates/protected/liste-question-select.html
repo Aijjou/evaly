@@ -76,25 +76,26 @@
 								id="datatable">
 								<thead class="bg-dark">
 									<tr>
-										<th scope="col">Id</th>
 										<th scope="col">Matière</th>
 										<th scope="col">Thème</th>
+										<th scope="col">Sélection</th>
 										<th scope="col">Intitulé</th>
 										<th scope="col">Coefficient</th>
-										<th scope="col">Taux réussite</th>
+										<th scope="col">Taux réussite</th>			
 									</tr>
 								</thead>
 								<tbody class="bg-dark ">
 									<tr th:each="question : ${questions}" class="bg-dark">
-										<td th:text="${question.idQuestion}"></td>
-										<td th:text="${question.theme.matiere.nom}"></td>
-										<td th:text="${question.theme.nom}"></td>
-										<td th:text="${question.descriptionQuestion}"></td>
-										<td th:utext="${question.coefficient}"></td>
-										<td th:utext="${question.tauxreussite}"></td>
+						
+										<td class="text-center"   th:text="${question.theme.matiere.nom}"></td>
+										<td class="text-center"   th:text="${question.theme.nom}"></td>
 										<td>
-											<input type="checkbox" name="ok" th:value="${question.idQuestion}"/>
+											<input class="align-center"   type="checkbox" name="ok" th:value="${question.idQuestion}"/>
 										</td>
+										<td th:text="${question.descriptionQuestion}"></td>
+										<td class="text-center"   th:utext="${question.coefficient}"></td>
+										<td class="text-center"   th:utext="${question.tauxreussite}"></td>
+										
 									</tr>
 								</tbody>
 							</table>

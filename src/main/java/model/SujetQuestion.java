@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -42,7 +44,7 @@ public class SujetQuestion implements java.io.Serializable {
 		this.idSujetQuestion = idSujetQuestion;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name = "id_question")
 	public Question getQuestion() {
 		return this.question;
@@ -52,7 +54,7 @@ public class SujetQuestion implements java.io.Serializable {
 		this.question = question;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name = "id_sujet")
 	public Sujet getSujet() {
 		return this.sujet;

@@ -3,6 +3,8 @@ package model;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -81,7 +83,7 @@ public class Sujet implements java.io.Serializable {
 		this.formateur = formateur;
 	}
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name = "id_matiere")
 	public Matiere getMatiere() {
 		return matiere;

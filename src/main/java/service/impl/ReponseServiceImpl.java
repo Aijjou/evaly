@@ -39,5 +39,11 @@ public class ReponseServiceImpl implements ReponseService{
 		reponseRepository.save(t);
 		
 	}
+	
+	@Override
+	public void deleteById(Integer id) {
+		reponseRepository.deleteById(id);
+		
+	}
 
 }
