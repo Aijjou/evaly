@@ -111,7 +111,7 @@ public class InscriptionController {
 
 		System.err.println("utilisateur " + formateurService.findById(utilisateur.getIdUtilisateur()));
 
-		if (!formateurService.findById(utilisateur.getIdUtilisateur()).isEmpty()) {
+		if (formateurService.findById(utilisateur.getIdUtilisateur()).isPresent()) {
 			System.err.println("formateur part");
 			Formateur formateur = utilisateurService.findById1(verifyutilisateur.getUtilisateur().getIdUtilisateur())
 					.get();
@@ -130,7 +130,7 @@ public class InscriptionController {
 
 			return "/public/inscription-final";
 
-		} else if (!apprenantService.findById(utilisateur.getIdUtilisateur()).isEmpty()) {
+		} else if (apprenantService.findById(utilisateur.getIdUtilisateur()).isPresent()) {
 			System.err.println("apprenant part");
 			Apprenant apprenant = utilisateurService.findById2(verifyutilisateur.getUtilisateur().getIdUtilisateur())
 					.get();
