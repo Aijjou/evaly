@@ -37,7 +37,9 @@
 
 		<div class="jumbotron shadow-lg main w-50 align-self-center">
 			<h1>
-				Bonjour, &nbsp;<span th:text="${#authentication.getPrincipal().prenom}"></span> !
+
+				Bonjour,&nbsp;<span th:text="${#authentication.getPrincipal().prenom}"></span> !
+
 			</h1>
 			<div sec:authorize="hasRole('ROLE_ADMIN')">
 				<p>Vous disposez des droits d'accès Admin</p>

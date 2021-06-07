@@ -50,7 +50,7 @@
 
 <script
 	src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.colVis.min.js"></script>
-<title>Liste des questions</title>
+<title>Liste des Questions</title>
 </head>
 <body>
 	<div th:replace="/shared/header :: header"></div>
@@ -61,7 +61,7 @@
 				class="card connexion w-25 d-flex flex-column justify-content-between pt-1 pl-3 pr-4 pb-2 mb-4 ">
 				<small class="row d-flex flex-row justify-content-start promotion"><i
 					class="fas fa-graduation-cap align-self-center ml-1 font-weight-bold"></i>&nbsp;
-					<div class="align-self-center pt-1">QUESTION</div></small>
+					<div class="align-self-center pt-1">QUESTIONS</div></small>
 				<div class="row align-self-center ">Liste des questions</div>
 			</div>
 		</div>
@@ -70,34 +70,59 @@
 			<div class="d-flex flex-row justify-content-center  p-4 main w-100">
 				<div class="card  align-self-center p-2  m-2 w-100">
 					<div class="row mt-4 align-self-center w-100">
+				<div class="row mb-4 w-100">
+					<div
+						class="col-4 align-self-center d-flex flex-row justify-content-center">
+						<a class="btn ajoutButton shadow-lg"
+							href="/protected/creation-question"> <i
+							class="fas fa-folder-plus"></i> &nbsp; Créer une Question
+						</a>
+					</div>
+					<div
+						class="col-4 align-self-center d-flex flex-row justify-content-center">
+						<a class="btn creerButton shadow-lg"
+							href="/protected/creation-sujet"> <i
+							class="fas fa-folder-plus"></i> &nbsp; Créer un Sujet
+						</a>
+					</div>
+						<div
+						class="col-4 align-self-center d-flex flex-row justify-content-center">
+						<a class="btn creerButton shadow-lg"
+							href="/protected/creation-examen"> <i
+							class="fas fa-folder-plus"></i> &nbsp; Créer un Examen
+						</a>
+					</div>
+				</div>
 						<form method="post" th:action="@{/protected/creation-sujet-manu}">
 							<table
-								class="table table-dark align-self-center shadow rounded bg-dark text-white"
-								id="datatable">
-								<thead class="bg-dark">
-									<tr>
-										<th scope="col">Id</th>
-										<th scope="col">Matière</th>
-										<th scope="col">Thème</th>
-										<th scope="col">Intitulé</th>
-										<th scope="col">Coefficient</th>
-										<th scope="col">Taux réussite</th>
+							class="table table-dark align-self-center shadow rounded bg-dark text-white"
+							id="datatable">
+							<thead class="bg-dark">
+								<tr>
+										<th class="text-center"    scope="col">Matière</th>
+										<th class="text-center"    scope="col">Thème</th>
+										<th class="text-center"    scope="col">Intitulé</th>
+										<th class="text-center"    scope="col">Coefficient</th>
+										<th class="text-center"    scope="col">Passages / Taux réussite</th>
+										<th class="text-center"    scope="col">Edition</th>
+					
 									</tr>
-								</thead>
-								<tbody class="bg-dark ">
-									<tr th:each="question : ${questions}" class="bg-dark">
-										<td th:text="${question.idQuestion}"></td>
-										<td th:text="${question.theme.matiere.nom}"></td>
-										<td th:text="${question.theme.nom}"></td>
-										<td th:text="${question.descriptionQuestion}"></td>
-										<td th:utext="${question.coefficient}"></td>
-										<td th:utext="${question.tauxreussite}"></td>
-										<td>
-											<input type="checkbox" name="ok" th:value="${question.idQuestion}"/>
+							</thead>
+							<tbody class="bg-dark ">
+								<tr th:each="question : ${questions}" class="bg-dark">
+										<td class="text-center"    th:text="${question.theme.matiere.nom}"></td>
+										<td class="text-center"    th:text="${question.theme.nom}"></td>
+										<td  th:text="${question.descriptionQuestion}"></td>
+										<td class="text-center"    th:text="${question.coefficient}"></td>
+										<td class="text-center"    th:utext="${question.nbnotes}+' fois / '+${question.tauxreussite}+'%'"></td>
+										<td class="text-center"    >
+											<a th:href="@{/protected/edition-question/{idQuestion}(idQuestion = ${question.idQuestion})}"	class="btn btn-dark mr-2"  name="idQuestion">
+											<i class="far fa-arrow-alt-circle-right"></i></a>
 										</td>
+					
 									</tr>
-								</tbody>
-							</table>
+							</tbody>
+						</table>
 							<input class="btn validerButton" type="submit" value="Valider">
 						</form>
 					</div>

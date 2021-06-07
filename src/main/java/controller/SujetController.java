@@ -1,10 +1,10 @@
 package controller;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +17,6 @@ import model.Matiere;
 import model.Organisation;
 import model.Promotion;
 import model.Question;
-import model.Reponse;
 import model.Sujet;
 import model.SujetQuestion;
 import model.Theme;
@@ -139,22 +138,6 @@ public class SujetController {
 		
 		return "/protected/creation-sujet-gen";
 	}
-	
-	@RequestMapping(value = "/protected/creation-sujet-manu", method = RequestMethod.GET)
-	public String manualSubject(Model model) {
-		
-		isFormateur = true;
-		isApprenant = false;
-		isConnectBoolean = true;
-		isAdmin = false;
-		
-		model.addAttribute("connexion", isConnectBoolean);
-		model.addAttribute("apprenant", isApprenant);
-		model.addAttribute("admin", isAdmin);
-		model.addAttribute("formateur", isFormateur);
-		
-		return "/protected/creation-sujet-manu";
-	}
 
 	@RequestMapping(value = "/protected/creation-sujet-manu", method = RequestMethod.POST)
 	public String creationQuesionnaire(Model model, @RequestParam List<Integer> ok) {
@@ -176,8 +159,6 @@ public class SujetController {
 			questions.add(question);
 		}
 		
-		Collections.sort(questions);
-		
 		model.addAttribute("connexion", isConnectBoolean);
 		model.addAttribute("apprenant", isApprenant);
 		model.addAttribute("admin", isAdmin);
@@ -188,7 +169,7 @@ public class SujetController {
 		return "/protected/creation-sujet-manu";
 	}
 	
-	@RequestMapping(value = "/protected/liste-sujet", method = RequestMethod.POST)
+	@RequestMapping(value = "/protected/creation-sujet-post", method = RequestMethod.POST)
 	public String validationQuesionnaire(Model model, @RequestParam List<Integer> list, String nom, String description) {
 		
 		isFormateur = true;
@@ -200,6 +181,7 @@ public class SujetController {
 		Matiere matiere = new Matiere();
 		Sujet sujet = new Sujet();
 		Question question = new Question();
+		System.err.println(nom);
 		sujet.setNom(nom);
 		sujet.setdescriptionSujet(description);
 		
@@ -213,38 +195,26 @@ public class SujetController {
 			//creation de la question et set l'id question
 			Optional<Question> questionOp = questionService.findById(questIds.get(i));
 			question = questionOp.get();
-			//ajout question et sujet a l'objet SujetQuestion puis save
-			SujetQuestion sujetQuestion = new SujetQuestion();
-			sujetQuestion.setSujet(sujet);
-			sujetQuestion.setQuestion(question);
-//			sujetQuestionService.save(sujetQuestion);
-			//ajout de la quest a la liste de quests selectionnées
+			
+			//ajout de la quest a la liste de quests selectionnÃ©es
 			questions.add(question);
 		}
-		
-		for(Sujet s : sujetService.sujets()) {
-			System.err.println(s.getdescriptionSujet());
-		}
-		System.err.println(sujet.getNom());
-		System.err.println(question.getIdQuestion());
 		
 		for(int j=0;j<questions.size();j++){
 			Theme theme = questions.get(j).getTheme();
 			matiere = questions.get(j).getTheme().getMatiere();
 			themes.add(theme);
+			
+			sujet.setMatiere(matiere);
+			//ajout question et sujet a l'objet SujetQuestion puis save
+			SujetQuestion sujetQuestion = new SujetQuestion();
+			sujetQuestion.setSujet(sujet);
+			sujetQuestion.setQuestion(questions.get(j));
+			sujetQuestionService.save(sujetQuestion);
 		}
 		
 		
-		model.addAttribute("connexion", isConnectBoolean);
-		model.addAttribute("apprenant", isApprenant);
-		model.addAttribute("admin", isAdmin);
-		model.addAttribute("formateur", isFormateur);
-		model.addAttribute("sujets", sujetService.sujets());
-		model.addAttribute("questions", questions);
-		model.addAttribute("themes", themes);
-		model.addAttribute("matiere", matiere);
-		
-		return "/protected/liste-sujet";
+		return "redirect:/protected/liste-sujet";
 	}
 	
 	@RequestMapping(value = "/protected/liste-sujet", method = RequestMethod.GET)
@@ -334,5 +304,73 @@ public class SujetController {
 
 	}
 	
+	@RequestMapping(value = "/protected/modification-sujet", method = RequestMethod.POST)
+	public String modificationSujet(Model model, Integer idSujet) {
+		
+		isAdmin = false;
+		isFormateur = false;
+		isApprenant = false;
+		isConnectBoolean = true;
+		
+		Optional<Sujet> sujetOp = sujetService.findById(idSujet);
+		Sujet sujet = sujetOp.get();
+		
+		Set<SujetQuestion> sujetQuest = sujet.getSujetQuestions();
+		List<SujetQuestion> cast = new ArrayList<SujetQuestion>(sujetQuest);
+		List<Question> questions = new ArrayList<Question>();
+		
+		for (int i = 0; i<cast.size(); i++) {
+			Question question = cast.get(i).getQuestion();
+			questions.add(question);
+		}
+		
+		
+		model.addAttribute("connexion", isConnectBoolean);
+		model.addAttribute("apprenant", isApprenant);
+		model.addAttribute("admin", isAdmin);
+		model.addAttribute("formateur", isFormateur);
+		model.addAttribute("sujet", sujet);
+		model.addAttribute("questions", questions);
+
+		return "/protected/modification-sujet";
+
+	}
+	
+	@RequestMapping(value = "/protected/liste-sujet-update", method = RequestMethod.POST)
+	public String validationUpdate(Model model, @RequestParam List<Integer> list, String nom, String description) {
+		
+		isFormateur = true;
+		isApprenant = false;
+		isConnectBoolean = true;
+		isAdmin = false;
+		List<Question> questions = new ArrayList<Question>();
+		HashSet<Theme> themes = new HashSet<Theme>();
+		Matiere matiere = new Matiere();
+		Sujet sujet = new Sujet();
+		Question question = new Question();
+		sujet.setNom(nom);
+		sujet.setdescriptionSujet(description);
+		
+		
+		System.err.println(list);
+		
+		//recuperation des ids
+		List<Integer> questIds = list;
+		//iteration dans la liste d'ids
+		for (int i=0;i<questIds.size();i++) {
+			//creation de la question et set l'id question
+			Optional<Question> questionOp = questionService.findById(questIds.get(i));
+			question = questionOp.get();
+			//ajout question et sujet a l'objet SujetQuestion puis save
+			SujetQuestion sujetQuestion = new SujetQuestion();
+			sujetQuestion.setSujet(sujet);
+			sujetQuestion.setQuestion(question);
+			sujetQuestionService.save(sujetQuestion);
+			//ajout de la quest a la liste de quests selectionnées
+			questions.add(question);
+		}
+		
+		return "redirect:/protected/liste-sujet";
+	}
 	
 }
