@@ -14,16 +14,17 @@ public class AdminEtablissementDto {
 	private String password;
 	private String question;
 	private String reponse;
+	private Boolean isAdmin;
 
 	public AdminEtablissementDto(String nom, Integer numero, String rue, String ville, String code, Boolean isFormateur,
-			String nomReferent, String prenomReferent, String mail, String password, String question, String reponse) {
+			String nomReferent, String prenomReferent, String mail, String password, String question, String reponse,
+			Boolean isAdmin) {
 		super();
 		this.name = nom;
 		this.numero = numero;
 		this.rue = rue;
 		this.ville = ville;
 		this.code = code;
-
 		this.isFormateur = isFormateur;
 		this.nomReferent = nomReferent;
 		this.prenomReferent = prenomReferent;
@@ -31,6 +32,7 @@ public class AdminEtablissementDto {
 		this.password = password;
 		this.question = question;
 		this.reponse = reponse;
+		this.isAdmin = isAdmin;
 	}
 
 	public AdminEtablissementDto() {
@@ -133,12 +135,28 @@ public class AdminEtablissementDto {
 		this.reponse = reponse;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Boolean getIsAdmin() {
+		return isAdmin;
+	}
+
+	public void setIsAdmin(Boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+
 	@Override
 	public String toString() {
 		return "AdminEtablissementDto [nom=" + name + ", numero=" + numero + ", rue=" + rue + ", ville=" + ville
-				+ ", code=" + code +  ", isFormateur=" + isFormateur + ", nomReferent="
-				+ nomReferent + ", prenomReferent=" + prenomReferent + ", mail=" + mail + ", password=" + password
-				+ ", question=" + question + ", reponse=" + reponse + "]";
+				+ ", code=" + code + ", isFormateur=" + isFormateur + ", nomReferent=" + nomReferent
+				+ ", prenomReferent=" + prenomReferent + ", mail=" + mail + ", password=" + password + ", question="
+				+ question + ", reponse=" + reponse + "]";
 	}
 
 }

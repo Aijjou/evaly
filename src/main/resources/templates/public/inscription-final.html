@@ -46,10 +46,11 @@
 		</div>
 
 		<div class="d-flex flex-row justify-content-center mt-4">
-			<div
+			<div 
 				class="card d-flex flex-row justify-content-center w-75 p-4 main">
 				<form class="w-75" th:object="${formateurDtoFinal}"
 					th:action="@{/public/inscription-final}" method="POST">
+
 					<input th:field="*{idFormateurDto}" id="idFormateurDto"
 						class="d-none" />
 					<div class="form-row">
@@ -67,8 +68,9 @@
 					<div class="form-row">
 						<div class="form-group col-md-6">
 							<label for="mail" class="text-dark font-weight-bold">Mail</label>
-							<input type="email" class="form-control" id="email"
-								th:field="*{mail}" placeholder="Adresse mail" disabled>
+							<input type="email" class="form-control" id="mail"
+								th:field="*{mail}" placeholder="Adresse mail"
+								readonly="readonly">
 						</div>
 						<div class="form-group col-md-6">
 							<label for="password" class="text-dark font-weight-bold">Mot
@@ -90,12 +92,12 @@
 								th:field="*{question}" placeholder="Qui est mon père?" required>
 						</div>
 					</div>
-					<div class="form-row mt-3">
+					<div class="form-row mt-3" th:if="${promotions != null}">
 						<div class="form-group col-md-6">
 							<label for="exampleFormControlSelect2"
 								class="text-dark font-weight-bold">Selectionner une ou
 								plusieurs promotions</label> <select multiple class="form-control"
-								th:field="*{idPromotion}" id="exampleFormControlSelect2">
+								th:field="*{idPromotions}" id="exampleFormControlSelect2">
 								<option th:each="promotion: ${promotions}"
 									th:value="${promotion.idPromotion}" th:text="${promotion.nom}"></option>
 
@@ -110,14 +112,17 @@
 					</div>
 					<div class="d-flex flex-row justify-content-end">
 						<a type="submit" href="/public/connexion"
-							class="btn annulerButton mr-2">ANNULER</a> <button type="submit"
-							class="btn validerButton">VALIDER</button>
+							class="btn annulerButton mr-2">ANNULER</a>
+						<button type="submit" class="btn validerButton">VALIDER</button>
 					</div>
 				</form>
+
 			</div>
+
 		</div>
 
 	</div>
 </body>
+
 
 </html>

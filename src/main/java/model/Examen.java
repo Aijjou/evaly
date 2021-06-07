@@ -123,6 +123,7 @@ public class Examen implements java.io.Serializable {
 		this.dateExamen = dateExamen;
 	}
 
+
 	@Column(name = "duree_examen")
 	public Integer getDureeExamen() {
 		return this.dureeExamen;

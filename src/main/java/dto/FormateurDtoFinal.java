@@ -1,6 +1,7 @@
 package dto;
 
 import java.util.Date;
+import java.util.List;
 
 import ognl.InappropriateExpressionException;
 
@@ -11,23 +12,32 @@ public class FormateurDtoFinal {
 	private String prenom;
 	private String mail;
 	private String password;
+	private Date dateInscriptionDate;
 	private Date dateNaissance;
+	private Boolean active;
+	private Boolean isAdmin;
+	private Boolean isReferent;
 	private String question;
 	private String reponse;
-	private Integer idPromotion;
+	private List<Integer> idPromotions;
 
 	public FormateurDtoFinal(Integer idFormateurDto, String nom, String prenom, String mail, String password,
-			Date dateNaissance, String question, String reponse, Integer idPromotion) {
+			Date dateInscriptionDate, Date dateNaissance, Boolean active, Boolean isAdmin, Boolean isReferent,
+			String question, String reponse, List<Integer> idPromotions) {
 		super();
 		this.idFormateurDto = idFormateurDto;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.mail = mail;
 		this.password = password;
+		this.dateInscriptionDate = dateInscriptionDate;
 		this.dateNaissance = dateNaissance;
+		this.active = active;
+		this.isAdmin = isAdmin;
+		this.isReferent = isReferent;
 		this.question = question;
 		this.reponse = reponse;
-		this.idPromotion = idPromotion;
+		this.idPromotions = idPromotions;
 	}
 
 	public String getNom() {
@@ -86,12 +96,44 @@ public class FormateurDtoFinal {
 		this.reponse = reponse;
 	}
 
-	public Integer getIdPromotion() {
-		return idPromotion;
+	public List<Integer> getIdPromotions() {
+		return idPromotions;
 	}
 
-	public void setIdPromotion(Integer idPromotion) {
-		this.idPromotion = idPromotion;
+	public void setIdPromotions(List<Integer> idPromotions) {
+		this.idPromotions = idPromotions;
+	}
+
+	public Date getDateInscriptionDate() {
+		return dateInscriptionDate;
+	}
+
+	public void setDateInscriptionDate(Date dateInscriptionDate) {
+		this.dateInscriptionDate = dateInscriptionDate;
+	}
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
+	public Boolean getIsAdmin() {
+		return isAdmin;
+	}
+
+	public void setIsAdmin(Boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+
+	public Boolean getIsReferent() {
+		return isReferent;
+	}
+
+	public void setIsReferent(Boolean isReferent) {
+		this.isReferent = isReferent;
 	}
 
 	public Integer getIdFormateurDto() {
@@ -104,9 +146,12 @@ public class FormateurDtoFinal {
 
 	@Override
 	public String toString() {
-		return "FormateurDtoFinal [nom=" + nom + ", prenom=" + prenom + ", mail=" + mail + ", password=" + password
-				+ ", dateNaissance=" + dateNaissance + ", question=" + question + ", reponse=" + reponse
-				+ ", idPromotion=" + idPromotion + "]";
+		return "FormateurDtoFinal [idFormateurDto=" + idFormateurDto + ", nom=" + nom + ", prenom=" + prenom + ", mail="
+				+ mail + ", password=" + password + ", dateInscriptionDate=" + dateInscriptionDate + ", dateNaissance="
+				+ dateNaissance + ", active=" + active + ", isAdmin=" + isAdmin + ", isReferent=" + isReferent
+				+ ", question=" + question + ", reponse=" + reponse + ", idPromotions=" + idPromotions + "]";
 	}
+
+	
 
 }

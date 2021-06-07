@@ -9,11 +9,11 @@ public class UtilisateurDto {
 	private String photo;
 	private String questionSecrete;
 	private String reponseSecrete;
-	
+	private Boolean isAdmin;
 	
 	
 	public UtilisateurDto(String nom, String prenom, String mail, String password, String photo, String questionSecrete,
-			String reponseSecrete) {
+			String reponseSecrete, Boolean isAdmin) {
 		super();
 		this.nom = nom;
 		this.prenom = prenom;
@@ -22,6 +22,7 @@ public class UtilisateurDto {
 		this.photo = photo;
 		this.questionSecrete = questionSecrete;
 		this.reponseSecrete = reponseSecrete;
+		this.isAdmin = isAdmin;
 	}
 
 
@@ -106,6 +107,18 @@ public class UtilisateurDto {
 
 	public void setReponseSecrete(String reponseSecrete) {
 		this.reponseSecrete = reponseSecrete;
+	}
+
+
+
+	public Boolean getIsAdmin() {
+		return isAdmin;
+	}
+
+
+
+	public void setIsAdmin(Boolean isAdmin) {
+		this.isAdmin = isAdmin;
 	}
 
 
