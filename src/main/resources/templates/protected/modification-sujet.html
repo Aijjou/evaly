@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
 	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
@@ -51,7 +52,7 @@
 
 <script
 	src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.colVis.min.js"></script>
-<title>Création Sujet</title>
+<title>Modification Sujet</title>
 </head>
 
 <body>
@@ -67,12 +68,16 @@
 					class="fas fa-graduation-cap align-self-center ml-1 font-weight-bold"></i>&nbsp;
 					<div class="align-self-center pt-1">SUJET</div>
 				</small>
-				<div class="row align-self-center ">Création Sujet Manuel</div>
+				<div class="row align-self-center ">Modification Sujet</div>
 			</div>
 		</div>
-		<div class="d-flex flex-row justify-content-center mt-4 align-self-center w-75">
+		<div
+			class="d-flex flex-row justify-content-center mt-4 align-self-center w-75">
 			<div class="d-flex flex-row justify-content-center  p-4 main">
-				<form method="post" th:action="@{/protected/creation-sujet-post}">
+				<form method="post"
+					th:action="@{/protected/validation-modification-sujet}"
+					th:object="${sujet}">
+					<input type="hidden" name="idSujet" th:value="*{idSujet}" />
 					<div class="d-flex flex-row justify-content-center">
 						<div class="card w-75 align-self-center p-2  m-2">
 							<div class="row mt-4 w-75 align-self-center">
@@ -81,40 +86,79 @@
 										Nom du sujet :</div>
 									<div
 										class="col-9 d-flex flex-row justify-content-center px-0 mb20px">
-										<textarea id="nom" name="nom" rows="1" cols="80"></textarea>
+										<textarea id="nom" name="nom" rows="1" cols="80"
+											th:field="*{nom}"></textarea>
 									</div>
 								</div>
 								<div class="row w-100 mb20px">
 									<div class="col-3 d-flex flex-row justify-content-center">
-										En-tête affiché aux apprenants : </div>
+										En-tête affiché aux apprenants :</div>
 									<div class="col-9 d-flex flex-row justify-content-center px-0">
-										<textarea id="description" rows="5" cols="80"
-											name="description"></textarea>
+										<textarea id="desc" rows="5" cols="80" name="desc"
+											th:field="*{descriptionSujet}"></textarea>
 									</div>
 
 								</div>
-								<div class="row mb-4 w-100">
+								<div class="mb-4 w-100">
+									<div th:if="${tableisActive}">
+										<table
+											class="table table-dark align-self-center shadow rounded bg-dark text-white"
+											id="datatable">
+											<thead class="bg-dark">
+												<tr>
+													<th scope="col">Matière</th>
+													<th scope="col">Thème</th>
+													<th scope="col">Sélection</th>
+												</tr>
+											</thead>
+											<tbody class="bg-dark ">
+												<tr th:each="theme : ${themes}" class="bg-dark">
+													<td class="text-center" th:text="${theme.matiere.nom}"></td>
+													<td class="text-center" th:text="${theme.nom}"></td>
+													<td><span
+														th:if="${#lists.contains(themesDuSujet, theme)}"> <input
+															class="align-center" type="checkbox" name="themeSelect"
+															th:value="${theme.idTheme}" checked />
+													</span> <span th:unless="${#lists.contains(themesDuSujet, theme)}">
+															<input class="align-center" type="checkbox"
+															name="themeSelect" th:value="${theme.idTheme}" />
+													</span></td>
+												</tr>
+											</tbody>
+										</table>
+										<button type="submit" name="action" value="refresh"
+											class="btn validerButton">Valider Théme(s)</button>
+									</div>
+								</div>
+								<div class="mb-4 w-100">
 									<table
 										class="table table-dark align-self-center shadow rounded bg-dark text-white"
-										id="datatable">
+										id="datatableq">
 										<thead class="bg-dark">
 											<tr>
-												<th scope="col">Matière</th>
 												<th scope="col">Thème</th>
 												<th scope="col">Intitulé</th>
 												<th scope="col">Coefficient</th>
 												<th scope="col">Taux réussite</th>
-									
+												<th scope="col">Sélection</th>
 											</tr>
 										</thead>
 										<tbody class="bg-dark ">
 											<tr th:each="question : ${questions}" class="bg-dark">
-												<td class="text-center"   th:text="${question.theme.matiere.nom}"></td>
-												<td  class="text-center"  th:text="${question.theme.nom}"></td>
+												<td class="text-center" th:text="${question.theme.nom}"></td>
 												<td th:text="${question.descriptionQuestion}"></td>
-												<td  class="text-center"  th:utext="${question.coefficient}"></td>
+												<td class="text-center" th:utext="${question.coefficient}"></td>
 												<td th:utext="${question.tauxreussite}+'%'"></td>
-												<input type="hidden" name="list" th:value="${question.idQuestion}"/>
+												<td><span
+													th:if="${#lists.contains(questionsDuSujet, question)}">
+														<input class="align-center" type="checkbox"
+														name="questionSelect" th:value="${question.idQuestion}"
+														checked />
+												</span> <span
+													th:unless="${#lists.contains(questionsDuSujet, question)}">
+														<input class="align-center" type="checkbox"
+														name="questionSelect" th:value="${question.idQuestion}" />
+												</span></td>
 											</tr>
 										</tbody>
 									</table>
@@ -125,8 +169,8 @@
 											onclick="location.href='liste-sujet'" type="button">Retour</button>
 									</div>
 									<div class="col-8 d-flex flex-row justify-content-center">
-										<input class="btn validerButton" type="submit"
-											value="Créer le sujet">
+										<button type="submit" name="action" value="update"
+											class="btn validerButton">Modifier le sujet</button>
 									</div>
 								</div>
 							</div>
@@ -136,6 +180,7 @@
 			</div>
 		</div>
 	</div>
+
 	<script type="text/javascript">
 		var expanded = false;
 
@@ -149,6 +194,16 @@
 				expanded = false;
 			}
 		}
+		/*<![CDATA[*/
+		$(document).ready(function() {
+			$('#datatable').DataTable();
+		});
+		/*]]>*/
+		/*<![CDATA[*/
+		$(document).ready(function() {
+			$('#datatableq').DataTable();
+		});
+		/*]]>*/
 	</script>
 </body>
 
