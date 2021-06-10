@@ -12,9 +12,10 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,12 +31,14 @@ import model.Formateur;
 import model.FormateurMatiere;
 import model.Matiere;
 import model.Promotion;
+import model.PromotionFormateur;
 import model.Question;
 import model.Reponse;
 import model.ReponseApprenantExamen;
 import model.ResultatExamen;
 import model.Sujet;
 import model.SujetQuestion;
+import model.Theme;
 import service.ApprenantService;
 import service.ExamenService;
 import service.FormateurMatiereService;
@@ -51,18 +54,6 @@ import service.SujetService;
 @Scope("session")
 public class ExamenController {
 
-	// yyyy-MM-dd"
-//	@InitBinder
-//	public void initBinder(WebDataBinder binder) {
-//		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//		dateFormat.setLenient(false);
-//		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
-//	}
-
-	Boolean isAdmin = false;
-	Boolean isFormateur = false;
-	Boolean isApprenant = false;
-	Boolean isConnectBoolean = true;
 
 	@Autowired
 	ExamenService examenService;
@@ -85,61 +76,115 @@ public class ExamenController {
 	@Autowired
 	FormateurMatiereService formateurMatiereService;
 
+	Boolean isAdmin = false;
+	Boolean isFormateur = false;
+	Boolean isApprenant = false;
+	Boolean isConnectBoolean = true;
+	Integer idUtilisateur = null;
 
+	private void verificationRolesAndSetIdUtilisateur() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		System.err.println(" --- --- --- verificationRoles  --- --- --- ");
+		auth.getAuthorities().stream().forEach(role -> {
+			if (role.getAuthority().equals("ROLE_ADMIN")) {
+				isAdmin = true;
+				System.out.println("ROLE_ADMIN");
+			}
+			if (role.getAuthority().equals("ROLE_APPRENANT")) {
+				isApprenant = true;
+				System.out.println("ROLE_APPRENANT");
+			}
+			if (role.getAuthority().equals("ROLE_FORMATEUR")) {
+				isFormateur = true;
+				System.out.println("ROLE_FORMATEUR");
+			}
+		});
+		principal.UserPrincipal userPrincipal = (principal.UserPrincipal) auth.getPrincipal();
+		idUtilisateur = userPrincipal.getId();
+		System.err.println(" --- --- --- verificationRoles --- --- --- ");
+	}
+	
+	
 	
 	@RequestMapping(value = "protected/liste-examen", method = RequestMethod.GET)
 	public String afficheExamenProf(Model model) {
+		
+		
+		verificationRolesAndSetIdUtilisateur();
+		System.out.println("admin ? " + isAdmin + " apprenant ? " + isApprenant + " formateur ? " + isFormateur
+				+ " id : " + idUtilisateur);
+		
+		if (isAdmin) {
+			//FIND ALL
+			List<Examen> examensAll = new ArrayList<Examen>();
+			examensAll=examenService.examens();
+			model.addAttribute("examens", examensAll);
+		}
+		
+		if (isFormateur) {
+			List<Examen> examensformateur = new ArrayList<Examen>();
+			
+			Optional<Formateur> fmto = formateurService.findById(idUtilisateur);
+			Formateur fmt = fmto.get();
+			
+			Set<PromotionFormateur> promoFormateur = fmt.getPromotionFormateurs();
+			
+			for (PromotionFormateur m : promoFormateur) {
+				Set<Examen> examenspromo = m.getPromotion().getExamens();
+				examensformateur.addAll(examenspromo);
+			}
+			
+			examensformateur=examenService.examens();
+			model.addAttribute("examens", examensformateur);
+		}
+		
+		if (isApprenant) {
+			
+			Optional<Apprenant> apto = apprenantService.findById(idUtilisateur);
+			Apprenant apt = apto.get();
+			
+			Promotion promo = apt.getPromotion();
+			
+			Set<Examen> examensapprenantset=promo.getExamens();
+			List<Examen> examensapt = new ArrayList<Examen>();
+			examensapt.addAll(examensapprenantset);
+			model.addAttribute("examens", examensapt);
+		}
 
-		isAdmin = false;
-		isFormateur = false;
-		isApprenant = false;
-		isConnectBoolean = true;
-		Integer idFormateur = 1;
-
-		//affichage de la liste des examens pour les matieres du formateur
-		
-		//recuperation du formateur et de ces matieres
-		Optional<Formateur> formateurOp = formateurService.findById(idFormateur);
-		Formateur formateur = formateurOp.get();
-		List<FormateurMatiere> profMat = formateurMatiereService.findByFormateur(formateur);
-		List<Matiere> matieres = new ArrayList<Matiere>();
-		
-		//ajout des matiere dans la liste "matieres" grace aux idMatiere dans la liste "profMat"
-		for (int i = 0; i < profMat.size(); i++) {
-			Matiere mat = profMat.get(i).getMatiere();
-			matieres.add(mat);
-		}
-		
-		//recuperation des sujets correspondants aux matieres du formateur
-		List<Sujet> sujetsProf = new ArrayList<Sujet>();
-		for (int j = 0; j < matieres.size(); j++) {
-			//chaque matiere peut avoir plusieurs sujets, donc ajout des listes sujets par matiere
-			List<Sujet> sujetByMat = sujetService.findByMatiere(matieres.get(j));
-			sujetsProf.addAll(sujetByMat);
-		}
-		
-		//recuperation de la liste des exams qui utilise les sujets de la matiere du formateur
-		List<Examen> examensForProf = new ArrayList<Examen>();
-		for (int k = 0; k < sujetsProf.size(); k++) {
-			List<Examen> examSujetProf = examenService.findBySujet(sujetsProf.get(k));
-			examensForProf.addAll(examSujetProf);
-		}
-		
-		for (Examen e : examensForProf) {
-			System.out.println(e.getDateExamenString());
-		}
-		
-		//FIND ALL
-		List<Examen> examensAll = new ArrayList<Examen>();
-		examensAll=examenService.examens();
-		
-		
-		
-		model.addAttribute("examens", examensAll);
-		model.addAttribute("connexion", isConnectBoolean);
-		model.addAttribute("apprenant", isApprenant);
-		model.addAttribute("admin", isAdmin);
-		model.addAttribute("formateur", isFormateur);
+//		Integer idFormateur = 1;
+//
+//		//affichage de la liste des examens pour les matieres du formateur
+//		
+//		//recuperation du formateur et de ces matieres
+//		Optional<Formateur> formateurOp = formateurService.findById(idFormateur);
+//		Formateur formateur = formateurOp.get();
+//		List<FormateurMatiere> profMat = formateurMatiereService.findByFormateur(formateur);
+//		List<Matiere> matieres = new ArrayList<Matiere>();
+//		
+//		//ajout des matiere dans la liste "matieres" grace aux idMatiere dans la liste "profMat"
+//		for (int i = 0; i < profMat.size(); i++) {
+//			Matiere mat = profMat.get(i).getMatiere();
+//			matieres.add(mat);
+//		}
+//		
+//		//recuperation des sujets correspondants aux matieres du formateur
+//		List<Sujet> sujetsProf = new ArrayList<Sujet>();
+//		for (int j = 0; j < matieres.size(); j++) {
+//			//chaque matiere peut avoir plusieurs sujets, donc ajout des listes sujets par matiere
+//			List<Sujet> sujetByMat = sujetService.findByMatiere(matieres.get(j));
+//			sujetsProf.addAll(sujetByMat);
+//		}
+//		
+//		//recuperation de la liste des exams qui utilise les sujets de la matiere du formateur
+//		List<Examen> examensForProf = new ArrayList<Examen>();
+//		for (int k = 0; k < sujetsProf.size(); k++) {
+//			List<Examen> examSujetProf = examenService.findBySujet(sujetsProf.get(k));
+//			examensForProf.addAll(examSujetProf);
+//		}
+//		
+//		for (Examen e : examensForProf) {
+//			System.out.println(e.getDateExamenString());
+//		}
 
 		return "protected/liste-examen";
 

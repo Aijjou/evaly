@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -37,6 +38,8 @@ public class Examen implements java.io.Serializable {
 	private Set<ReponseApprenant> reponseApprenants = new HashSet<ReponseApprenant>(0);
 	private Promotion promotion;
 	private Sujet sujet;
+	private Matiere matiere;
+	
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_promotion")
@@ -46,6 +49,16 @@ public class Examen implements java.io.Serializable {
 
 	public void setPromotion(Promotion promotion) {
 		this.promotion = promotion;
+	}
+	
+	@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+	@JoinColumn(name = "id_matiere")
+	public Matiere getMatiere() {
+		return matiere;
+	}
+
+	public void setMatiere(Matiere matiere) {
+		this.matiere = matiere;
 	}
 	
 	
