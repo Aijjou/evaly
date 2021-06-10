@@ -104,7 +104,7 @@
 												<th scope="col">Intitulé</th>
 												<th scope="col">Coefficient</th>
 												<th scope="col">Taux réussite</th>
-									
+												
 											</tr>
 										</thead>
 										<tbody class="bg-dark ">
@@ -114,6 +114,7 @@
 												<td th:text="${question.descriptionQuestion}"></td>
 												<td  class="text-center"  th:utext="${question.coefficient}"></td>
 												<td th:utext="${question.tauxreussite}+'%'"></td>
+												  <input type="hidden" name="list" th:value="${question.idQuestion}"/>
 											</tr>
 										</tbody>
 									</table>

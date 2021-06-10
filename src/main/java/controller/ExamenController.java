@@ -129,7 +129,13 @@ public class ExamenController {
 			System.out.println(e.getDateExamenString());
 		}
 		
-		model.addAttribute("examens", examensForProf);
+		//FIND ALL
+		List<Examen> examensAll = new ArrayList<Examen>();
+		examensAll=examenService.examens();
+		
+		
+		
+		model.addAttribute("examens", examensAll);
 		model.addAttribute("connexion", isConnectBoolean);
 		model.addAttribute("apprenant", isApprenant);
 		model.addAttribute("admin", isAdmin);

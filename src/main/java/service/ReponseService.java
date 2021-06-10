@@ -16,5 +16,7 @@ public interface ReponseService {
 	public Optional<Reponse> findById(Integer id);
 
 	public void deleteById(Integer idReponse);
+	
+	public void delete(Reponse r);
 
 }

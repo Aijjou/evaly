@@ -1,6 +1,8 @@
 package model;
 // Generated 26 mars 2021 � 22:40:09 by Hibernate Tools 5.1.10.Final
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -122,7 +124,16 @@ public class Sujet implements java.io.Serializable {
 
 	@Column(name = "note_moyenne", precision = 22, scale = 0)
 	public Double getNoteMoyenne() {
-		return this.noteMoyenne;
+		double d = round(this.noteMoyenne,2);
+		return d;
+	}
+
+	public static double round(double value, int places) {
+	    if (places < 0) throw new IllegalArgumentException();
+
+	    BigDecimal bd = BigDecimal.valueOf(value);
+	    bd = bd.setScale(places, RoundingMode.HALF_UP);
+	    return bd.doubleValue();
 	}
 
 	public void setNoteMoyenne(Double noteMoyenne) {

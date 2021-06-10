@@ -90,15 +90,17 @@
 						id="datatable">
 						<thead class="bg-dark">
 							<tr>
+							<th scope="col">Id</th>
 								<th scope="col">Promotion</th>
 								<th scope="col">Date Création</th>
 								<th scope="col">Année Création</th>
 								<th scope="col">Liste Apprenants</th>
-								<th scope="col">Opérations</th>
+								<th  type="hidden"  scope="col">Opérations</th>
 							</tr>
 						</thead>
 						<tbody class="bg-dark ">
 							<tr th:each="promotion : ${promotions}" class="bg-dark">
+							<td class="text-center"   th:text="${promotion.idPromotion}"></td>
 								<td class="text-center"   th:text="${promotion.nom}"></td>
 								<td class="text-center"   th:text="${promotion.dateCreation}"></td>
 								<td class="text-center"   th:text="${promotion.anneeCreation}"></td>
@@ -108,9 +110,8 @@
 										<i class="far fa-arrow-alt-circle-right"></i>
 									</button>
 								</td>
-								<td>
-									<button type="submit" class="btn btn-dark mr-2"
-										name="promoSelect" th:value="${promotion.idPromotion}">
+								<td  type="hidden" >
+									<button type="submit" class="btn btn-dark mr-2" name="promoSelect"  th:value="${promotion.idPromotion}">
 										<i class="far fa-arrow-alt-circle-right"></i>
 									</button>
 								</td>
