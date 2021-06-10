@@ -27,6 +27,7 @@ public class Question implements java.io.Serializable, Comparable {
 
 	private Integer idQuestion;
 	private Theme theme;
+	private Matiere matiere;
 	private String descriptionQuestion;
 	private Integer coefficient;
 	private Boolean isQcm;
@@ -65,6 +66,17 @@ public class Question implements java.io.Serializable, Comparable {
 
 	public void setIdQuestion(Integer idQuestion) {
 		this.idQuestion = idQuestion;
+	}
+	
+	
+	@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+	@JoinColumn(name = "id_matiere")
+	public Matiere getMatiere() {
+		return matiere;
+	}
+
+	public void setMatiere(Matiere matiere) {
+		this.matiere = matiere;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)

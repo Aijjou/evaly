@@ -16,6 +16,8 @@ public interface ResultatExamenService {
 	
 	public Optional<ResultatExamen>findByApprenantAndExamen(Apprenant a, Examen e);
 	
+	public List<ResultatExamen>findByApprenant(Apprenant a);
+	
 	void save(ResultatExamen t);
 
 }

@@ -31,6 +31,11 @@ public class QuestionServiceImpl implements QuestionService{
 	public List<Question> QuestionsByTheme(Theme theme) {
 		return questionRepository.findByTheme(theme);
 	}
+	
+	@Override
+	public List<Question> QuestionsByMatiere(Matiere matiere) {
+		return questionRepository.findByMatiere(matiere);
+	}
 
 
 	@Override

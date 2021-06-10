@@ -17,10 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import dto.QuestionDto;
+import model.Formateur;
+import model.FormateurMatiere;
 import model.Matiere;
 import model.Question;
 import model.Reponse;
 import model.Theme;
+import service.FormateurService;
 import service.MatiereService;
 import service.QuestionService;
 import service.ReponseService;
@@ -44,6 +47,9 @@ public class QuestionController {
 
 	@Autowired
 	ReponseService reponseService;
+	
+	@Autowired
+	FormateurService formateurService;
 
 	Boolean isAdmin = false;
 	Boolean isFormateur = false;
@@ -80,19 +86,40 @@ public class QuestionController {
 		System.out.println("admin ? " + isAdmin + " apprenant ? " + isApprenant + " formateur ? " + isFormateur
 				+ " id : " + idUtilisateur);
 		if (isApprenant)
-			return "redirect:/protected/home";
+			return "redirect:/public/accessDenied";
+		
+		if (isAdmin) {
+			List<Theme> listth = themeService.themes();
+			model.addAttribute("listtheme", listth);
+
+			List<Matiere> listmatiere = matiereService.matieres();
+			model.addAttribute("listmatiere", listmatiere);
+		}
+		
+		if (isFormateur) {
+			Optional<Formateur> fmto = formateurService.findById(idUtilisateur);
+			
+			Formateur fmt = fmto.get();
+			
+			List<Theme> listthfinal = new ArrayList<Theme>();
+			List<Matiere> listmatiere = new ArrayList<Matiere>();
+			
+			Set<FormateurMatiere> formateurMatieres = fmt.getFormateurMatieres();
+
+			for (FormateurMatiere m : formateurMatieres) {
+				listmatiere.add(m.getMatiere());
+				List<Theme> listthmat = themeService.findThemesByMat(m.getMatiere());
+				listthfinal.addAll(listthmat);
+			}
+			model.addAttribute("listmatiere", listmatiere);
+			model.addAttribute("listtheme", listthfinal);
+		}
 
 		QuestionDto qdto = new QuestionDto();
-		qdto.setDescriptionQuestion("dsc");
+		qdto.setDescriptionQuestion("");
 		qdto.setIsQcm(true);
 		qdto.setRep1br("true");
 		model.addAttribute("question", qdto);
-
-		List<Theme> listth = themeService.themes();
-		model.addAttribute("listtheme", listth);
-
-		List<Matiere> listmatiere = matiereService.matieres();
-		model.addAttribute("listmatiere", listmatiere);
 
 		return "/protected/creation-question";
 	}
@@ -105,7 +132,34 @@ public class QuestionController {
 		System.out.println("admin ? " + isAdmin + " apprenant ? " + isApprenant + " formateur ? " + isFormateur
 				+ " id : " + idUtilisateur);
 		if (isApprenant)
-			return "redirect:/protected/home";
+			return "redirect:/public/accessDenied";
+		
+		if (isAdmin) {
+			List<Theme> listth = themeService.themes();
+			model.addAttribute("listtheme", listth);
+
+			List<Matiere> listmatiere = matiereService.matieres();
+			model.addAttribute("listmatiere", listmatiere);
+		}
+		
+		if (isFormateur) {
+			Optional<Formateur> fmto = formateurService.findById(idUtilisateur);
+			
+			Formateur fmt = fmto.get();
+			
+			List<Theme> listthfinal = new ArrayList<Theme>();
+			List<Matiere> listmatiere = new ArrayList<Matiere>();
+			
+			Set<FormateurMatiere> formateurMatieres = fmt.getFormateurMatieres();
+
+			for (FormateurMatiere m : formateurMatieres) {
+				listmatiere.add(m.getMatiere());
+				List<Theme> listthmat = themeService.findThemesByMat(m.getMatiere());
+				listthfinal.addAll(listthmat);
+			}
+			model.addAttribute("listmatiere", listmatiere);
+			model.addAttribute("listtheme", listthfinal);
+		}
 
 		Integer idq = Integer.parseInt(idQuestion);
 
@@ -185,13 +239,6 @@ public class QuestionController {
 
 		model.addAttribute("question", qdto);
 
-		List<Theme> listth = themeService.themes();
-		model.addAttribute("listtheme", listth);
-
-		List<Matiere> listmatiere = matiereService.matieres();
-
-		model.addAttribute("listmatiere", listmatiere);
-
 		return "/protected/edition-question";
 	}
 
@@ -203,6 +250,8 @@ public class QuestionController {
 				+ " id : " + idUtilisateur);
 		if (isApprenant)
 			return "redirect:/protected/home";
+		
+		System.out.println();
 
 		System.out.println("------Test rep3-------");
 		System.out.print("Test réponses 3 rep3null");
@@ -506,12 +555,32 @@ public class QuestionController {
 		verificationRolesAndSetIdUtilisateur();
 		System.out.println("admin ? " + isAdmin + " apprenant ? " + isApprenant + " formateur ? " + isFormateur
 				+ " id : " + idUtilisateur);
-		if (isApprenant)
-			return "redirect:/protected/home";
 
-		List<Question> questions = questionService.questions();
-		model.addAttribute("questions", questions);
-		model.addAttribute("sujets", sujetService.sujets());
+		
+		if (isApprenant)
+			return "redirect:/public/accessDenied";
+		
+		if (isAdmin) {
+			List<Question> questions = questionService.questions();
+			model.addAttribute("questions", questions);
+		}
+		
+		if (isFormateur) {
+			Optional<Formateur> fmto = formateurService.findById(idUtilisateur);
+			
+			Formateur fmt = fmto.get();
+			
+			List<Question> questions = new ArrayList<Question>();
+			List<Matiere> listmatiere = new ArrayList<Matiere>();
+			Set<FormateurMatiere> formateurMatieres = fmt.getFormateurMatieres();
+
+			for (FormateurMatiere m : formateurMatieres) {
+				listmatiere.add(m.getMatiere());
+				List<Question> questionsmat = questionService.QuestionsByMatiere(m.getMatiere());
+				questions.addAll(questionsmat);
+			}
+			model.addAttribute("questions", questions);
+		}
 
 		return "/protected/liste-question";
 	}

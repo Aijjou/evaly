@@ -229,7 +229,6 @@ public class SujetController {
 		Matiere matiere = new Matiere();
 		
 		
-		
 		for(int j=0;j<questions.size();j++){
 			System.err.println(questions.get(j).getDescriptionQuestion());
 			Theme theme = questions.get(j).getTheme();
@@ -237,11 +236,6 @@ public class SujetController {
 			themes.add(theme);
 		}
 		
-		
-		model.addAttribute("connexion", isConnectBoolean);
-		model.addAttribute("apprenant", isApprenant);
-		model.addAttribute("admin", isAdmin);
-		model.addAttribute("formateur", isFormateur);
 		model.addAttribute("sujets", sujetService.sujets());
 		model.addAttribute("questions", questions);
 		model.addAttribute("themes", themes);
