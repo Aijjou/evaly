@@ -50,4 +50,10 @@ public class ResultatExamenImpl implements ResultatExamenService{
 		return resultatExamenRepository.findByApprenantAndExamen(a, e);
 	}
 
+
+	@Override
+	public List<ResultatExamen> findByApprenant(Apprenant a) {
+		return resultatExamenRepository.findByApprenant(a);
+	}
+
 }

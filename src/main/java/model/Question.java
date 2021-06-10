@@ -27,6 +27,7 @@ public class Question implements java.io.Serializable, Comparable {
 
 	private Integer idQuestion;
 	private Theme theme;
+	private Matiere matiere;
 	private String descriptionQuestion;
 	private Integer coefficient;
 	private Boolean isQcm;
@@ -34,7 +35,7 @@ public class Question implements java.io.Serializable, Comparable {
 	private Set<SujetQuestion> sujetQuestions = new HashSet<SujetQuestion>(0);
 	private Set<Reponse> reponses = new HashSet<Reponse>(0);
 	private Set<ReponseApprenant> reponseApprenants = new HashSet<ReponseApprenant>(0);
-	private double tauxreussite=100;
+	private Integer tauxreussite=100;
 	private Integer nbnotes=0;
 	private Integer nbreussite=0;
 	
@@ -65,6 +66,17 @@ public class Question implements java.io.Serializable, Comparable {
 
 	public void setIdQuestion(Integer idQuestion) {
 		this.idQuestion = idQuestion;
+	}
+	
+	
+	@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+	@JoinColumn(name = "id_matiere")
+	public Matiere getMatiere() {
+		return matiere;
+	}
+
+	public void setMatiere(Matiere matiere) {
+		this.matiere = matiere;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
@@ -158,11 +170,11 @@ public class Question implements java.io.Serializable, Comparable {
 	}
 
 	@Column(name = "tauxreussite")
-	public double getTauxreussite() {
+	public Integer getTauxreussite() {
 		return this.tauxreussite;
 	}
 
-	public void setTauxreussite(double tauxreussite) {
+	public void setTauxreussite(Integer tauxreussite) {
 			this.tauxreussite = tauxreussite;
 	}
 

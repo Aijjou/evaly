@@ -59,7 +59,7 @@ public class SujetController {
 
 	@Autowired
 	PromotionService promotionService;
-	
+
 	List<Theme> themesCtrlMem = new ArrayList<Theme>();
 
 	@RequestMapping(value = "/protected/creation-sujet", method = RequestMethod.GET)
@@ -236,15 +236,12 @@ public class SujetController {
 		Matiere matiere = new Matiere();
 
 		for (int j = 0; j < questions.size(); j++) {
+			System.err.println(questions.get(j).getDescriptionQuestion());
 			Theme theme = questions.get(j).getTheme();
 			matiere = questions.get(j).getTheme().getMatiere();
 			themes.add(theme);
 		}
 
-		model.addAttribute("connexion", isConnectBoolean);
-		model.addAttribute("apprenant", isApprenant);
-		model.addAttribute("admin", isAdmin);
-		model.addAttribute("formateur", isFormateur);
 		model.addAttribute("sujets", sujetService.sujets());
 		model.addAttribute("questions", questions);
 		model.addAttribute("themes", themes);
@@ -308,7 +305,7 @@ public class SujetController {
 
 	@RequestMapping(value = "/protected/modification-sujet/{idSujet}", method = RequestMethod.GET)
 	public String modificationSujet(Model model, @PathVariable(name = "idSujet") String idSujet) {
-		System.err.println(">>>>>>>> dto : "+themesCtrlMem);
+		System.err.println(">>>>>>>> dto : " + themesCtrlMem);
 
 		boolean tableisActive = true;
 		// recuperation de l'id sujet
@@ -332,27 +329,26 @@ public class SujetController {
 		// recuperation de la matiere et recuperation des themes de la matiere
 		Matiere matiere = questionsDuSujet.get(0).getTheme().getMatiere();
 		themes = themeService.findThemesByMat(matiere);
-			
-		if(themesCtrlMem.isEmpty()) {
+
+		if (themesCtrlMem.isEmpty()) {
 			for (int i = 0; i < sujetQuestions.size(); i++) {
 				Question questMem = sujetQuestions.get(i).getQuestion();
 				themesDuSujetSet.add(questMem.getTheme());
-				tableisActive=true;
+				tableisActive = true;
 			}
-			System.err.println("(empty) contenu themesDuSujet : "+themesDuSujetSet);
-		}
-		else {
+			System.err.println("(empty) contenu themesDuSujet : " + themesDuSujetSet);
+		} else {
 			for (int i = 0; i < themesCtrlMem.size(); i++) {
 				Theme themeMem = themesCtrlMem.get(i);
 				themesDuSujetSet.add(themeMem);
 			}
-			System.err.println("(not empty) contenu themesDuSujet : "+themesDuSujetSet);
-			
+			System.err.println("(not empty) contenu themesDuSujet : " + themesDuSujetSet);
+
 			themesCtrlMem.clear();
-			System.err.println(">>>>>> contenu themesCtrlMem : "+themesCtrlMem);
-			tableisActive=false;
+			System.err.println(">>>>>> contenu themesCtrlMem : " + themesCtrlMem);
+			tableisActive = false;
 		}
-		
+
 		List<Theme> themesDuSujet = new ArrayList<Theme>(themesDuSujetSet);
 
 		// recuperation des questions par themes et ajout dans une liste de l'ensemble
@@ -365,7 +361,7 @@ public class SujetController {
 
 		Collections.sort(questionsDuSujet);
 		Collections.sort(questions);
-		System.err.println("verif list themesDuSujet : "+themesDuSujet);
+		System.err.println("verif list themesDuSujet : " + themesDuSujet);
 
 		model.addAttribute("sujet", sujet);
 		model.addAttribute("questionsDuSujet", questionsDuSujet);
@@ -378,19 +374,21 @@ public class SujetController {
 	}
 
 	@RequestMapping(value = "/protected/validation-modification-sujet", method = RequestMethod.POST)
-	public String validationModificationSujet(Model model, @ModelAttribute Sujet sujet, @RequestParam(value="themeSelect") List<Integer> themeSelect, @RequestParam(value="questionSelect") List<Integer> questionSelect,  String action) {
-		
+	public String validationModificationSujet(Model model, @ModelAttribute Sujet sujet,
+			@RequestParam(value = "themeSelect") List<Integer> themeSelect,
+			@RequestParam(value = "questionSelect") List<Integer> questionSelect, String action) {
+
 		System.err.println(sujet.getdescriptionSujet());
 		Optional<Sujet> sujetOp = sujetService.findById(sujet.getIdSujet());
 		Sujet sujetObj = sujetOp.get();
-		
+
 		sujetObj.setNom(sujet.getNom());
 		sujetObj.setdescriptionSujet(sujet.getdescriptionSujet());
 
-		if (action.equals("update") ) {
+		if (action.equals("update")) {
 			System.err.println(">>>>> if update");
-			
-			//recuperation des questions
+
+			// recuperation des questions
 			List<Question> questions = new ArrayList<Question>();
 			for (int j = 0; j < questionSelect.size(); j++) {
 				Optional<Question> questionMemOp = questionService.findById(questionSelect.get(j));
@@ -405,9 +403,8 @@ public class SujetController {
 				sujetQuestionService.save(sq);
 				sujetQuestionService.delete(sq);
 			}
-			
-			
-			//creation du sujetQuestion puis ajout des questions pour le sujet
+
+			// creation du sujetQuestion puis ajout des questions pour le sujet
 			for (int i = 0; i < questions.size(); i++) {
 				SujetQuestion sujetQuestionMem = new SujetQuestion();
 				sujetQuestionMem.setQuestion(questions.get(i));
@@ -415,31 +412,28 @@ public class SujetController {
 				sujetObj.getSujetQuestions().add(sujetQuestionMem);
 				sujetQuestionService.save(sujetQuestionMem);
 			}
-			
+
 			sujetService.save(sujetObj);
-			
-			//gestion de la suppression des questions du sujet qui n'ont pas été selectionnées
-			
-			
+
+			// gestion de la suppression des questions du sujet qui n'ont pas été
+			// selectionnées
+
 			return "redirect:/protected/liste-sujet";
-		}
-		else {
+		} else {
 			System.err.println(">>>>> else refresh");
-			
-			//recuperation des themes
+
+			// recuperation des themes
 			List<Theme> themes = new ArrayList<Theme>();
 			for (int k = 0; k < themeSelect.size(); k++) {
 				Optional<Theme> themeMemOp = themeService.findById(themeSelect.get(k));
 				Theme themeMem = themeMemOp.get();
 				themes.add(themeMem);
 			}
-		
+
 			themesCtrlMem.addAll(themes);
-			System.err.println(">>>>> dto : before : "+themesCtrlMem);
-			
-			
-			
-			return "redirect:/protected/modification-sujet/"+sujet.getIdSujet();
+			System.err.println(">>>>> dto : before : " + themesCtrlMem);
+
+			return "redirect:/protected/modification-sujet/" + sujet.getIdSujet();
 		}
 	}
 
