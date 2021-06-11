@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
 <meta charset="UTF-8">
@@ -25,6 +26,7 @@
 <link href="../../inscription-final.css"
 	th:href="@{/css/inscription-final.css}" rel="stylesheet">
 <link href="/fontawesome/css/all.css" rel="stylesheet">
+
 <title>Inscription</title>
 
 </head>
@@ -34,23 +36,31 @@
 		$('.datepicker').datepicker();
 	</script>
 	<div th:replace="/shared/header :: header"></div>
+
 	<div class="principal d-flex flex-column justify-content-around">
 		<div class="d-flex flex-row justify-content-center mb-4 titre">
-			<div
+			<div th:if="${isModification != true}"
 				class="card connexion w-25 d-flex flex-column justify-content-between pt-1 pl-3 pr-4 pb-2 mb-4 ">
 				<small class="row d-flex flex-row justify-content-start promotion"><i
 					class="fas fa-address-card align-self-center ml-1 font-weight-bold"></i>&nbsp;
 					<div class="align-self-center pt-1">INSCRIPTION</div></small>
 				<div class="row align-self-center">INSCRIPTION - FINAL</div>
 			</div>
+			<div th:if="${isModification == true}"
+				class="card connexion w-25 d-flex flex-column justify-content-between pt-1 pl-3 pr-4 pb-2 mb-4 ">
+				<small class="row d-flex flex-row justify-content-start promotion"><i
+					class="fas fa-pen-square align-self-center ml-1 font-weight-bold"></i>&nbsp;
+					<div class="align-self-center pt-1">MODIFACTION</div></small>
+				<div class="text-center pr-0 pl-0">MODIFICATION - PROFIL</div>
+			</div>
 		</div>
 
 		<div class="d-flex flex-row justify-content-center mt-4">
-
 			<div
 				class="card d-flex flex-row justify-content-center w-75 p-4 main">
 				<form class="w-75" th:object="${apprenantDtoFinal}"
-					th:action="@{/public/inscription-final-apprenant}" method="POST">
+					th:action="@{/public/inscription-final-apprenant}" method="POST"
+					enctype="multipart/form-data">
 
 					<input th:field="*{idApprenantDto}" id="idApprenantDto"
 						class="d-none" /> <input th:field="*{idPromotion}"
@@ -84,7 +94,7 @@
 					<div class="form-row mb-0">
 						<div class="form-group col-md-6 mb-0">
 							<label for="reponse" class="text-dark font-weight-bold">Date
-								de naissance</label> <input type="date" id="datepicker"
+								de naissance</label> <input type="date" id="dateNaissance"
 								th:field="*{dateNaissance}" class="form-control text-left mr-2">
 
 						</div>
@@ -95,6 +105,13 @@
 						</div>
 					</div>
 					<div class="form-row mt-3">
+
+						<div class="form-group col-md-6">
+							<label for="exampleFormControlSelect2"
+								class="text-dark font-weight-bold">Selectionner une
+								photo de profil </label> <input type="file" name="photo" value="photo"
+								id="photo" th:field="*{photo}" />
+						</div>
 						<div class="form-group col-md-6">
 							<label for="reponseSecrete" class="text-dark font-weight-bold">Réponse
 								secrète</label>
@@ -102,17 +119,17 @@
 								placeholder="ex : Dark Vador" th:field="*{reponse}" required></textarea>
 						</div>
 					</div>
+
 					<div class="d-flex flex-row justify-content-end">
-						<a type="submit" href="/public/connexion"
+						<a type="submit" href="/protected/home"
+							th:if="${isModification == true}" class="btn annulerButton mr-2">ANNULER</a>
+						<a type="submit" href="/public/connexion" th:if="${isModification != true}"
 							class="btn annulerButton mr-2">ANNULER</a>
 						<button type="submit" class="btn validerButton">VALIDER</button>
 					</div>
 				</form>
 			</div>
 		</div>
-
 	</div>
 </body>
-
-
 </html>

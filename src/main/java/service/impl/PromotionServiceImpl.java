@@ -8,7 +8,10 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
+import model.Formateur;
 import model.Promotion;
+import model.PromotionFormateur;
+import repository.PromotionFormateurRepository;
 import repository.PromotionRepository;
 import service.PromotionService;
 
@@ -18,6 +21,9 @@ public class PromotionServiceImpl implements PromotionService {
 
 	@Resource
 	PromotionRepository promotionRepository;
+
+	@Resource
+	PromotionFormateurRepository promotionFormateurRepository;
 
 	@Override
 	public List<Promotion> promotions() {
@@ -36,5 +42,19 @@ public class PromotionServiceImpl implements PromotionService {
 		promotionRepository.save(s);
 
 	}
+
+	@Override
+	public List<PromotionFormateur> findByPromotion(Promotion promotion) {
+
+		return promotionFormateurRepository.findByPromotion(promotion);
+	}
+
+	@Override
+	public List<PromotionFormateur> findByFormateur(Formateur formateur) {
+		
+		return promotionFormateurRepository.findByFormateur(formateur);
+	}
+	
+
 
 }

@@ -1,10 +1,17 @@
 package controller;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
-import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -23,6 +30,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.thymeleaf.util.StringUtils;
 
 import dto.AdminEtablissementDto;
 import dto.ApprenantDto;
@@ -37,6 +46,7 @@ import model.GroupeFormateur;
 import model.Matiere;
 import model.Organisation;
 import model.Promotion;
+import model.PromotionFormateur;
 import model.Utilisateur;
 import model.VerifyUtilisateur;
 import service.ApprenantService;
@@ -79,6 +89,42 @@ public class InscriptionController {
 	@Autowired
 	private PromotionService promotionService;
 
+	Boolean isAdmin = false;
+	Boolean isFormateur = false;
+	Boolean isApprenant = false;
+	Boolean isConnectBoolean = true;
+	Integer idUtilisateur = null;
+
+	private void verificationRolesAndSetIdUtilisateur() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		System.err.println(" --- --- --- verificationRoles  --- --- --- ");
+		auth.getAuthorities().stream().forEach(role -> {
+			if (role.getAuthority().equals("ROLE_ADMIN")) {
+				isAdmin = true;
+				isFormateur = false;
+				isApprenant = false;
+				System.out.println("ROLE_ADMIN");
+			}
+			if (role.getAuthority().equals("ROLE_APPRENANT")) {
+				isApprenant = true;
+				isFormateur = false;
+				isAdmin = false;
+				System.out.println("ROLE_APPRENANT");
+			}
+			if (role.getAuthority().equals("ROLE_FORMATEUR")) {
+				isFormateur = true;
+				isApprenant = false;
+				isAdmin = false;
+				System.out.println("ROLE_FORMATEUR");
+			}
+		});
+		principal.UserPrincipal userPrincipal = (principal.UserPrincipal) auth.getPrincipal();
+		idUtilisateur = userPrincipal.getId();
+		System.err.println(" --- --- --- verificationRoles --- --- --- ");
+	}
+
+	private final String UPLOAD_DIR = "C:\\Users\\afpa\\Documents\\workspace-spring-tool-suite-4-4.9.0.RELEASE\\evaly\\src\\main\\resources\\static\\images\\";
+
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -118,8 +164,8 @@ public class InscriptionController {
 
 			FormateurDtoFinal formateurDtoFinal = new FormateurDtoFinal(formateur.getIdUtilisateur(),
 					formateur.getNom(), formateur.getPrenom(), formateur.getMail(), null,
-					formateur.getDateInscription(), null, formateur.getActive(), false, formateur.getIsReferent(), null,
-					null, null);
+					formateur.getDateInscription(), null, formateur.getActive(), null, false, formateur.getIsReferent(),
+					null, null, null);
 
 			if (utilisateurService.verifyCode(verifyCodeDto)) {
 				formateurDtoFinal.setActive(true);
@@ -138,7 +184,7 @@ public class InscriptionController {
 			ApprenantDtoFinal apprenantDtoFinal = new ApprenantDtoFinal(apprenant.getIdUtilisateur(),
 					apprenant.getNom(), apprenant.getPrenom(), apprenant.getMail(), null,
 					apprenant.getDateInscription(), null, apprenant.getActive(), false, null, null,
-					apprenant.getPromotion().getIdPromotion());
+					apprenant.getPromotion().getIdPromotion(), null);
 
 			System.err.println(" >>>> " + apprenant.getPromotion().getIdPromotion());
 
@@ -165,7 +211,10 @@ public class InscriptionController {
 			@Valid @ModelAttribute("formateurDtoFinal") FormateurDtoFinal formateurDtoFinal, BindingResult result,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		System.err.println("formateur final " + formateurDtoFinal);
+		String fileName = org.springframework.util.StringUtils
+				.cleanPath(formateurDtoFinal.getPhoto().getOriginalFilename());
+		Path path = Paths.get(UPLOAD_DIR + fileName);
+		Files.copy(formateurDtoFinal.getPhoto().getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
 
 		Formateur formateur = utilisateurService.createFormateurFinal(formateurDtoFinal);
 
@@ -186,10 +235,15 @@ public class InscriptionController {
 			@Valid @ModelAttribute("apprenantFinalDto") ApprenantDtoFinal apprenantDtoFinal, BindingResult result,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
+		String fileName = org.springframework.util.StringUtils
+				.cleanPath(apprenantDtoFinal.getPhoto().getOriginalFilename());
+		Path path = Paths.get(UPLOAD_DIR + fileName);
+		Files.copy(apprenantDtoFinal.getPhoto().getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+
 		Apprenant apprenant = utilisateurService.createApprenantFinal(apprenantDtoFinal);
 
 		if (apprenant.getMail() != null && apprenant.getPassword() != null) {
-			return "/public/connexion";
+			return "redirect:/logout";
 		}
 		return "/public/inscription-final-apprenant";
 	}
@@ -208,11 +262,14 @@ public class InscriptionController {
 
 	@RequestMapping(value = "/admin/inscription-formateur-admin", method = RequestMethod.POST)
 	public String registration(Model model, @Valid @ModelAttribute("formateurDto") FormateurDto formateurDto,
-			BindingResult result, HttpServletRequest request, HttpServletResponse response) throws Exception {
+			BindingResult result, HttpServletRequest request, HttpServletResponse response,
+			RedirectAttributes redirectAttributes) throws Exception {
 
 		Formateur formateur = utilisateurService.createFormateurParAdmin(formateurDto);
 
 		if (formateur != null) {
+			redirectAttributes.addFlashAttribute("message", "L'opération a reussi");
+			redirectAttributes.addFlashAttribute("alertClass", "alert-success");
 			return "redirect:/protected/home";
 		}
 
@@ -274,15 +331,30 @@ public class InscriptionController {
 	@RequestMapping(value = "/protected/inscription-apprenant-formateur", method = RequestMethod.GET)
 	public String afficheInscriptionApprenantFormateur(Model model) {
 
-		List<Promotion> promotions = promotionService.promotions();
+		List<Promotion> promotions2 = new ArrayList<>();
+
+		verificationRolesAndSetIdUtilisateur();
+
+		if (isFormateur == true) {
+
+			Formateur formateur = formateurService.findById(idUtilisateur).get();
+			List<PromotionFormateur> promotions = promotionService.findByFormateur(formateur);
+
+			promotions2 = promotions.stream().map(promo -> promo.getPromotion()).collect(Collectors.toList());
+
+		}
+		if (isAdmin == true) {
+			promotions2 = promotionService.promotions();
+		}
+		System.err.println(" >>>>> " + promotions2);
 
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (auth == null) {
 			return "redirect:/public/connexion";
 		}
 
-		model.addAttribute("promotions", promotions);
-		model.addAttribute("apprenantDto", new ApprenantDto());
+		model.addAttribute("promotions", promotions2);
+		model.addAttribute("apprenantDto", new ApprenantDtoFinal());
 
 		return "/protected/inscription-apprenant-formateur";
 	}
@@ -290,9 +362,7 @@ public class InscriptionController {
 	@RequestMapping(value = "/protected/inscription-apprenant-formateur", method = RequestMethod.POST)
 	public String inscriptionApprenantFormateur(Model model,
 			@Valid @ModelAttribute("apprenantDto") ApprenantDto apprenantDto, BindingResult result,
-			HttpServletRequest request, HttpServletResponse response) {
-
-		System.err.println(">>>>>>> apprenantDto  " + apprenantDto);
+			HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) {
 
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
@@ -303,6 +373,8 @@ public class InscriptionController {
 		Apprenant apprenant = apprenantService.createApprenantParFormateur(apprenantDto);
 
 		if (apprenant != null) {
+			redirectAttributes.addFlashAttribute("message", "L'opération a reussi");
+			redirectAttributes.addFlashAttribute("alertClass", "alert-success");
 			return "redirect:/protected/home";
 		}
 
@@ -315,7 +387,7 @@ public class InscriptionController {
 		if (auth != null) {
 			new SecurityContextLogoutHandler().logout(request, response, auth);
 		}
-		return "redirect:/connexion";
+		return "redirect:/public/connexion";
 	}
 
 }

@@ -17,19 +17,21 @@ public class UserPrincipal implements UserDetails {
 
 	private static final long serialVersionUID = 4313653395184670905L;
 
-	private Integer id;
+	public Integer id;
 
 	private String username;
 
 	private String prenom;
 
-	@JsonIgnore
+
 	private String mail;
 
 	@JsonIgnore
 	private String password;
 
 	private Collection<? extends GrantedAuthority> authorities;
+
+	private String photo;
 
 	public UserPrincipal() {
 		super();
@@ -38,8 +40,7 @@ public class UserPrincipal implements UserDetails {
 
 	public UserPrincipal(Integer id, String username, String email, String password,
 
-
-			Collection<? extends GrantedAuthority> authorities, String prenom) {
+			Collection<? extends GrantedAuthority> authorities, String prenom, String photo) {
 
 		super();
 		this.id = id;
@@ -48,6 +49,7 @@ public class UserPrincipal implements UserDetails {
 		this.mail = email;
 		this.password = password;
 		this.authorities = authorities;
+		this.photo = photo;
 	}
 
 	public static UserDetails create(Utilisateur utilisateur) {
@@ -55,7 +57,7 @@ public class UserPrincipal implements UserDetails {
 				.map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
 
 		return new UserPrincipal(utilisateur.getIdUtilisateur(), utilisateur.getNom(), utilisateur.getMail(),
-				utilisateur.getPassword(), authorities, utilisateur.getPrenom());
+				utilisateur.getPassword(), authorities, utilisateur.getPrenom(), utilisateur.getPhoto());
 
 	}
 
@@ -84,6 +86,15 @@ public class UserPrincipal implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return authorities;
+	}
+	
+	
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
 	}
 
 	@Override
@@ -120,6 +131,12 @@ public class UserPrincipal implements UserDetails {
 	public int hashCode() {
 
 		return Objects.hash(id);
+	}
+
+	@Override
+	public String toString() {
+		return "UserPrincipal [id=" + id + ", username=" + username + ", prenom=" + prenom + ", mail=" + mail
+				+ ", password=" + password + ", authorities=" + authorities + "]";
 	}
 
 }

@@ -6,6 +6,12 @@ body, html {
 	background-color: #C4C4C4;
 }
 
+#photoTableau {
+	height: 25px;
+	width: 25px;
+	border-radius: 50%;
+}
+
 .dataTables_filter label {
 	color: black;
 	padding: 5px;
@@ -38,12 +44,9 @@ ul {
 	margin-bottom: 40px;
 }
 
-
-
 .main {
 	position: relative;
 	top: 40px;
-	
 }
 
 .fa-sign-out-alt {

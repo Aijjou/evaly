@@ -25,8 +25,6 @@ public class FormateurServiceImpl implements FormateurService {
 		return (List<Formateur>) formateurRepository.findAll();
 	}
 
-
-
 	public Formateur createFormateurFinal(Formateur formateur) {
 
 		return formateurRepository.save(formateur);
@@ -36,6 +34,20 @@ public class FormateurServiceImpl implements FormateurService {
 	public Optional<Formateur> findById(Integer id) {
 		return formateurRepository.findById(id);
 
+	}
+
+	@Override
+	public boolean delete(Integer id) {
+
+		boolean isDelete = false;
+
+		formateurRepository.deleteById(id);
+
+		if (formateurRepository.findById(id) != null) {
+			isDelete = true;
+		}
+
+		return isDelete;
 	}
 
 }

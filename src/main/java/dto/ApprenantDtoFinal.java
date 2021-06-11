@@ -2,6 +2,8 @@ package dto;
 
 import java.util.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class ApprenantDtoFinal {
 
 	private Integer idApprenantDto;
@@ -16,6 +18,7 @@ public class ApprenantDtoFinal {
 	private String question;
 	private String reponse;
 	private Integer idPromotion;
+	private MultipartFile photo;
 
 	public ApprenantDtoFinal() {
 
@@ -23,7 +26,7 @@ public class ApprenantDtoFinal {
 
 	public ApprenantDtoFinal(Integer idApprenantDto, String nom, String prenom, String mail, String password,
 			Date dateInscriptionDate, Date dateNaissance, Boolean active, Boolean isAdmin, String question,
-			String reponse, Integer idPromotion) {
+			String reponse, Integer idPromotion, MultipartFile photo) {
 		super();
 		this.idApprenantDto = idApprenantDto;
 		this.nom = nom;
@@ -37,6 +40,7 @@ public class ApprenantDtoFinal {
 		this.question = question;
 		this.reponse = reponse;
 		this.idPromotion = idPromotion;
+		this.photo = photo;
 	}
 
 	public Integer getIdApprenantDto() {
@@ -134,6 +138,15 @@ public class ApprenantDtoFinal {
 	public void setIdPromotion(Integer idPromotion) {
 		this.idPromotion = idPromotion;
 	}
+	
+
+	public MultipartFile getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(MultipartFile photo) {
+		this.photo = photo;
+	}
 
 	@Override
 	public String toString() {
@@ -143,8 +156,4 @@ public class ApprenantDtoFinal {
 				+ ", reponse=" + reponse + ", idPromotion=" + idPromotion + "]";
 	}
 
-	
-	
-	
-	
 }

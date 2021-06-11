@@ -3,6 +3,8 @@ package dto;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import ognl.InappropriateExpressionException;
 
 public class FormateurDtoFinal {
@@ -15,6 +17,7 @@ public class FormateurDtoFinal {
 	private Date dateInscriptionDate;
 	private Date dateNaissance;
 	private Boolean active;
+	private MultipartFile photo;
 	private Boolean isAdmin;
 	private Boolean isReferent;
 	private String question;
@@ -22,8 +25,8 @@ public class FormateurDtoFinal {
 	private List<Integer> idPromotions;
 
 	public FormateurDtoFinal(Integer idFormateurDto, String nom, String prenom, String mail, String password,
-			Date dateInscriptionDate, Date dateNaissance, Boolean active, Boolean isAdmin, Boolean isReferent,
-			String question, String reponse, List<Integer> idPromotions) {
+			Date dateInscriptionDate, Date dateNaissance, Boolean active, MultipartFile photo, Boolean isAdmin,
+			Boolean isReferent, String question, String reponse, List<Integer> idPromotions) {
 		super();
 		this.idFormateurDto = idFormateurDto;
 		this.nom = nom;
@@ -33,6 +36,7 @@ public class FormateurDtoFinal {
 		this.dateInscriptionDate = dateInscriptionDate;
 		this.dateNaissance = dateNaissance;
 		this.active = active;
+		this.photo = photo;
 		this.isAdmin = isAdmin;
 		this.isReferent = isReferent;
 		this.question = question;
@@ -144,14 +148,21 @@ public class FormateurDtoFinal {
 		this.idFormateurDto = idFormateurDto;
 	}
 
+	public MultipartFile getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(MultipartFile photo) {
+		this.photo = photo;
+	}
+
 	@Override
 	public String toString() {
 		return "FormateurDtoFinal [idFormateurDto=" + idFormateurDto + ", nom=" + nom + ", prenom=" + prenom + ", mail="
 				+ mail + ", password=" + password + ", dateInscriptionDate=" + dateInscriptionDate + ", dateNaissance="
-				+ dateNaissance + ", active=" + active + ", isAdmin=" + isAdmin + ", isReferent=" + isReferent
-				+ ", question=" + question + ", reponse=" + reponse + ", idPromotions=" + idPromotions + "]";
+				+ dateNaissance + ", active=" + active + ", photo=" + photo + ", isAdmin=" + isAdmin + ", isReferent="
+				+ isReferent + ", question=" + question + ", reponse=" + reponse + ", idPromotions=" + idPromotions
+				+ "]";
 	}
-
-	
 
 }
