@@ -3,7 +3,9 @@ package model;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -36,6 +38,7 @@ public class Sujet implements java.io.Serializable {
 	private Set<ReponseApprenantExamen> reponseApprenantExamens = new HashSet<ReponseApprenantExamen>(0);
 	private Set<SujetQuestion> sujetQuestions = new HashSet<SujetQuestion>(0);
 	private Set<ReponseApprenant> reponseApprenants = new HashSet<ReponseApprenant>(0);
+	
 	
 	public Sujet() {
 	}
