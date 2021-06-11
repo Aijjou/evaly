@@ -4,6 +4,7 @@ package model;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -76,7 +77,7 @@ public class Formateur extends Utilisateur {
 		this.examens = examens;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "formateur")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "formateur",cascade = CascadeType.ALL)
 	public Set<FormateurMatiere> getFormateurMatieres() {
 		return this.formateurMatieres;
 	}
@@ -94,7 +95,7 @@ public class Formateur extends Utilisateur {
 		this.sujets = sujets;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "formateur")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "formateur", cascade = CascadeType.ALL)
 	public Set<FormateurGroupeFormateur> getFormateurGroupeFormateurs() {
 		return this.formateurGroupeFormateurs;
 	}
@@ -103,7 +104,7 @@ public class Formateur extends Utilisateur {
 		this.formateurGroupeFormateurs = formateurGroupeFormateurs;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "formateur")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "formateur", cascade = CascadeType.ALL)
 	public Set<PromotionFormateur> getPromotionFormateurs() {
 		return this.promotionFormateurs;
 	}

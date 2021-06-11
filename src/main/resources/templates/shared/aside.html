@@ -8,16 +8,17 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
 	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
 	crossorigin="anonymous">
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-	integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-	crossorigin="anonymous"></script>
+
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
 	integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
 	crossorigin="anonymous"></script>
 <script
 	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
 	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+	crossorigin="anonymous"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+	integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
 	crossorigin="anonymous"></script>
 <link href="../../css/aside.css" rel="stylesheet"
 	th:href="@{/css/aside.css}">
@@ -28,18 +29,19 @@
 		class="aside d-flex flex-column justify-content-start"
 		sec:authorize="isAuthenticated()">
 
-		<ul class="p-2">
+		<ul class="p-4">
 
-			<li class="mb-4 pb-0"><a href="/protected/home"><i class="fas fa-home"></i>&nbsp;Home</a></li>
+			<li class="mb-4 pb-0"><a href="/protected/home"><i
+					class="fas fa-home"></i>&nbsp;Home</a></li>
 			<li class="mb-4 pb-0 nav-header" data-toggle="collapse"
 				data-target="#user" sec:authorize="hasRole('ROLE_ADMIN')">
-				<div class="hvr">
+				<a class="hvr mb-2" href=#>
 					<i class="fas fa-list-ul"></i>&nbsp;Utilisateur
-				</div>
+				</a>
 				<ul class="nav nav-list collapse ml-4 mb-0" id="user">
 					<li class="mb-4 pb-0"><a href="/admin/liste-formateur"><i
 							class="fas fa-user-tie"></i>&nbsp;Formateur</a></li>
-					<li class="mb-4 pb-0"><a href="/protected/liste-apprenant"><i
+					<li class="mb-2 pb-0"><a href="/protected/liste-apprenant"><i
 							class="fas fa-feather-alt"></i>&nbsp;Apprenants</a></li>
 				</ul>
 			</li>
@@ -66,9 +68,9 @@
 			<li class="mb-4 pb-0 nav-header" data-toggle="collapse"
 				data-target="#resources"
 				sec:authorize="hasRole('ROLE_ADMIN') || hasRole('ROLE_FORMATEUR')">
-				<div class="hvr">
+				<a class="hvr" href=#>
 					<i class="fas fa-file-alt mr-1"></i>&nbsp;Ressources
-				</div>
+				</a>
 				<ul class="nav nav-list collapse ml-4 mb-0" id="resources">
 					<li class="mb-4 pb-0"><a th:href="@{/protected/liste-examen}"><i
 							class="far fa-calendar-alt"></i>&nbsp;Examens</a></li>
@@ -85,11 +87,7 @@
 			<li class="mb-4 pb-0"><a href="/protected/liste-resultat"
 				sec:authorize="hasRole('ROLE_ADMIN') || hasRole('ROLE_FORMATEUR') || hasRole('ROLE_APPRENANT')"><i
 					class="fas fa-poll"></i>&nbsp;Résultats</a></li>
-<!-- 			<li class="mb-4 pb-0" sec:authorize="hasRole('ROLE_ADMIN')"><a -->
-<!-- 				href="http://" class="btn btn-info" data-toggle="collapse" -->
-<!-- 				role="button" aria-expanded="false" -->
-<!-- 				aria-controls="multiCollapseExample3"><i class="fas fa-user-cog"></i>&nbsp; -->
-<!-- 					Administration</a></li> -->
+			
 			<li class="mb-4 pb-0"><a href="/logout"
 				sec:authorize="isAuthenticated()"><i class="fas fa-sign-out-alt"></i>&nbsp;Déconnexion</a></li>
 		</ul>

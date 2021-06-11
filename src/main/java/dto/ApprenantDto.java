@@ -5,6 +5,7 @@ import java.util.List;
 
 public class ApprenantDto {
 
+	private Integer idApprenantDto;
 	private String nom;
 	private String prenom;
 	private String mail;
@@ -15,14 +16,25 @@ public class ApprenantDto {
 
 	}
 
-	public ApprenantDto(String nom, String prenom, String mail, Date dateInscriptionDate, Integer idPromotion) {
+	public ApprenantDto(Integer idApprenant, String nom, String prenom, String mail, Date dateInscriptionDate,
+			Integer idPromotion) {
+
 		super();
+		this.idApprenantDto = idApprenant;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.mail = mail;
 		this.dateInscriptionDate = dateInscriptionDate;
 		this.idPromotion = idPromotion;
 
+	}
+
+	public Integer getIdApprenantDto() {
+		return idApprenantDto;
+	}
+
+	public void setIdApprenantDto(Integer idApprenantDto) {
+		this.idApprenantDto = idApprenantDto;
 	}
 
 	public String getNom() {
@@ -70,8 +82,5 @@ public class ApprenantDto {
 		return "ApprenantDto [nom=" + nom + ", prenom=" + prenom + ", mail=" + mail + ", dateInscriptionDate="
 				+ dateInscriptionDate + ", idPromotion=" + idPromotion + "]";
 	}
-
-
-
 
 }

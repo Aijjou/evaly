@@ -35,13 +35,9 @@ public class ConnexionController {
 	@RequestMapping(value = "/public/connexion", method = RequestMethod.GET)
 	public String login(Model model, HttpServletRequest request, HttpServletResponse response) {
 
-//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//
-//		if (auth != null) {
-//
-//			InscriptionController.logoutPage(request, response);
-//		}
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
+	
 		String titreString = "Decouvrez Evaly";
 
 		model.addAttribute("titre", titreString);

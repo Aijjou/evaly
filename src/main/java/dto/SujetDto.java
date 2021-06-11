@@ -22,17 +22,18 @@ public class SujetDto {
 	private Boolean isAutomaticGenerated;
 	private String descriptionSujet;
 	private Double noteMoyenne=0D;
+	private Integer nbnotes=0;
 	private Set<Examen> examens = new HashSet<Examen>(0);
 	private Set<ReponseApprenantExamen> reponseApprenantExamens = new HashSet<ReponseApprenantExamen>(0);
 	private Set<SujetQuestion> sujetQuestions = new HashSet<SujetQuestion>(0);
 	private Set<ReponseApprenant> reponseApprenants = new HashSet<ReponseApprenant>(0);
-	private List<Theme> theme = new ArrayList<Theme>();
+	private Set<Theme> theme = new HashSet<Theme>();
 	
-	public List<Theme> getTheme() {
+	public Set<Theme> getTheme() {
 		return theme;
 	}
 
-	public void setTheme(List<Theme> theme) {
+	public void setTheme(Set<Theme> theme) {
 		this.theme = theme;
 	}
 
@@ -126,6 +127,14 @@ public class SujetDto {
 
 	public void setReponseApprenants(Set<ReponseApprenant> reponseApprenants) {
 		this.reponseApprenants = reponseApprenants;
+	}
+
+	public Integer getNbnotes() {
+		return nbnotes;
+	}
+
+	public void setNbnotes(Integer nbnotes) {
+		this.nbnotes = nbnotes;
 	}
 
 }

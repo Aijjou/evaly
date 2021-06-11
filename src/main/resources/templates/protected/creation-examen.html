@@ -9,16 +9,17 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
 	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
 	crossorigin="anonymous">
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-	integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-	crossorigin="anonymous"></script>
+
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
 	integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
 	crossorigin="anonymous"></script>
 <script
 	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
 	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+	crossorigin="anonymous"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+	integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
 	crossorigin="anonymous"></script>
 
 <link href="../../css/creation-examen.css" rel="stylesheet"
@@ -69,16 +70,19 @@
 				<div class="row align-self-center ">CREATION EXAMEN</div>
 			</div>
 		</div>
-		<div class="d-flex flex-row justify-content-center mt-4 align-self-center w-75">
+		<div
+			class="d-flex flex-row justify-content-center mt-4 align-self-center w-75">
 			<div class="card d-flex flex-row justify-content-center  p-4 main">
-				<form method="post" th:action="@{/protected/creation-examen-sub}" th:object="${examen}">
+				<form method="post" th:action="@{/protected/creation-examen-sub}"
+					th:object="${examen}">
 					<div class="d-flex flex-column justify-content-center">
 						<div class="row">
 							<div class="col-3 d-flex flex-row justify-content-center">
 								Titre</div>
 							<div
 								class="col-8 d-flex flex-row justify-content-center px-0 mb20px">
-								<textarea id="rep1" name="rep1" rows="1" cols="50" th:field="*{titre}"></textarea>
+								<textarea id="rep1" name="rep1" rows="1" cols="50"
+									th:field="*{titre}"></textarea>
 							</div>
 						</div>
 						<div class="row mb-4 w-100 mb20px">
@@ -89,8 +93,8 @@
 								class="col-9 align-self-center d-flex flex-row px-0 justify-content-center">
 								<select name="sujet" th:field="*{sujet}">
 									<option value="">-- Choisir un sujet --</option>
-									<option th:each="sujet : ${sujets}"
-										th:value="${sujet.idSujet}" th:text="${sujet.nom}">
+									<option th:each="sujet : ${sujets}" th:value="${sujet.idSujet}"
+										th:text="${sujet.nom}">
 								</select>
 							</div>
 						</div>
@@ -99,10 +103,10 @@
 							<div
 								class="col-3 align-self-center d-flex flex-row justify-content-center">
 								Promotion :</div>
-							
+
 							<div
 								class="col-9 align-self-center d-flex flex-row px-0 justify-content-center">
-								<select name="promotion"  th:field="*{promotion}">
+								<select name="promotion" th:field="*{promotion}">
 									<option value="">-- Choisir une promotion --</option>
 									<option th:each="promo : ${promotions}"
 										th:value="${promo.idPromotion}" th:text="${promo.nom}">
@@ -114,7 +118,8 @@
 								class="col-3 align-self-center d-flex flex-row justify-content-center">
 								Date et heure</div>
 							<div class="col-9 d-flex flex-row justify-content-center px-0">
-								<input type="datetime-local" name="date"   th:field="*{dateExamen}" />
+								<input type="datetime-local" name="date"
+									th:field="*{dateExamen}" />
 							</div>
 						</div>
 						<div class="row mb-4 w-100">
@@ -122,7 +127,7 @@
 								class="col-3 align-self-center d-flex flex-row justify-content-center">
 								Durée</div>
 							<div class="col-9 d-flex flex-row justify-content-center px-0 ">
-								<input type="number" name="duree"   th:field="*{dureeExamen}"  /><span>&nbsp;minutes.</span>
+								<input type="number" name="duree" th:field="*{dureeExamen}" /><span>&nbsp;minutes.</span>
 							</div>
 						</div>
 

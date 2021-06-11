@@ -231,21 +231,46 @@ public class SujetController {
 		isApprenant = false;
 		isConnectBoolean = true;
 		isAdmin = false;
-		List<Question> questions = questionService.questions();
-		HashSet<Theme> themes = new HashSet<Theme>();
-		Matiere matiere = new Matiere();
+		List<Sujet> sujets = sujetService.sujets();
+		List<SujetDto> sujetsDto = new ArrayList<SujetDto>();
+		HashSet<Theme> themesDuSujet = new HashSet<Theme>();
+		
+		//pour chaque sujet
+		for (int j = 0; j < sujets.size(); j++) {
+			//creation et insertion de donner dans le sujetdto puis ajout a la liste de dto
+			SujetDto dto = new SujetDto();
+			dto.setIdSujet(sujets.get(j).getIdSujet());
+			dto.setNom(sujets.get(j).getNom());
+			dto.setDescriptionSujet(sujets.get(j).getdescriptionSujet());
+			dto.setMatiere(sujets.get(j).getMatiere());
+			dto.setNbnotes(sujets.get(j).getNbnotes());
+			dto.setNoteMoyenne(sujets.get(j).getNoteMoyenne());
+			
+			//recherche des questions pour le sujet par la table d'asso sujetquestion
+			List<SujetQuestion> sujetQuestionsDuSujet = sujetQuestionService.findBySujet(sujets.get(j));
+			
+			//recuperation des themes des questions dans un hashset (donc pas de doublons)
+			for (int i = 0; i < sujetQuestionsDuSujet.size(); i++) {
+				Theme themeDuSujet = sujetQuestionsDuSujet.get(i).getQuestion().getTheme();
+				themesDuSujet.add(themeDuSujet);
+			}
+			System.err.println(themesDuSujet);
 
-		for (int j = 0; j < questions.size(); j++) {
-			System.err.println(questions.get(j).getDescriptionQuestion());
-			Theme theme = questions.get(j).getTheme();
-			matiere = questions.get(j).getTheme().getMatiere();
-			themes.add(theme);
+			Set<Theme> themeMem = new HashSet<Theme>();
+			//cast du hashset en list
+			List<Theme> castHashsetThemes = new ArrayList<Theme>(themesDuSujet);
+			for (int k = 0; k < castHashsetThemes.size(); k++) {
+				themeMem.add(castHashsetThemes.get(k));
+			}
+			
+			dto.setTheme(themeMem);
+			
+			//ajout de la liste des themes au sujet
+			sujetsDto.add(dto);
+			themesDuSujet.clear();
 		}
 
-		model.addAttribute("sujets", sujetService.sujets());
-		model.addAttribute("questions", questions);
-		model.addAttribute("themes", themes);
-		model.addAttribute("matiere", matiere);
+		model.addAttribute("sujets", sujetsDto);
 
 		return "/protected/liste-sujet";
 	}
