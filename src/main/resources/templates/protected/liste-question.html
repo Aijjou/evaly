@@ -70,7 +70,7 @@
 			class="d-flex flex-row justify-content-center mt-4 align-self-center w-75">
 			<div class="d-flex flex-row justify-content-center  p-4 main w-100">
 				<div class="card  align-self-center p-2  m-2 w-100">
-					<div class="row mt-4 align-self-center w-100">
+					<div class="mt-4 align-self-center w-100">
 				<div class="row mb-4 w-100">
 					<div
 						class="col-4 align-self-center d-flex flex-row justify-content-center">
@@ -100,6 +100,7 @@
 							id="datatable">
 							<thead class="bg-dark">
 								<tr>
+										<th class="text-center"    scope="col">#</th>
 										<th class="text-center"    scope="col">Matière</th>
 										<th class="text-center"    scope="col">Thème</th>
 										<th class="text-center"    scope="col">Intitulé</th>
@@ -111,6 +112,7 @@
 							</thead>
 							<tbody class="bg-dark ">
 								<tr th:each="question : ${questions}" class="bg-dark">
+									<td class="text-center"    th:text="${question.idQuestion}"></td>
 										<td class="text-center"    th:text="${question.theme.matiere.nom}"></td>
 										<td class="text-center"    th:text="${question.theme.nom}"></td>
 										<td  th:text="${question.descriptionQuestion}"></td>
@@ -120,7 +122,6 @@
 											<a th:href="@{/protected/edition-question/{idQuestion}(idQuestion = ${question.idQuestion})}"	class="btn btn-dark mr-2"  name="idQuestion">
 											<i class="far fa-arrow-alt-circle-right"></i></a>
 										</td>
-					
 									</tr>
 							</tbody>
 						</table>

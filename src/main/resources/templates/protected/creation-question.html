@@ -97,7 +97,7 @@
 									<input type="checkbox" id="checker" value="true" th:field="*{nvthemebool}">
 								</div>
 								<div class="col-5 d-flex flex-row justify-content-center px-0">
-									<textarea id="themename" name="rep1" rows="1" cols="30" th:field="*{nvtheme}" 
+									<textarea id="themename" rows="1" cols="30" th:field="*{nvtheme}" 
 										disabled></textarea>
 								</div>
 							</div>
@@ -246,14 +246,20 @@
 		document.getElementById('checker').onchange = function() {
 			document.getElementById('themename').disabled = !this.checked;
 			document.getElementById('matselect').disabled = !this.checked;
+			document.getElementById('theme').disabled = this.checked;
 		};
 	</script>
+
 	<script type="text/javascript">
 		document.getElementById('vraifaux').onchange = function() {
 			document.getElementById('rep1').disabled = this.checked;
 			document.getElementById('rep2').disabled = this.checked;
 			document.getElementById('rep3').disabled = this.checked;
 			document.getElementById('rep4').disabled = this.checked;
+			document.getElementById('rep1check').disabled = this.checked;
+			document.getElementById('rep2check').disabled = this.checked;
+			document.getElementById('rep3check').disabled = this.checked;
+			document.getElementById('rep4check').disabled = this.checked;
 			document.getElementById('repvrai').disabled = !this.checked;
 			document.getElementById('repfaux').disabled = !this.checked;
 		};
@@ -264,6 +270,10 @@
 			document.getElementById('rep2').disabled = !this.checked;
 			document.getElementById('rep3').disabled = !this.checked;
 			document.getElementById('rep4').disabled = !this.checked;
+			document.getElementById('rep1check').disabled = !this.checked;
+			document.getElementById('rep2check').disabled = !this.checked;
+			document.getElementById('rep3check').disabled = !this.checked;
+			document.getElementById('rep4check').disabled = !this.checked;
 			document.getElementById('repvrai').disabled = this.checked;
 			document.getElementById('repfaux').disabled = this.checked;
 		};

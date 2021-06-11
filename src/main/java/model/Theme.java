@@ -25,7 +25,7 @@ public class Theme implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "Theme [idTheme=" + idTheme + ", matiere=" + matiere + ", nom=" + nom + "]";
+		return "Theme [idTheme=" + idTheme +"]";
 	}
 
 	private Integer idTheme;

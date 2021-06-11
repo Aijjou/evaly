@@ -22,7 +22,6 @@ import javax.persistence.Table;
 @PrimaryKeyJoinColumn(name = "id_utilisateur")
 public class Formateur extends Utilisateur {
 
-
 	private Utilisateur utilisateur;
 	private Boolean isReferent; 
 	private Set<Examen> examens = new HashSet<Examen>(0);
@@ -50,8 +49,6 @@ public class Formateur extends Utilisateur {
 		this.promotionFormateurs = promotionFormateurs;
 	}
 
-
-
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_utilisateur", nullable = false, insertable = false, updatable = false)
 	public Utilisateur getUtilisateur() {
@@ -62,9 +59,6 @@ public class Formateur extends Utilisateur {
 		this.utilisateur = utilisateur;
 	}
 
-	
-	
-	
 	@Column(name="is_referent")
 	public Boolean getIsReferent() {
 		return isReferent;
@@ -125,7 +119,4 @@ public class Formateur extends Utilisateur {
 				+ formateurMatieres + ", sujets=" + sujets + ", formateurGroupeFormateurs=" + formateurGroupeFormateurs
 				+ ", promotionFormateurs=" + promotionFormateurs + "]";
 	}
-
-	
-	
 }

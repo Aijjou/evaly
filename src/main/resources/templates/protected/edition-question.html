@@ -168,12 +168,12 @@
 									Réponse V/F :</div>
 							
 								<div class="col-4 d-flex flex-row justify-content-center">
-									<input class="inputradio" type="radio" id="repvrai" name="repvf" value="true" th:field="*{isVrai}" disabled>
+									<input class="inputradio" type="radio" id="repvrai" name="repvf" value="true" th:field="*{isVrai}" >
 									<label for="qcm">Vrai</label>
 								</div>
 
 								<div class="col-4 d-flex flex-row justify-content-center">
-									<input class="inputradio" type="radio" id="repfaux" name="repvf" value="false" th:field="*{isVrai}" disabled>
+									<input class="inputradio" type="radio" id="repfaux" name="repvf" value="false" th:field="*{isVrai}" >
 									<label for="vraifaux">Faux</label>
 								</div>
 							</div>
@@ -270,14 +270,20 @@
 		document.getElementById('checker').onchange = function() {
 			document.getElementById('themename').disabled = !this.checked;
 			document.getElementById('matselect').disabled = !this.checked;
+			document.getElementById('theme').disabled = this.checked;
 		};
 	</script>
+
 	<script type="text/javascript">
 		document.getElementById('vraifaux').onchange = function() {
 			document.getElementById('rep1').disabled = this.checked;
 			document.getElementById('rep2').disabled = this.checked;
 			document.getElementById('rep3').disabled = this.checked;
 			document.getElementById('rep4').disabled = this.checked;
+			document.getElementById('rep1check').disabled = this.checked;
+			document.getElementById('rep2check').disabled = this.checked;
+			document.getElementById('rep3check').disabled = this.checked;
+			document.getElementById('rep4check').disabled = this.checked;
 			document.getElementById('repvrai').disabled = !this.checked;
 			document.getElementById('repfaux').disabled = !this.checked;
 		};
@@ -288,6 +294,10 @@
 			document.getElementById('rep2').disabled = !this.checked;
 			document.getElementById('rep3').disabled = !this.checked;
 			document.getElementById('rep4').disabled = !this.checked;
+			document.getElementById('rep1check').disabled = !this.checked;
+			document.getElementById('rep2check').disabled = !this.checked;
+			document.getElementById('rep3check').disabled = !this.checked;
+			document.getElementById('rep4check').disabled = !this.checked;
 			document.getElementById('repvrai').disabled = this.checked;
 			document.getElementById('repfaux').disabled = this.checked;
 		};

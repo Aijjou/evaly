@@ -104,7 +104,7 @@
 									<th  class="text-center"  scope="col">Description</th>
 									<th  class="text-center"  scope="col">Matière</th>
 									<th  class="text-center"  scope="col">Thème(s)</th>
-										<th class="text-center"   scope="col">Nombre notes</th>
+									<th class="text-center"   scope="col">Nombre notes</th>
 									<th  class="text-center"  scope="col">Moyenne/20</th>
 									<th class="text-center"   scope="col" >Modification</th>
 								</tr>
@@ -112,10 +112,10 @@
 							<tbody class="bg-dark ">
 								<tr th:each="sujet : ${sujets}" class="bg-dark">
 									<td class="text-center"   th:text="${sujet.nom}"></td>
-									<td class="text-center"   th:text="${sujet.getdescriptionSujet}"></td>
+									<td class="text-center"   th:text="${sujet.descriptionSujet}"></td>
 									<td class="text-center"   th:text="${sujet.matiere.nom}"></td>
 									<td>
-										<th:block th:each="theme : ${themes}">
+										<th:block th:each="theme : ${sujet.theme}">
 											<span th:text="${theme.nom}">
 											</span>
 										</th:block>
@@ -124,30 +124,12 @@
 									<span  class="text-center"   th:if="${sujet.nbnotes > 0}"><td th:text="${sujet.noteMoyenne}"></td></span>
 									<span th:unless="${sujet.nbnotes > 0}"><td></td></span>
 									<td  class="text-center"  >
-										<a href="info_eleve.html" target="_blank" class="mr-2"
-										rel="noopener noreferrer" type="button" data-toggle="modal"
-										data-target="#myModal"><i class="fas fa-edit"></i></a>
+										<a th:href="@{/protected/modification-sujet/{idSujet}(idSujet = ${sujet.idSujet})}"
+										class="btn btn-dark mr-2"  name="idSujet">
+										<i class="fas fa-edit"></i></a>
 									</td>
 								</tr>
 							</tbody>
-							<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-								<div class="modal-dialog" role="document">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h4 class="modal-title text-warning " id="myModalLabel">
-												<i class="fas fa-exclamation-triangle"></i>&nbsp;Modification
-												Sujet
-											</h4>
-										</div>
-										<div class="modal-body">Êtes vous sur de vouloir modifier ce sujet ?</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-secondary"
-												data-dismiss="modal">Close</button>
-											<button type="button" class="btn btn-primary">OK</button>
-										</div>
-									</div>
-								</div>
-							</div>
 						</table>
 						</form>
 					</div>

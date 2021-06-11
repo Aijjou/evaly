@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import model.Examen;
+import model.Matiere;
 import model.Promotion;
 import model.Sujet;
 
@@ -19,5 +20,5 @@ public interface ExamenService  {
 	
 	List<Examen> findBySujet(Sujet sujet);
 
-
+	List<Examen> findByMatiere(Matiere matiere);
 }
