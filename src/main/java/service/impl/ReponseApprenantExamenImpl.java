@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import model.Apprenant;
+import model.Examen;
 import model.ReponseApprenantExamen;
 import repository.ReponseApprenantExamenRepository;
 import service.ReponseApprenantExamenService;
@@ -39,6 +40,12 @@ public class ReponseApprenantExamenImpl implements ReponseApprenantExamenService
 	public void save(ReponseApprenantExamen t) {
 		reponseApprenantExamenRepository.save(t);
 		
+	}
+
+
+	@Override
+	public List<ReponseApprenantExamen> findByApprenantAndExamen(Apprenant a, Examen e) {
+		return reponseApprenantExamenRepository.findByApprenantAndExamen(a,e);
 	}
 
 }
