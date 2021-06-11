@@ -6,8 +6,7 @@ header {
 	top: 0px;
 	left: 0px;
 	right: 0px;
-	z-index : 1;
-
+	z-index: 1;
 }
 
 .avatar {
@@ -16,11 +15,15 @@ header {
 	width: 40px;
 }
 
-.bienvenue{
-	
+.avatar2 {
+	border-radius: 50%;
+	height: 100px;
+	width: 100px;
+}
+
+.bienvenue {
 	font-size: 35px;
-	color : white;
-	
+	color: white;
 }
 
 img {
@@ -29,10 +32,30 @@ img {
 	background-color: #51438F;
 }
 
-.fa-bell {
-	font-size: 25px;
-}
-
 .badge {
 	margin-left: -10px;
+}
+
+.dropdown-menu {
+	color: white;
+	background-color: #51438F;
+}
+
+.card-body .badge {
+	font-size: 15px;
+	width: 150px;
+}
+
+.dropdown-toggle {
+	outline: none;
+	border: none;
+	display: none;
+}
+
+button:focus {
+	border: none;
+}
+
+.infos {
+	font-size: 18px;
 }

@@ -19,7 +19,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import ch.qos.logback.core.joran.conditional.IfAction;
 import dto.ApprenantDto;
+import dto.ApprenantDtoFinal;
 import dto.FormateurDto;
 import mail.Mail;
 import mail.MailService;
@@ -112,55 +114,93 @@ public class ApprenantServiceImpl implements ApprenantService {
 
 		Promotion promotion = promotionRepository.findById(apprenantDto.getIdPromotion()).get();
 
-		System.out.println(" >>>> promotion " + promotion);
 		Role role = roleService.findById(3).get();
 
 		Set<Role> listeRoles = new HashSet<>();
 		Apprenant apprenant = new Apprenant();
 
-		apprenant.setDateInscription(apprenantDto.getDateInscriptionDate());
-		apprenant.setIsAdmin(false);
-		apprenant.setNom(apprenantDto.getNom());
-		apprenant.setPrenom(apprenantDto.getPrenom());
-		apprenant.setMail(apprenantDto.getMail());
-		apprenant.setPromotion(promotion);
+		System.err.println("id " + apprenantDto.getIdApprenantDto());
 
-		apprenant.setRoles(listeRoles);
-		apprenant.getRoles().add(role);
+		if (apprenantDto.getIdApprenantDto() != null) {
+			Apprenant apprenantRecup = apprenantRepository.findById(apprenantDto.getIdApprenantDto()).get();
+			System.out.println("ici id pas null");
+			apprenant.setIdUtilisateur(apprenantDto.getIdApprenantDto());
+			apprenant.setDateInscription(apprenantDto.getDateInscriptionDate());
+			apprenant.setIsAdmin(false);
+			apprenant.setNom(apprenantDto.getNom());
+			apprenant.setPrenom(apprenantDto.getPrenom());
+			apprenant.setMail(apprenantDto.getMail());
+			apprenant.setPromotion(promotion);
+			apprenant.setActive(true);
+			apprenant.setDateNaissance(apprenantRecup.getDateNaissance());
+			apprenant.setPassword(apprenantRecup.getPassword());
+			apprenant.setPhoto(apprenantRecup.getPhoto());
+			apprenant.setQuestionSecrete(apprenantRecup.getQuestionSecrete());
+			apprenant.setReponseSecrete(apprenantRecup.getReponseSecrete());
+			apprenant.setRoles(listeRoles);
+			apprenant.getRoles().add(role);
 
-		String token = RandomUtil.generateRandomStringNumber(6).toUpperCase();
+		} else {
 
-		VerifyUtilisateur verifyUtilisateur = new VerifyUtilisateur();
+			System.out.println("ici id null");
+			apprenant.setDateInscription(apprenantDto.getDateInscriptionDate());
+			apprenant.setIsAdmin(false);
+			apprenant.setNom(apprenantDto.getNom());
+			apprenant.setPrenom(apprenantDto.getPrenom());
+			apprenant.setMail(apprenantDto.getMail());
+			apprenant.setPromotion(promotion);
 
-		verifyUtilisateur.setUtilisateur(apprenant);
+			apprenant.setRoles(listeRoles);
+			apprenant.getRoles().add(role);
 
-		verifyUtilisateur.setCreatedDate(LocalDateTime.now());
+			String token = RandomUtil.generateRandomStringNumber(6).toUpperCase();
 
-		verifyUtilisateur.setExpiredDataToken(LocalDateTime.now().plusDays(1));
-		verifyUtilisateur.setToken(token);
-		verifyUtilisateurRepository.save(verifyUtilisateur);
+			VerifyUtilisateur verifyUtilisateur = new VerifyUtilisateur();
 
-		Map<String, Object> maps = new HashMap<>();
-		maps.put("utilisateur", apprenant);
-		maps.put("token", token);
+			verifyUtilisateur.setUtilisateur(apprenant);
 
-		Mail mail = new Mail();
-		mail.setFrom("postmaster@mg.iteacode.com");
-		mail.setSubject("Validation inscription Evaly");
-		mail.setTo(apprenant.getMail());
-		mail.setModel(maps);
-		try {
-			mailService.sendEmail(mail);
-		} catch (MessagingException e) {
+			verifyUtilisateur.setCreatedDate(LocalDateTime.now());
 
-			e.printStackTrace();
+			verifyUtilisateur.setExpiredDataToken(LocalDateTime.now().plusDays(1));
+			verifyUtilisateur.setToken(token);
+			verifyUtilisateurRepository.save(verifyUtilisateur);
+
+			Map<String, Object> maps = new HashMap<>();
+			maps.put("utilisateur", apprenant);
+			maps.put("token", token);
+
+			Mail mail = new Mail();
+			mail.setFrom("postmaster@mg.iteacode.com");
+			mail.setSubject("Validation inscription Evaly");
+			mail.setTo(apprenant.getMail());
+			mail.setModel(maps);
+			try {
+				mailService.sendEmail(mail);
+			} catch (MessagingException e) {
+
+				e.printStackTrace();
+			}
+
 		}
-
 		Apprenant apprenant2 = apprenantRepository.save(apprenant);
 
 		System.err.println("apprenant validee " + apprenant2.getPromotion().getIdPromotion());
 
 		return apprenant2;
+	}
+
+	@Override
+	public boolean delete(Integer id) {
+
+		boolean isDelete = false;
+
+		apprenantRepository.deleteById(id);
+
+		if (apprenantRepository.findById(id) != null) {
+			isDelete = true;
+		}
+
+		return isDelete;
 	}
 
 }

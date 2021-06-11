@@ -34,14 +34,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		System.out.println("config");
 
-		http.csrf().disable().authorizeRequests() // "/protected/**")
-				.antMatchers("/admin/**").hasAuthority("ROLE_ADMIN").antMatchers("/protected/**")
-				.access("hasRole('ROLE_ADMIN')").antMatchers("/protected/**").hasAnyAuthority("ROLE_FORMATEUR")
+		http.csrf().disable().authorizeRequests().antMatchers("/admin/**").hasAuthority("ROLE_ADMIN").antMatchers("/protected/**")
+				.hasAnyAuthority("ROLE_FORMATEUR", "ROLE_ADMIN", "ROLE_APPRENANT")
 				.antMatchers("/webjars/**", "/static/**", "/peritable/**", "/public/**", "/assets/**", "/css/**",
-						"/images/**", "/fontawesome/**", "/logout", "/protected/**")
+						"/images/**", "/fontawesome/**", "/logout")
 				.permitAll().anyRequest().authenticated().and().formLogin().loginPage("/public/connexion")
 				.defaultSuccessUrl("/protected/home").usernameParameter("email").passwordParameter("password").and()
-				.logout().logoutSuccessUrl("/public/connexion").and().exceptionHandling()
+				.logout().logoutSuccessUrl("/public/connexion").deleteCookies("JSESSIONID").and().exceptionHandling()
 				.accessDeniedPage("/public/accessDenied");
 		;
 

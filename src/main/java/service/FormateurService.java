@@ -11,5 +11,7 @@ public interface FormateurService {
 	public List<Formateur>formateurs();
 	
 	public Optional<Formateur> findById(Integer id);
+	
+	public boolean delete(Integer isDelete);
 
 }

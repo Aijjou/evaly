@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -41,8 +42,6 @@
 	<div th:replace="/shared/header :: header"></div>
 	<div th:replace="/shared/aside :: aside"></div>
 	<div class=" principal  d-flex flex-column justify-content-around">
-
-		<!-- 	<th:block th:include="/shared/_header-aside"></th:block> -->
 		<div class="d-flex flex-row justify-content-center  titre">
 			<div
 				class="card connexion w-25 d-flex flex-column justify-content-between pt-1 pl-3 pr-4 pb-2 mb-4 ">
@@ -73,15 +72,17 @@
 								th:text="${formateur.prenom}"></span>
 						</h4>
 						<a
-							class="btn nbreMatiere d-flex flex-row justify-content-around w-100 mb-2 p-2"
-							data-toggle="collapse" href="#collapseExample" role="button"
-							aria-expanded="false"
+							class="btn nbreMatiere d-flex flex-row justify-content-around w-100 mb-2 p-2 accordion-toggle"
+							data-toggle="collapse"
+							th:attr="data-target='#accordion_'+${formateur.idUtilisateur}"
+							role="button" aria-expanded="false"
 							th:aria-controls="${formateur.idUtilisateur}"><i
 							class="fas fa-graduation-cap align-self-center"></i> <span
 							class="titreNombreMatiere align-self-center">&nbsp;NOMBRE
 								MATIERE</span> <span
 							th:text="${#lists.size(formateur.formateurMatieres)}"> </span> </a>
-						<div class="collapse" id="collapseExample">
+						<div class="accordion-body collapse"
+							th:id="'#accordion_'+${formateur.idUtilisateur}">
 							<div class="p-2 d-flex flex-row flex-wrap justify-content-center">
 
 								<div th:each="matiere:${formateur.formateurMatieres}"
@@ -108,7 +109,10 @@
 								<i class="fas fa-envelope"></i>
 							</div>
 							<div class="badge bg-danger appel p-2">
-								<i class="far fa-trash-alt"></i>
+								<a data-toggle="modal" data-target="#modal-warning"
+									th:attr="data-target='#modal-warning'+${formateur.idUtilisateur}"
+									type="button"><i class="far fa-trash-alt"></i></a>
+
 							</div>
 							<div class="badge appel p-2">
 								<i class="fas fa-pencil-alt"></i>
@@ -119,9 +123,34 @@
 						</div>
 					</div>
 				</div>
+				<div class="modal modal-warning fade in"
+					th:id="modal-warning+${formateur.idUtilisateur}">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header bg-danger text-white">
+
+								<h4 class="modal-title">
+									<i class="fas fa-exclamation-triangle"></i> &nbsp;Suppression
+									Formateur
+								</h4>
+							</div>
+							<div class="modal-body text-dark">
+								<h5>Êtes vous sur de vouloir supprimer ce formateur ?</h5>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-outline pull-left"
+									data-dismiss="modal">Close</button>
+								<a type="button" class="btn btn-outline-danger"
+									th:href="@{/admin/delete-formateur/{id}(id=${formateur.idUtilisateur})}"><i
+									class="fa fa-check"></i>&nbsp;Delete</a>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
+
 </body>
 
 </html>

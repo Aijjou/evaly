@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,16 +9,17 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
 	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
 	crossorigin="anonymous">
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-	integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-	crossorigin="anonymous"></script>
+
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
 	integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
 	crossorigin="anonymous"></script>
 <script
 	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
 	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+	crossorigin="anonymous"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+	integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
 	crossorigin="anonymous"></script>
 
 <link href="../../css/liste-eleve.css" rel="stylesheet"
@@ -53,6 +55,7 @@
 <title>Liste des eleves</title>
 </head>
 <body>
+
 	<div th:replace="/shared/header :: header"></div>
 	<div th:replace="/shared/aside :: aside"></div>
 	<div class="principal d-flex flex-column justify-content-around">
@@ -69,7 +72,8 @@
 			<div class="row mt-4 w-75 align-self-center">
 				<div class="row mb-4 w-100">
 					<div
-						class="col-4 align-self-center d-flex flex-row justify-content-center">
+						class="col-4 align-self-center d-flex flex-row justify-content-center"
+						sec:authorize="hasRole('ROLE_FORMATEUR') || hasRole('ROLE_ADMIN') ">
 						<a class="btn ajoutButton shadow-lg"
 							href="/protected/inscription-apprenant-formateur"> <i
 							class="fas fa-user-plus"></i> &nbsp; Ajouter un Eleve
@@ -81,7 +85,7 @@
 					id="datatable">
 					<thead class="bg-dark">
 						<tr>
-							<th scope="col" >#</th>
+							<th scope="col">#</th>
 							<th scope="col">Nom</th>
 							<th scope="col">Prenom</th>
 							<th scope="col">Email</th>
@@ -91,82 +95,85 @@
 					</thead>
 					<tbody class="bg-dark ">
 						<tr th:each="apprenant : ${apprenants}" class="bg-dark">
-							<td th:text="${apprenant.idUtilisateur}"></td>
+							<td class="text-center"><img id="photoTableau"
+								th:src="${apprenant.photo}" /></td>
 							<td th:text="${apprenant.nom}"></td>
 							<td th:text="${apprenant.prenom}"></td>
 							<td th:text="${apprenant.mail}"></td>
 							<td th:utext="${apprenant.promotion.nom}"></td>
 							<td class="d-flex flex-row justify-content-center"><a
-								href="http://" target="_blank" rel="noopener noreferrer"
-								class="mr-2"><i class="fas fa-edit"></i></a> &nbsp; <a
-								href="info_eleve.html" target="_blank" class="mr-2"
-								rel="noopener noreferrer" type="button" data-toggle="modal"
-								data-target="#myModal"><i
-									class="far fa-arrow-alt-circle-right"></i></a> &nbsp; <a
-								href="http://" target="_blank" rel="noopener noreferrer"
-								class="mr-2"><i class="far fa-envelope-open"></i></a>
-								</td>
-						</tr>
-					</tbody>
-					<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-						aria-labelledby="myModalLabel" aria-hidden="true">
-						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h4 class="modal-title text-warning " id="myModalLabel">
-										<i class="fas fa-exclamation-triangle"></i>&nbsp;Modification
-										Apprenant
-									</h4>
-								</div>
-								<div class="modal-body">Êtes vous sur de vouloir modifier
-									cet apprenant?</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary"
-										data-dismiss="modal">Close</button>
-									<button type="button" class="btn btn-primary">OK</button>
+								sec:authorize="hasRole('ROLE_FORMATEUR') || hasRole('ROLE_ADMIN') "
+								th:href="@{/protected/edit-apprenant/{id}(id=${apprenant.idUtilisateur})}"
+								class="mr-2"><i class="fas fa-edit text-warning"></i></a> &nbsp;
+								<a href="info_eleve.html"
+								sec:authorize="hasRole('ROLE_FORMATEUR') || hasRole('ROLE_ADMIN') "
+								class="mr-2"><i
+									class="far fa-arrow-alt-circle-right text-success"></i></a> &nbsp;
+								<a href="http://" target="_blank" rel="noopener noreferrer"
+								class="mr-2"><i class="far fa-envelope-open"></i></a> &nbsp; <a
+								sec:authorize="hasRole('ROLE_FORMATEUR') || hasRole('ROLE_ADMIN') "
+								data-toggle="modal" data-target="#modal-warning"
+								th:attr="data-target='#modal-warning'+${apprenant.idUtilisateur}"
+								type="button"><i class="fas fa-trash-alt text-danger"></i></a></td>
+							<div class="modal modal-warning fade in"
+								th:id="modal-warning+${apprenant.idUtilisateur}">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header bg-danger text-white">
+
+											<h4 class="modal-title">
+												<i class="fas fa-exclamation-triangle"></i>
+												&nbsp;Suppression Apprenant
+											</h4>
+										</div>
+										<div class="modal-body text-dark">
+											<h5>Êtes vous sur de vouloir supprimer cet apprenant ?</h5>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-outline pull-left"
+												data-dismiss="modal">Close</button>
+											<a type="button" class="btn btn-outline-danger"
+												th:href="@{/protected/delete-apprenant/{id}(id=${apprenant.idUtilisateur})}"><i
+												class="fa fa-check"></i>&nbsp;Delete</a>
+										</div>
+									</div>
 								</div>
 							</div>
-						</div>
-					</div>
+						</tr>
+
+					</tbody>
+
 				</table>
 			</div>
 		</div>
 	</div>
+
+	<!-- 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" -->
+	<!-- 		aria-labelledby="myModalLabel" aria-hidden="true"> -->
+	<!-- 		<div class="modal-dialog" role="document"> -->
+	<!-- 			<div class="modal-content"> -->
+	<!-- 				<div class="modal-header bg-danger"> -->
+	<!-- 					<h4 class="modal-title text-white " id="myModalLabel"> -->
+	<!-- 						<i class="fas fa-exclamation-triangle"></i>&nbsp;Modification -->
+	<!-- 						Apprenant -->
+	<!-- 					</h4> -->
+	<!-- 				</div> -->
+	<!-- 				<div class="modal-body">Êtes vous sur de vouloir supprimer cet -->
+	<!-- 					cet apprenant?</div> -->
+	<!-- 				<div class="modal-footer"> -->
+	<!-- 					<button type="button" class="btn btn-secondary" -->
+	<!-- 						data-dismiss="modal">Close</button> -->
+	<!-- 					<a type="button" class="btn btn-danger" -->
+	<!-- 						th:href="@{/protected/delete-apprenant/{idApprenant}(idApprenant=${apprenant.idUtilisateur})}">Delete</a> -->
+	<!-- 				</div> -->
+	<!-- 			</div> -->
+	<!-- 		</div> -->
+	<!-- 	</div> -->
 	<script>
 		/*<![CDATA[*/
 		$(document).ready(function() {
-			$('#datatable').DataTable({
-				dom : 'lBfrtip',
-				buttons : [ {
-					extend : 'print',
-					exportOptions : {
-						columns : ':visible'
-					}
-				}, {
-					extend : 'copy',
-					exportOptions : {
-						columns : [ 0, ':visible' ]
-					}
-				}, {
-					extend : 'excel',
-					exportOptions : {
-						columns : ':visible'
-					}
-				}, {
-					extend : 'pdf',
-					exportOptions : {
-						columns : [ 0, 1, 2, 3, 4 ]
-					}
-				}, {
-					extend : 'colvis',
-					postfixButtons : [ 'colvisRestore' ]
-				} ],
-				"columnDefs" : [ {
-					"searchable" : false,
-					"targets" : 5
-				} ]
+			$('#datatable').DataTable({});
 
-			});
 		});
 		/*]]>*/
 	</script>

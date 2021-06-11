@@ -4,6 +4,7 @@ package model;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -80,7 +81,7 @@ public class Apprenant extends Utilisateur {
 		this.utilisateur = utilisateur;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "apprenant")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "apprenant", cascade = CascadeType.ALL)
 	public Set<ReponseApprenantExamen> getReponseApprenantExamens() {
 		return this.reponseApprenantExamens;
 	}
@@ -89,7 +90,7 @@ public class Apprenant extends Utilisateur {
 		this.reponseApprenantExamens = reponseApprenantExamens;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "apprenant")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "apprenant", cascade = CascadeType.ALL)
 	public Set<ResultatExamen> getResultatExamens() {
 		return this.resultatExamens;
 	}
@@ -98,7 +99,7 @@ public class Apprenant extends Utilisateur {
 		this.resultatExamens = resultatExamens;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "apprenant")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "apprenant", cascade = CascadeType.ALL)
 	public Set<ReponseApprenant> getReponseApprenants() {
 		return this.reponseApprenants;
 	}

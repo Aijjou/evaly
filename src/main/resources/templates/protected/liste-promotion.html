@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,16 +9,17 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
 	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
 	crossorigin="anonymous">
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-	integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-	crossorigin="anonymous"></script>
+
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
 	integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
 	crossorigin="anonymous"></script>
 <script
 	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
 	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+	crossorigin="anonymous"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+	integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
 	crossorigin="anonymous"></script>
 
 <link href="../../css/liste-eleve.css" rel="stylesheet"
@@ -47,7 +49,7 @@
 	th:href="@{/Buttons-1.7.0/js/buttons.print.min.js}"></script>
 <script type="text/javascript"
 	th:href="@{/Buttons-1.7.0/js/dataTables.buttons.min.js}"></script>
-<!-- <link th:href="@{/css/headerAside.css}" rel="stylesheet"> -->
+
 <script
 	src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.colVis.min.js"></script>
 <title>Liste des promotions</title>
@@ -66,8 +68,9 @@
 			</div>
 		</div>
 		<div class="card w-75 align-self-center p-2 main m-2">
-			<div class="row mt-4 w-75 align-self-center">
-				<div class="row mb-4 w-100">
+			<div class="mt-4 w-75 align-self-center">
+				<div class="row mb-4 w-100"
+					sec:authorize="hasRole('ROLE_ADMIN') || hasRole('ROLE_FORMATEUR')">
 					<div
 						class="col-4 align-self-center d-flex flex-row justify-content-center">
 						<a class="btn ajoutButton shadow-lg"
@@ -90,28 +93,22 @@
 						id="datatable">
 						<thead class="bg-dark">
 							<tr>
-								<th scope="col">Promotion</th>
-								<th scope="col">Date Création</th>
-								<th scope="col">Année Création</th>
-								<th scope="col">Liste Apprenants</th>
-								<th scope="col">Opérations</th>
+								<th class="text-center" scope="col">Promotion</th>
+								<th class="text-center" scope="col">Date Création</th>
+								<th class="text-center" scope="col">Année Création</th>
+								<th class="text-center" scope="col">Affiche promotion</th>
+
 							</tr>
 						</thead>
 						<tbody class="bg-dark ">
 							<tr th:each="promotion : ${promotions}" class="bg-dark">
-								<td class="text-center"   th:text="${promotion.nom}"></td>
-								<td class="text-center"   th:text="${promotion.dateCreation}"></td>
-								<td class="text-center"   th:text="${promotion.anneeCreation}"></td>
-								<td>
+								<td class="text-center" th:text="${promotion.nom}"></td>
+								<td class="text-center" th:text="${promotion.dateCreation}"></td>
+								<td class="text-center" th:text="${promotion.anneeCreation}"></td>
+								<td class="text-center">
 									<button type="submit" class="btn btn-dark mr-2"
 										name="promoSelect" th:value="${promotion.idPromotion}">
-										<i class="far fa-arrow-alt-circle-right"></i>
-									</button>
-								</td>
-								<td>
-									<button type="submit" class="btn btn-dark mr-2"
-										name="promoSelect" th:value="${promotion.idPromotion}">
-										<i class="far fa-arrow-alt-circle-right"></i>
+										<i class="fas fa-hand-pointer text-success text-center"></i>
 									</button>
 								</td>
 							</tr>
