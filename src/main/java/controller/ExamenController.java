@@ -80,6 +80,8 @@ public class ExamenController {
 	Boolean isApprenant = false;
 	Boolean isConnectBoolean = true;
 	Integer idUtilisateur = null;
+	
+	String message=null;
 
 	private void verificationRolesAndSetIdUtilisateur() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -161,6 +163,13 @@ public class ExamenController {
 
 			model.addAttribute("examens", examensapt);
 		}
+		
+		if(message!=null) {
+			model.addAttribute("message", message);
+			message=null;
+		}
+		else model.addAttribute("message","");
+		
 
 		return "protected/liste-examen";
 
@@ -257,13 +266,14 @@ public class ExamenController {
 		System.out.println("admin ? " + isAdmin + " apprenant ? " + isApprenant + " formateur ? " + isFormateur
 				+ " id : " + idUtilisateur);
 
-		/////
+		///// Passage as Utilisateur 2
+		idUtilisateur=2;
 
 		Integer idex = Integer.parseInt(idExamen);
 		Optional<Examen> examenopt = examenService.findById(idex);
 		Examen examen = examenopt.get();
 
-		Integer idapprenant = 2;
+		Integer idapprenant = idUtilisateur;
 		Optional<Apprenant> a = apprenantService.findById(idapprenant);
 		Apprenant app = a.get();
 
@@ -271,12 +281,8 @@ public class ExamenController {
 		//
 		// Find ResultatExamenByApprenantAndExamen
 		// si trouvé redirect liste-examen // else affichage
-		//
-
-//		if (resultatExamenService.findByApprenantAndExamen(app, examen)!=null) {
-//			return "redirect:/protected/liste-examen";
-//		}
-
+		
+		Date now = new Date();
 		String depart = examen.getDateExamenString();
 		String fin = null;
 		Date datedebutexamen = null;
@@ -290,28 +296,41 @@ public class ExamenController {
 		Integer duree = examen.getDureeExamen();
 		Long dureemillisec = (long) (duree * 60 * 1000);
 		Date datefinexamen = new Date(departmillisec + dureemillisec);
-
+		
 		for (int i = 0; i < 10; i++) {
 			System.out.println("DEPART" + depart + " FIN " + datefinexamen);
 		}
-
+		
+		// Vérif si date actuelle comprise entre début et fin examen
+		if (now.compareTo(datedebutexamen)<0) {
+			System.err.print("REDIRECT LISTE EXAMEN - EXAMEN NON COMMENCE");
+			message="L'examen n'a pas encore débuté.";
+			return "redirect:/protected/liste-examen";
+		}
+		
+		if (now.compareTo(datefinexamen)>0) {
+			System.err.print("REDIRECT LISTE EXAMEN - EXAMEN TERMINE");
+			message="L'examen est terminé.";
+			return "redirect:/protected/liste-examen";
+		}
+		
+		// Vérif si l'examen a déjà été passé
+		List<ReponseApprenantExamen> lrae = reponseApprenantExamenService.findByApprenantAndExamen(app, examen);
+		if (lrae.size()>0) {
+			System.err.print("REDIRECT LISTE EXAMEN - REPONSES DEJA PRESENTES");
+			message="Vous avez déjà effectué cet examen.";
+			return "redirect:/protected/liste-examen";
+		}
+		
 		String pattern = "yyyy-MM-dd HH:mm";
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-
 		String timeleftstring = simpleDateFormat.format(datefinexamen);
 		System.out.println(timeleftstring);
 
-		Date now = new Date();
 		Long nowmilli = now.getTime();
 		Long finmilli = datefinexamen.getTime();
 		Long timeleftmilli = finmilli - nowmilli;
-
-//	    try {
-//			model.addAttribute("endDate", new SimpleDateFormat("yyyy-MM-dd").parse("2022-01-01"));
-//		} catch (ParseException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		
 		try {
 			model.addAttribute("endDate", new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(timeleftstring));
 			model.addAttribute("timeleftmilli", timeleftmilli);
@@ -325,9 +344,6 @@ public class ExamenController {
 		ArrayList<QuestionDto> questions = qdto.getQuestions();
 		model.addAttribute("qdto", qdto);
 		model.addAttribute("questions", questions);
-		System.out.println(qdto);
-		System.out.println(qdto);
-		System.out.println(qdto);
 
 		return "protected/questionnaire";
 	}
@@ -335,12 +351,54 @@ public class ExamenController {
 	@RequestMapping(value = "/protected/questionnaire-sub", method = RequestMethod.POST)
 	public String passageExamenSub(@ModelAttribute QuestionnaireDto qu, Model model, @RequestParam List<Integer> ok) {
 
-		Integer idapprenant = 2;
+		verificationRolesAndSetIdUtilisateur();
+		System.out.println("admin ? " + isAdmin + " apprenant ? " + isApprenant + " formateur ? " + isFormateur
+				+ " id : " + idUtilisateur);
 
+		///// Passage as Utilisateur 2
+		idUtilisateur=2;
+		Integer idapprenant=idUtilisateur;
+		
 		Optional<Apprenant> a = apprenantService.findById(idapprenant);
 		Apprenant app = a.get();
-		Optional<Examen> e = examenService.findById(qu.getIdExamen());
-		Examen exa = e.get();
+		Optional<Examen> exap = examenService.findById(qu.getIdExamen());
+		Examen exa = exap.get();
+		
+		Date now = new Date();
+		String depart = exa.getDateExamenString();
+		String fin = null;
+		Date datedebutexamen = null;
+		try {
+			datedebutexamen = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(depart);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Long departmillisec = datedebutexamen.getTime();
+		Integer duree = exa.getDureeExamen();
+		Long dureemillisec = (long) (duree * 60 * 1000);
+		Date datefinexamen = new Date(departmillisec + dureemillisec);
+		Long datefinexamenlong = datefinexamen.getTime();
+		Date datefinexamenplusuneminute = new Date(datefinexamenlong + 60000);
+		if (now.compareTo(datedebutexamen)<0) {
+			System.err.print("REDIRECT LISTE EXAMEN - EXAMEN NON COMMENCE");
+			message="L'examen n'a pas encore débuté.";
+			return "redirect:/protected/liste-examen";
+		}
+		
+		if (now.compareTo(datefinexamenplusuneminute)>0) {
+			System.err.print("REDIRECT LISTE EXAMEN - FIN EXAMEN DEPASSEE");
+			message="L'heure de fin d'examen a été dépassée de plus d'une minute, les réponses sont ignorées.";
+			return "redirect:/protected/liste-examen";
+		}
+
+		List<ReponseApprenantExamen> lrae = reponseApprenantExamenService.findByApprenantAndExamen(app, exa);
+		if (lrae.size()>0) {
+			System.err.print("REDIRECT LISTE EXAMEN - REPONSES DEJA PRESENTES");
+			message="Vous avez déjà effectué cet examen.";
+			return "redirect:/protected/liste-examen";
+		}
+		
 		List<ReponseApprenantExamen> listrae = new ArrayList<ReponseApprenantExamen>();
 
 		for (Integer i : ok) {
