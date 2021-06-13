@@ -36,6 +36,10 @@ body, html {
 }
 
 
+.message{
+	font-size:150%;
+	color:red;
+}
 
 .main {
 	position: relative;
