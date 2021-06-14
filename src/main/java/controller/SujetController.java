@@ -9,6 +9,8 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.QSort;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -36,10 +38,7 @@ import service.ThemeService;
 @Controller
 public class SujetController {
 
-	Boolean isConnectBoolean = false;
-	Boolean isAdmin = false;
-	Boolean isFormateur = false;
-	Boolean isApprenant = false;
+
 	Sujet sujet;
 
 	@Autowired
@@ -61,19 +60,52 @@ public class SujetController {
 	PromotionService promotionService;
 
 	List<Theme> themesCtrlMem = new ArrayList<Theme>();
+	Boolean isAdmin = false;
+	Boolean isFormateur = false;
+	Boolean isApprenant = false;
+	Boolean isConnectBoolean = true;
+	Integer idUtilisateur = null;
+	
+	private void verificationRolesAndSetIdUtilisateur() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		System.err.println(" --- --- --- verificationRoles  --- --- --- ");
+		auth.getAuthorities().stream().forEach(role -> {
+			if (role.getAuthority().equals("ROLE_ADMIN")) {
+				isAdmin = true;
+				System.out.println("ROLE_ADMIN");
+			} else
+				isAdmin = false;
+
+			if (role.getAuthority().equals("ROLE_APPRENANT")) {
+				isApprenant = true;
+				System.out.println("ROLE_APPRENANT");
+			} else
+				isApprenant = false;
+
+			if (role.getAuthority().equals("ROLE_FORMATEUR")) {
+				isFormateur = true;
+				System.out.println("ROLE_FORMATEUR");
+			} else
+				isFormateur = false;
+		});
+		if (isAdmin || isFormateur || isApprenant) {
+		principal.UserPrincipal userPrincipal = (principal.UserPrincipal) auth.getPrincipal();
+		idUtilisateur = userPrincipal.getId();
+		}
+		System.err.println(" --- --- --- verificationRoles --- --- --- ");
+	}
 
 	@RequestMapping(value = "/protected/creation-sujet", method = RequestMethod.GET)
 	public String afficheFormateur(Model model) {
 
-		isFormateur = true;
-		isApprenant = false;
-		isConnectBoolean = true;
-		isAdmin = false;
-
-		model.addAttribute("connexion", isConnectBoolean);
-		model.addAttribute("apprenant", isApprenant);
-		model.addAttribute("admin", isAdmin);
-		model.addAttribute("formateur", isFormateur);
+		verificationRolesAndSetIdUtilisateur();
+		System.out.println("admin ? " + isAdmin + " apprenant ? " + isApprenant + " formateur ? " + isFormateur
+				+ " id : " + idUtilisateur);
+		
+		if (idUtilisateur==null)return "redirect:/public/connexion";
+		if (isApprenant)
+			return "redirect:/public/accessDenied";
+		
 		model.addAttribute("listmatieres", matiereService.matieres());
 
 		return "/protected/creation-sujet";
@@ -82,17 +114,17 @@ public class SujetController {
 	@RequestMapping(value = "/protected/creation-sujet2", method = RequestMethod.POST)
 	public String afficheFormateur2(Model model, @RequestParam Integer title) {
 
-		isFormateur = true;
-		isApprenant = false;
-		isConnectBoolean = true;
-		isAdmin = false;
+		verificationRolesAndSetIdUtilisateur();
+		System.out.println("admin ? " + isAdmin + " apprenant ? " + isApprenant + " formateur ? " + isFormateur
+				+ " id : " + idUtilisateur);
+		
+		if (idUtilisateur==null)return "redirect:/public/connexion";
+		if (isApprenant)
+			return "redirect:/public/accessDenied";
+		
 		Matiere mat = new Matiere();
 		mat.setIdMatiere(title);
 
-		model.addAttribute("connexion", isConnectBoolean);
-		model.addAttribute("apprenant", isApprenant);
-		model.addAttribute("admin", isAdmin);
-		model.addAttribute("formateur", isFormateur);
 		model.addAttribute("themes", themeService.findThemesByMat(mat));
 
 		return "/protected/creation-sujet2";
@@ -101,10 +133,14 @@ public class SujetController {
 	@RequestMapping(value = "/protected/liste-question-select", method = RequestMethod.POST)
 	public String afficheFListeQuestions(Model model, @RequestParam List<Integer> title) {
 
-		isFormateur = true;
-		isApprenant = false;
-		isConnectBoolean = true;
-		isAdmin = false;
+		verificationRolesAndSetIdUtilisateur();
+		System.out.println("admin ? " + isAdmin + " apprenant ? " + isApprenant + " formateur ? " + isFormateur
+				+ " id : " + idUtilisateur);
+		
+		if (idUtilisateur==null)return "redirect:/public/connexion";
+		if (isApprenant)
+			return "redirect:/public/accessDenied";
+		
 		List<Question> questions = new ArrayList<Question>();
 
 		System.err.println(title);
@@ -134,15 +170,13 @@ public class SujetController {
 	@RequestMapping(value = "/protected/creation-sujet-gen", method = RequestMethod.GET)
 	public String generateSubject(Model model) {
 
-		isFormateur = true;
-		isApprenant = false;
-		isConnectBoolean = true;
-		isAdmin = false;
-
-		model.addAttribute("connexion", isConnectBoolean);
-		model.addAttribute("apprenant", isApprenant);
-		model.addAttribute("admin", isAdmin);
-		model.addAttribute("formateur", isFormateur);
+		verificationRolesAndSetIdUtilisateur();
+		System.out.println("admin ? " + isAdmin + " apprenant ? " + isApprenant + " formateur ? " + isFormateur
+				+ " id : " + idUtilisateur);
+		
+		if (idUtilisateur==null)return "redirect:/public/connexion";
+		if (isApprenant)
+			return "redirect:/public/accessDenied";
 
 		return "/protected/creation-sujet-gen";
 	}
@@ -150,10 +184,14 @@ public class SujetController {
 	@RequestMapping(value = "/protected/creation-sujet-manu", method = RequestMethod.POST)
 	public String creationQuesionnaire(Model model, @RequestParam List<Integer> ok) {
 
-		isFormateur = true;
-		isApprenant = false;
-		isConnectBoolean = true;
-		isAdmin = false;
+		verificationRolesAndSetIdUtilisateur();
+		System.out.println("admin ? " + isAdmin + " apprenant ? " + isApprenant + " formateur ? " + isFormateur
+				+ " id : " + idUtilisateur);
+		
+		if (idUtilisateur==null)return "redirect:/public/connexion";
+		if (isApprenant)
+			return "redirect:/public/accessDenied";
+		
 		List<Question> questions = new ArrayList<Question>();
 
 		// recuperation des ids
@@ -181,10 +219,14 @@ public class SujetController {
 	public String validationQuesionnaire(Model model, @RequestParam List<Integer> list, String nom,
 			String description) {
 
-		isFormateur = true;
-		isApprenant = false;
-		isConnectBoolean = true;
-		isAdmin = false;
+		verificationRolesAndSetIdUtilisateur();
+		System.out.println("admin ? " + isAdmin + " apprenant ? " + isApprenant + " formateur ? " + isFormateur
+				+ " id : " + idUtilisateur);
+		
+		if (idUtilisateur==null)return "redirect:/public/connexion";
+		if (isApprenant)
+			return "redirect:/public/accessDenied";
+		
 		List<Question> questions = new ArrayList<Question>();
 		HashSet<Theme> themes = new HashSet<Theme>();
 		Matiere matiere = new Matiere();
@@ -227,10 +269,14 @@ public class SujetController {
 	@RequestMapping(value = "/protected/liste-sujet", method = RequestMethod.GET)
 	public String validationQuesionnaire2(Model model) {
 
-		isFormateur = true;
-		isApprenant = false;
-		isConnectBoolean = true;
-		isAdmin = false;
+		verificationRolesAndSetIdUtilisateur();
+		System.out.println("admin ? " + isAdmin + " apprenant ? " + isApprenant + " formateur ? " + isFormateur
+				+ " id : " + idUtilisateur);
+		
+		if (idUtilisateur==null)return "redirect:/public/connexion";
+		if (isApprenant)
+			return "redirect:/public/accessDenied";
+		
 		List<Sujet> sujets = sujetService.sujets();
 		List<SujetDto> sujetsDto = new ArrayList<SujetDto>();
 		HashSet<Theme> themesDuSujet = new HashSet<Theme>();
@@ -278,6 +324,14 @@ public class SujetController {
 	@RequestMapping(value = "/protected/liste-promotion-select", method = RequestMethod.POST)
 	public String affichePromotion(Model model, @RequestParam Integer sujetSelect) {
 
+		verificationRolesAndSetIdUtilisateur();
+		System.out.println("admin ? " + isAdmin + " apprenant ? " + isApprenant + " formateur ? " + isFormateur
+				+ " id : " + idUtilisateur);
+		
+		if (idUtilisateur==null)return "redirect:/public/connexion";
+		if (isApprenant)
+			return "redirect:/public/accessDenied";
+		
 		List<Promotion> promotions = promotionService.promotions();
 		Organisation org = promotions.get(0).getOrganisation();
 		String nomOrganisation = org.getName();
@@ -307,10 +361,13 @@ public class SujetController {
 	@RequestMapping(value = "/protected/envoi-sujet", method = RequestMethod.POST)
 	public String envoiSujet(Model model, @RequestParam List<Integer> promotions, Sujet sujetSelect) {
 
-		isAdmin = false;
-		isFormateur = false;
-		isApprenant = false;
-		isConnectBoolean = true;
+		verificationRolesAndSetIdUtilisateur();
+		System.out.println("admin ? " + isAdmin + " apprenant ? " + isApprenant + " formateur ? " + isFormateur
+				+ " id : " + idUtilisateur);
+		
+		if (idUtilisateur==null)return "redirect:/public/connexion";
+		if (isApprenant)
+			return "redirect:/public/accessDenied";
 
 		System.err.println("test ctrleur envoi sujet");
 
@@ -331,6 +388,14 @@ public class SujetController {
 	@RequestMapping(value = "/protected/modification-sujet/{idSujet}", method = RequestMethod.GET)
 	public String modificationSujet(Model model, @PathVariable(name = "idSujet") String idSujet) {
 		System.err.println(">>>>>>>> dto : " + themesCtrlMem);
+		
+		verificationRolesAndSetIdUtilisateur();
+		System.out.println("admin ? " + isAdmin + " apprenant ? " + isApprenant + " formateur ? " + isFormateur
+				+ " id : " + idUtilisateur);
+		
+		if (idUtilisateur==null)return "redirect:/public/connexion";
+		if (isApprenant)
+			return "redirect:/public/accessDenied";
 
 		boolean tableisActive = true;
 		// recuperation de l'id sujet
@@ -402,6 +467,14 @@ public class SujetController {
 	public String validationModificationSujet(Model model, @ModelAttribute Sujet sujet,
 			@RequestParam(value = "themeSelect") List<Integer> themeSelect,
 			@RequestParam(value = "questionSelect") List<Integer> questionSelect, String action) {
+		
+		verificationRolesAndSetIdUtilisateur();
+		System.out.println("admin ? " + isAdmin + " apprenant ? " + isApprenant + " formateur ? " + isFormateur
+				+ " id : " + idUtilisateur);
+		
+		if (idUtilisateur==null)return "redirect:/public/connexion";
+		if (isApprenant)
+			return "redirect:/public/accessDenied";
 
 		System.err.println(sujet.getdescriptionSujet());
 		Optional<Sujet> sujetOp = sujetService.findById(sujet.getIdSujet());

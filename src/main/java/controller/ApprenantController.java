@@ -55,15 +55,17 @@ public class ApprenantController {
 			if (role.getAuthority().equals("ROLE_ADMIN")) {
 				isAdmin = true;
 				System.out.println("ROLE_ADMIN");
-			}
+			} else isAdmin=false;
+			
 			if (role.getAuthority().equals("ROLE_APPRENANT")) {
 				isApprenant = true;
 				System.out.println("ROLE_APPRENANT");
-			}
+			} else isApprenant=false;
+			
 			if (role.getAuthority().equals("ROLE_FORMATEUR")) {
 				isFormateur = true;
 				System.out.println("ROLE_FORMATEUR");
-			}
+			} else isFormateur=false;
 		});
 		principal.UserPrincipal userPrincipal = (principal.UserPrincipal) auth.getPrincipal();
 		idUtilisateur = userPrincipal.getId();
@@ -148,7 +150,7 @@ public class ApprenantController {
 
 	}
 
-	@RequestMapping(value = "protected/edit-apprenant/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/protected/edit-apprenant/{id}", method = RequestMethod.GET)
 	public String editApprenant(Model model, @PathVariable("id") Integer idApprenant) {
 
 		boolean isModification = true;
