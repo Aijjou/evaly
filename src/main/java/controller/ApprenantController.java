@@ -1,6 +1,9 @@
 package controller;
 
+import java.io.Console;
+
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -19,6 +22,13 @@ import dto.ApprenantDto;
 import dto.ApprenantDtoFinal;
 import model.Apprenant;
 import model.Examen;
+
+import model.Organisation;
+
+import model.Utilisateur;
+
+import service.OrganisationService;
+
 import model.Formateur;
 import model.FormateurMatiere;
 import model.Promotion;
@@ -26,7 +36,9 @@ import model.ResultatExamen;
 import service.ApprenantService;
 import service.ExamenService;
 import service.FormateurService;
+
 import service.PromotionService;
+import service.UtilisateurService;
 
 @Controller
 public class ApprenantController {
@@ -40,13 +52,19 @@ public class ApprenantController {
 	@Autowired
 	FormateurService formateurService;
 
+	@Autowired
+	UtilisateurService utilisateurService;
+
+	@Autowired
+	OrganisationService organisationService;
+
 	Boolean isAdmin = false;
 	Boolean isFormateur = false;
 	Boolean isApprenant = false;
 	Boolean isConnectBoolean = true;
 	Integer idUtilisateur = null;
-	
-	String message=null;
+
+	String message = null;
 
 	private void verificationRolesAndSetIdUtilisateur() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -55,23 +73,26 @@ public class ApprenantController {
 			if (role.getAuthority().equals("ROLE_ADMIN")) {
 				isAdmin = true;
 				System.out.println("ROLE_ADMIN");
-			} else isAdmin=false;
-			
+			} else
+				isAdmin = false;
+
 			if (role.getAuthority().equals("ROLE_APPRENANT")) {
 				isApprenant = true;
 				System.out.println("ROLE_APPRENANT");
-			} else isApprenant=false;
-			
+			} else
+				isApprenant = false;
+
 			if (role.getAuthority().equals("ROLE_FORMATEUR")) {
 				isFormateur = true;
 				System.out.println("ROLE_FORMATEUR");
-			} else isFormateur=false;
+			} else
+				isFormateur = false;
 		});
 		principal.UserPrincipal userPrincipal = (principal.UserPrincipal) auth.getPrincipal();
 		idUtilisateur = userPrincipal.getId();
 		System.err.println(" --- --- --- verificationRoles --- --- --- ");
 	}
-	
+
 	@RequestMapping(value = "/protected/liste-apprenant", method = RequestMethod.GET)
 	public String afficheApprenant(Model model) {
 
@@ -184,7 +205,6 @@ public class ApprenantController {
 				apprenant.getDateNaissance(), apprenant.getActive(), apprenant.getIsAdmin(),
 				apprenant.getQuestionSecrete(), apprenant.getReponseSecrete(),
 				apprenant.getPromotion().getIdPromotion(), null);
-		
 
 		model.addAttribute("apprenantDtoFinal", apprenantDtoFinal);
 		model.addAttribute("isModification", isModification);
@@ -194,45 +214,68 @@ public class ApprenantController {
 
 	@RequestMapping(value = "/protected/info-utilisateur/{id}", method = RequestMethod.GET)
 	public String afficheUnUtilisateur(Model model, @PathVariable("id") Integer idApprenant) {
-		
-		System.out.println("INFOS");
-		isFormateur=true;
-		idUtilisateur=1;
-		
-		Optional<Formateur> fo = null;
-		Formateur forma = null;
-		Set<FormateurMatiere> formatiere = null;
-		List<Integer> indexmatiere = new ArrayList<Integer>();
-		if (isFormateur) {
-			fo = formateurService.findById(idUtilisateur);
-			forma=fo.get();
-			formatiere = forma.getFormateurMatieres();
-			System.err.println("Resultats matiere du formateur");
-			for (FormateurMatiere fm : formatiere) {
-				indexmatiere.add(fm.getMatiere().getIdMatiere());
-				System.err.println(fm.getMatiere());
-			}
-		}
-		
-		
-		Apprenant apprenant = apprenantService.findById(idApprenant).get();
-		Set<ResultatExamen> resultatExamens = apprenant.getResultatExamens();
-		List<ResultatExamen> resultsfiltered = new ArrayList<ResultatExamen>();
-		for (ResultatExamen re : resultatExamens) {
-			if (indexmatiere.contains(re.getExamen().getMatiere().getIdMatiere())) {
-				resultsfiltered.add(re);
-			}
-		}
-		
-		if (!resultsfiltered.isEmpty()) {
-			model.addAttribute("results", resultsfiltered);
-		}
-		System.err.println("Resultats examens");
-		System.err.println(resultsfiltered);
-		Promotion promotion = apprenant.getPromotion();
 
-		model.addAttribute("apprenant", apprenant);
-		model.addAttribute("promotion", promotion);
+		Utilisateur utilisateur = utilisateurService.findById(idApprenant).get();
+		System.err.println("utilisateur edit " + utilisateur.getPrenom());
+		Organisation organisation = organisationService.findOrganisation(utilisateur.getIdOrganisation()).get();
+
+		utilisateur.getRoles().stream().forEach(role -> {
+
+			if (role.getName() == "ROLE_ADMIN") {
+				isAdmin = true;
+				isApprenant = false;
+				isFormateur = false;
+			} else if (role.getName() == "ROLE_FORMATEUR") {
+				isAdmin = false;
+				isApprenant = false;
+				isFormateur = true;
+
+			} else if (role.getName() == "ROLE_APPRENANT") {
+				isAdmin = false;
+				isApprenant = true;
+				isFormateur = false;
+				Apprenant apprenant = apprenantService.findById(idApprenant).get();
+				Promotion promotion = apprenant.getPromotion();
+				model.addAttribute("promotion", promotion);
+				System.out.println("INFOS");
+				isFormateur = true;
+				idUtilisateur = 1;
+
+				Optional<Formateur> fo = null;
+				Formateur forma = null;
+				Set<FormateurMatiere> formatiere = null;
+				List<Integer> indexmatiere = new ArrayList<Integer>();
+				if (isFormateur) {
+					fo = formateurService.findById(idUtilisateur);
+					forma = fo.get();
+					formatiere = forma.getFormateurMatieres();
+					System.err.println("Resultats matiere du formateur");
+					for (FormateurMatiere fm : formatiere) {
+						indexmatiere.add(fm.getMatiere().getIdMatiere());
+						System.err.println(fm.getMatiere());
+					}
+				}
+
+				Set<ResultatExamen> resultatExamens = apprenant.getResultatExamens();
+				List<ResultatExamen> resultsfiltered = new ArrayList<ResultatExamen>();
+				for (ResultatExamen re : resultatExamens) {
+					if (indexmatiere.contains(re.getExamen().getMatiere().getIdMatiere())) {
+						resultsfiltered.add(re);
+					}
+				}
+
+				if (!resultsfiltered.isEmpty()) {
+					model.addAttribute("results", resultsfiltered);
+				}
+				System.err.println("Resultats examens");
+				System.err.println(resultsfiltered);
+			}
+
+		});
+
+		model.addAttribute("utilisateur", utilisateur);
+
+		model.addAttribute("organisation", organisation);
 
 		return "/protected/info-utilisateur";
 	}
