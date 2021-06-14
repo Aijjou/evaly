@@ -17,6 +17,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "organisation", catalog = "evaly")
+//@Table(name = "organisation", catalog = "u575564338_evaly")
 public class Organisation implements java.io.Serializable {
 
 	/**

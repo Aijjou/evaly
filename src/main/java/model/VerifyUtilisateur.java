@@ -18,6 +18,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "verify_utilisateur", catalog = "evaly")
+//@Table(name = "verify_utilisateur", catalog = "u575564338_evaly")
 public class VerifyUtilisateur {
 
 	@Id
@@ -29,10 +30,10 @@ public class VerifyUtilisateur {
 	@org.hibernate.annotations.Type(type = "org.hibernate.type.TextType")
 	private String token;
 
-	@Column(name="expired_data_token")
+	@Column(name = "expired_data_token")
 	private LocalDateTime expiredDataToken;
 
-	@Column(name="created_date")
+	@Column(name = "created_date")
 	private LocalDateTime createdDate;
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -71,8 +72,6 @@ public class VerifyUtilisateur {
 		this.createdDate = createdDate;
 	}
 
-	
-
 	public Utilisateur getUtilisateur() {
 		return utilisateur;
 	}
@@ -97,7 +96,4 @@ public class VerifyUtilisateur {
 				+ ", createdDate=" + createdDate + ", utilisateur=" + utilisateur + "]";
 	}
 
-	
-	
 }
-

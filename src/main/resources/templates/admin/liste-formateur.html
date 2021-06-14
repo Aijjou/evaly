@@ -114,9 +114,12 @@
 									type="button"><i class="far fa-trash-alt"></i></a>
 
 							</div>
-							<div class="badge appel p-2">
-								<i class="fas fa-pencil-alt"></i>
-							</div>
+							<a
+								th:href="@{/admin/edit-formateur-admin/{id}(id=${formateur.idUtilisateur})}" type="button">
+								<div class="badge appel p-2">
+									<i class="fas fa-pencil-alt"></i>
+								</div>
+							</a>
 							<div class="badge appel p-2">
 								<i class="fas fa-arrow-right"></i>
 							</div>

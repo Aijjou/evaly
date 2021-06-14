@@ -90,9 +90,10 @@
 
 							<a
 								class="badge badge-pill badge-light mb-4 text-dark p-2 shadow-lg"
-								th:href="@{/public/inscription-final/{idFormateur}(idFormateur=${#authentication.getPrincipal().id})}">Affiche</a>
-							<a class="badge badge-pill badge-light text-dark p-2 shadow-lg"
-								th:href="@{/protected/edit-formateur-formateur/{idFormateur}(idFormateur=${#authentication.getPrincipal().id})}">Modification</a>
+								th:href="@{/public/inscription-final/{idFormateur}(idFormateur=${#authentication.getPrincipal().id})}"><i
+								class="fas fa-id-card"></i> &nbsp; Affiche</a> <a
+								class="badge badge-pill badge-light text-dark p-2 shadow-lg"
+								th:href="@{/protected/edit-formateur-formateur/{idFormateur}(idFormateur=${#authentication.getPrincipal().id})}"><i class="fas fa-edit text-dark"></i>&nbsp;Modification</a>
 
 						</div>
 						<div
@@ -101,18 +102,19 @@
 
 							<a
 								class="badge badge-pill badge-light mb-4 text-dark p-2 shadow-lg"
-								href="#">Affiche</a> <a
+								th:href="@{/protected/info-utilisateur/{id}(id=${#authentication.getPrincipal().id})}"><i class="fas fa-id-card"></i> &nbsp; Affiche</a> <a
 								class="badge badge-pill badge-light text-dark p-2 shadow-lg"
-								th:href="@{/public/edit-apprenant-apprenant/{idApprenant}(idApprenant=${#authentication.getPrincipal().id})}">Modification</a>
+								th:href="@{/public/edit-apprenant-apprenant/{idApprenant}(idApprenant=${#authentication.getPrincipal().id})}"><i class="fas fa-edit text-dark"></i>&nbsp;Modification</a>
 						</div>
 						<div
 							class="card-body d-flex flex-column justify-content-around align-items-center"
 							sec:authorize="hasRole('ROLE_ADMIN')">
 							<a
 								class="badge badge-pill badge-light mb-4 text-dark p-2 shadow-lg"
-								href="#">Affiche</a> <a
+								href="#"><i class="fas fa-id-card"></i> &nbsp; Affiche</a> <a
 								class="badge badge-pill badge-light text-dark p-2 shadow-lg"
-								th:href="@{/public/inscription-admin/{idAdmin}(idAdmin=${#authentication.getPrincipal().id})}">Modification</a>
+								th:href="@{/admin/edit-admin-admin/{idAdmin}(idAdmin=${#authentication.getPrincipal().id})}"><i class="fas fa-edit text-dark"></i>&nbsp;
+								Modification</a>
 
 						</div>
 						<div class="card-footer d-flex flex-row justify-content-center">

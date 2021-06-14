@@ -1,7 +1,10 @@
 package dto;
 
+import java.lang.reflect.Constructor;
+
 public class AdminEtablissementDto {
 
+	private Integer idAdminEtablissementDtoInteger;
 	private String name;
 	private Integer numero;
 	private String rue;
@@ -16,10 +19,11 @@ public class AdminEtablissementDto {
 	private String reponse;
 	private Boolean isAdmin;
 
-	public AdminEtablissementDto(String nom, Integer numero, String rue, String ville, String code, Boolean isFormateur,
-			String nomReferent, String prenomReferent, String mail, String password, String question, String reponse,
-			Boolean isAdmin) {
+	public AdminEtablissementDto(Integer idAdminEtablissementDto, String nom, Integer numero, String rue, String ville,
+			String code, Boolean isFormateur, String nomReferent, String prenomReferent, String mail, String password,
+			String question, String reponse, Boolean isAdmin) {
 		super();
+		this.idAdminEtablissementDtoInteger = idAdminEtablissementDto;
 		this.name = nom;
 		this.numero = numero;
 		this.rue = rue;
@@ -37,6 +41,15 @@ public class AdminEtablissementDto {
 
 	public AdminEtablissementDto() {
 
+	}
+
+	
+	public Integer getIdAdminEtablissementDtoInteger() {
+		return idAdminEtablissementDtoInteger;
+	}
+
+	public void setIdAdminEtablissementDtoInteger(Integer idAdminEtablissementDtoInteger) {
+		this.idAdminEtablissementDtoInteger = idAdminEtablissementDtoInteger;
 	}
 
 	public String getNom() {

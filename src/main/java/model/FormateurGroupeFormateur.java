@@ -17,6 +17,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "formateur_groupe_formateur", catalog = "evaly")
+//@Table(name = "formateur_groupe_formateur", catalog = "u575564338_evaly")
 public class FormateurGroupeFormateur implements java.io.Serializable {
 
 	private Integer idFormateurGroupeFormateur;
