@@ -256,7 +256,7 @@ public class InscriptionController {
 
 		return "/public/inscription-final-apprenant";
 	}
-
+	
 	@RequestMapping(value = "/public/inscription-final-apprenant", method = RequestMethod.POST)
 	public String inscriptionFinalApprenant(Model model,
 			@Valid @ModelAttribute("apprenantFinalDto") ApprenantDtoFinal apprenantDtoFinal, BindingResult result,
