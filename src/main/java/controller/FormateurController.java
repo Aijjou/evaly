@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.cloudinary.provisioning.Account.Role;
 
 import dto.ApprenantDtoFinal;
+import dto.FormateurDto;
 import dto.FormateurDtoFinal;
 import model.Apprenant;
 import model.Examen;
@@ -31,6 +32,7 @@ import model.Sujet;
 import service.ExamenService;
 import service.FormateurMatiereService;
 import service.FormateurService;
+import service.GroupeService;
 import service.PromotionService;
 import service.SujetService;
 
@@ -56,6 +58,9 @@ public class FormateurController {
 
 	@Autowired
 	ExamenService examenService;
+
+	@Autowired
+	GroupeService groupeService;
 
 	@RequestMapping(value = "/admin/liste-formateur", method = RequestMethod.GET)
 	public String afficheFormateur(Model model) {
@@ -141,6 +146,32 @@ public class FormateurController {
 		model.addAttribute("isModification", isModification);
 
 		return "/public/inscription-final";
+	}
+
+	@RequestMapping(value = "/admin/edit-formateur-admin/{id}", method = RequestMethod.GET)
+	public String editApprenantParAdmin(Model model, @PathVariable("id") Integer idFormateur) {
+
+		boolean isModification = true;
+
+		Formateur formateur = formateurService.findById(idFormateur).get();
+
+		
+	
+
+//		System.err.println(" >>>>>>>  " + formateur);
+
+//		FormateurDtoFinal formateurDtoFinal = new FormateurDtoFinal(formateur.getIdUtilisateur(), formateur.getNom(),
+//				formateur.getPrenom(), formateur.getMail(), formateur.getPassword(), formateur.getDateInscription(),
+//				formateur.getDateNaissance(), formateur.getActive(), null, formateur.getIsAdmin(), null,
+//				formateur.getQuestionSecrete(), formateur.getReponseSecrete(), listeIdPromotion);
+
+//		FormateurDto formateurDto = new FormateurDto(formateur.getIdUtilisateur(), formateur.getNom(),
+//				formateur.getPrenom(), formateur.getMail(), formateur.getDateInscription());
+
+//		model.addAttribute("formateurDtoFinal", formateurDtoFinal);
+		model.addAttribute("isModification", isModification);
+
+		return "/admin/inscription-formateur-admin";
 	}
 
 }

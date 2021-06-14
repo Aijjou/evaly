@@ -19,6 +19,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "formateur", catalog = "evaly")
+//@Table(name = "formateur", catalog = "u575564338_evaly")
 @PrimaryKeyJoinColumn(name = "id_utilisateur")
 public class Formateur extends Utilisateur {
 

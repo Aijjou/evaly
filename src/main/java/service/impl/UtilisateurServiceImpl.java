@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -96,16 +97,30 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Override
 	public Utilisateur createAdmin(UtilisateurDto admin) throws Exception {
 
-		Date dateInscription = new Date(System.currentTimeMillis());
-		System.err.println(admin);
-		Role role = roleService.findById(1).get();
+		Utilisateur util = utilisateurRepository.findById(admin.getIdUtilisateurDto()).get();
 
+		Date dateInscription = new Date(System.currentTimeMillis());
+		System.err.println("admin createAdmin" + admin);
+		Role role = roleService.findById(1).get();
+		Utilisateur utilisateur;
 		Set<Role> listeRoles = new HashSet<>();
 
-		Utilisateur utilisateur = new Utilisateur(admin.getNom(), admin.getPrenom(), admin.getMail(),
-				passwordEncoder.encode(admin.getPassword()), admin.getQuestionSecrete(), admin.getReponseSecrete(),
-				dateInscription, null, null, null, true, listeRoles, true);
-		utilisateur.getRoles().add(role);
+		if (admin.getIdUtilisateurDto() != null) {
+			System.err.println("if id admin != null");
+			utilisateur = new Utilisateur(admin.getIdUtilisateurDto(), admin.getNom(), admin.getPrenom(),
+					admin.getMail(), passwordEncoder.encode(admin.getPassword()), admin.getQuestionSecrete(),
+					admin.getReponseSecrete(), dateInscription, null, null, util.getPhoto(), true, listeRoles, true, 1);
+			utilisateur.setIdUtilisateur(admin.getIdUtilisateurDto());
+			System.err.println("utilisateur admin + " + utilisateur);
+			utilisateur.getRoles().add(role);
+
+		} else {
+			System.err.println("if id admin == null");
+			utilisateur = new Utilisateur(admin.getNom(), admin.getPrenom(), admin.getMail(),
+					passwordEncoder.encode(admin.getPassword()), admin.getQuestionSecrete(), admin.getReponseSecrete(),
+					dateInscription, null, null, null, true, listeRoles, true, 1);
+			utilisateur.getRoles().add(role);
+		}
 
 		log.info(utilisateur);
 
@@ -126,6 +141,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		Formateur formateur2 = new Formateur();
 
 		formateur2.setActive(true);
+
+		if (formateur.getIdUtilisateurDto() != null) {
+			formateur2.setIdUtilisateur(formateur.getIdUtilisateurDto());
+		}
 
 		formateur2.setDateInscription(dateInscrDate);
 		formateur2.setMail(formateur.getMail());
@@ -240,6 +259,15 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 		Formateur formateur3 = formateurRepository.save(formateur2);
 
+		if (formateurDtoFinal.getIdFormateurDto() != null) {
+			List<PromotionFormateur> promotionFormateurs = promotionFormateurRepository.findByFormateur(formateur2);
+
+			for (PromotionFormateur promotionFormateur : promotionFormateurs) {
+				promotionFormateurRepository.delete(promotionFormateur);
+			}
+
+		}
+
 		for (int i = 0; i < formateurDtoFinal.getIdPromotions().size(); i++) {
 			PromotionFormateur promotionFormateur = new PromotionFormateur();
 			Promotion promotion = promotionRepository.findById(formateurDtoFinal.getIdPromotions().get(i)).get();
@@ -263,7 +291,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		Set<Role> listeRoles = new HashSet<>();
 
 		System.err.println(">>>> " + role);
-		
+
 		Apprenant apprenant = new Apprenant();
 		apprenant.setIdUtilisateur(apprenantDtoFinal.getIdApprenantDto());
 		apprenant.setNom(apprenantDtoFinal.getNom());

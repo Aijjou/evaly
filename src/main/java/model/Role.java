@@ -15,6 +15,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "roles" , catalog = "evaly")
+//@Table(name = "roles" , catalog = "u575564338_evaly")
 public class Role implements Serializable{
 
 	private static final long serialVersionUID = 8374992679263373931L;

@@ -39,6 +39,7 @@ img {
 .dropdown-menu {
 	color: white;
 	background-color: #51438F;
+	border: none !important;
 }
 
 .card-body .badge {
@@ -46,14 +47,19 @@ img {
 	width: 150px;
 }
 
-.dropdown-toggle {
+.dropdown-toggle:focus {
 	outline: none;
 	border: none;
 	display: none;
 }
 
+
+
+
 button:focus {
-	border: none;
+	outline: none !important;
+	border: none !important;
+	display: none !important;
 }
 
 .infos {

@@ -105,7 +105,7 @@
 								sec:authorize="hasRole('ROLE_FORMATEUR') || hasRole('ROLE_ADMIN') "
 								th:href="@{/protected/edit-apprenant/{id}(id=${apprenant.idUtilisateur})}"
 								class="mr-2"><i class="fas fa-edit text-warning"></i></a> &nbsp;
-								<a href="info_eleve.html"
+								<a th:href="@{/protected/info-utilisateur/{id}(id=${apprenant.idUtilisateur})}"
 								sec:authorize="hasRole('ROLE_FORMATEUR') || hasRole('ROLE_ADMIN') "
 								class="mr-2"><i
 									class="far fa-arrow-alt-circle-right text-success"></i></a> &nbsp;

@@ -154,4 +154,17 @@ public class ApprenantController {
 		return "/public/inscription-final-apprenant";
 	}
 
+	@RequestMapping(value = "/protected/info-utilisateur/{id}", method = RequestMethod.GET)
+	public String afficheUnUtilisateur(Model model, @PathVariable("id") Integer idApprenant) {
+
+		Apprenant apprenant = apprenantService.findById(idApprenant).get();
+
+		Promotion promotion = apprenant.getPromotion();
+
+		model.addAttribute("apprenant", apprenant);
+		model.addAttribute("promotion", promotion);
+
+		return "/protected/info-utilisateur";
+	}
+
 }
