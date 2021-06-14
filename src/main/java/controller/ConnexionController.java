@@ -56,6 +56,7 @@ public class ConnexionController {
 		model.addAttribute("titre", titreString);
 
 		return "/public/connexion";
+
 	}
 
 	@RequestMapping(value = "/protected/home", method = RequestMethod.GET)
