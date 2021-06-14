@@ -237,46 +237,43 @@ public class ApprenantController {
 				Apprenant apprenant = apprenantService.findById(idApprenant).get();
 				Promotion promotion = apprenant.getPromotion();
 				model.addAttribute("promotion", promotion);
+				System.out.println("INFOS");
+				isFormateur = true;
+				idUtilisateur = 1;
+
+				Optional<Formateur> fo = null;
+				Formateur forma = null;
+				Set<FormateurMatiere> formatiere = null;
+				List<Integer> indexmatiere = new ArrayList<Integer>();
+				if (isFormateur) {
+					fo = formateurService.findById(idUtilisateur);
+					forma = fo.get();
+					formatiere = forma.getFormateurMatieres();
+					System.err.println("Resultats matiere du formateur");
+					for (FormateurMatiere fm : formatiere) {
+						indexmatiere.add(fm.getMatiere().getIdMatiere());
+						System.err.println(fm.getMatiere());
+					}
+				}
+
+				Set<ResultatExamen> resultatExamens = apprenant.getResultatExamens();
+				List<ResultatExamen> resultsfiltered = new ArrayList<ResultatExamen>();
+				for (ResultatExamen re : resultatExamens) {
+					if (indexmatiere.contains(re.getExamen().getMatiere().getIdMatiere())) {
+						resultsfiltered.add(re);
+					}
+				}
+
+				if (!resultsfiltered.isEmpty()) {
+					model.addAttribute("results", resultsfiltered);
+				}
+				System.err.println("Resultats examens");
+				System.err.println(resultsfiltered);
 			}
 
 		});
 
 		model.addAttribute("utilisateur", utilisateur);
-
-		System.out.println("INFOS");
-		isFormateur = true;
-		idUtilisateur = 1;
-
-		Optional<Formateur> fo = null;
-		Formateur forma = null;
-		Set<FormateurMatiere> formatiere = null;
-		List<Integer> indexmatiere = new ArrayList<Integer>();
-		if (isFormateur) {
-			fo = formateurService.findById(idUtilisateur);
-			forma = fo.get();
-			formatiere = forma.getFormateurMatieres();
-			System.err.println("Resultats matiere du formateur");
-			for (FormateurMatiere fm : formatiere) {
-				indexmatiere.add(fm.getMatiere().getIdMatiere());
-				System.err.println(fm.getMatiere());
-			}
-		}
-
-		Apprenant apprenant = apprenantService.findById(idApprenant).get();
-		Set<ResultatExamen> resultatExamens = apprenant.getResultatExamens();
-		List<ResultatExamen> resultsfiltered = new ArrayList<ResultatExamen>();
-		for (ResultatExamen re : resultatExamens) {
-			if (indexmatiere.contains(re.getExamen().getMatiere().getIdMatiere())) {
-				resultsfiltered.add(re);
-			}
-		}
-
-		if (!resultsfiltered.isEmpty()) {
-			model.addAttribute("results", resultsfiltered);
-		}
-		System.err.println("Resultats examens");
-		System.err.println(resultsfiltered);
-		Promotion promotion = apprenant.getPromotion();
 
 		model.addAttribute("organisation", organisation);
 
