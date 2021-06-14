@@ -79,7 +79,7 @@ public class QuestionController {
 		System.err.println(" --- --- --- verificationRoles --- --- --- ");
 	}
 
-	@RequestMapping(value = "/protected/creation-question", method = RequestMethod.GET)
+	@RequestMapping(value = "protected/creation-question", method = RequestMethod.GET)
 	public String creationQuestion(QuestionDto question, Model model) {
 
 		verificationRolesAndSetIdUtilisateur();

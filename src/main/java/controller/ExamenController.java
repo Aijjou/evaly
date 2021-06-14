@@ -105,7 +105,7 @@ public class ExamenController {
 		System.err.println(" --- --- --- verificationRoles --- --- --- ");
 	}
 
-	@RequestMapping(value = "protected/liste-examen", method = RequestMethod.GET)
+	@RequestMapping(value = "/protected/liste-examen", method = RequestMethod.GET)
 	public String afficheListeExamen(Model model) {
 
 		verificationRolesAndSetIdUtilisateur();
@@ -171,11 +171,11 @@ public class ExamenController {
 		else model.addAttribute("message","");
 		
 
-		return "protected/liste-examen";
+		return "/protected/liste-examen";
 
 	}
 
-	@RequestMapping(value = "protected/creation-examen", method = RequestMethod.GET)
+	@RequestMapping(value = "/protected/creation-examen", method = RequestMethod.GET)
 	public String creationExamen(ExamenDto examen, Model model) {
 		ExamenDto edto = new ExamenDto();
 		// edto.setDateExamen(new Date());
@@ -186,7 +186,7 @@ public class ExamenController {
 		model.addAttribute("sujets", sujetService.sujets());
 		model.addAttribute("promotions", promotionService.promotions());
 
-		return "protected/creation-examen";
+		return "/protected/creation-examen";
 
 	}
 
@@ -259,7 +259,7 @@ public class ExamenController {
 		return "redirect:/protected/liste-examen";
 	}
 
-	@RequestMapping(value = "protected/questionnaire/{idExamen}", method = RequestMethod.GET)
+	@RequestMapping(value = "/protected/questionnaire/{idExamen}", method = RequestMethod.GET)
 	public String passageExamen(Model model, @PathVariable(name = "idExamen") String idExamen) {
 
 		verificationRolesAndSetIdUtilisateur();
@@ -267,7 +267,7 @@ public class ExamenController {
 				+ " id : " + idUtilisateur);
 
 		///// Passage as Utilisateur 2
-		idUtilisateur=2;
+		idUtilisateur=5;
 
 		Integer idex = Integer.parseInt(idExamen);
 		Optional<Examen> examenopt = examenService.findById(idex);
@@ -345,7 +345,7 @@ public class ExamenController {
 		model.addAttribute("qdto", qdto);
 		model.addAttribute("questions", questions);
 
-		return "protected/questionnaire";
+		return "/protected/questionnaire";
 	}
 
 	@RequestMapping(value = "/protected/questionnaire-sub", method = RequestMethod.POST)
@@ -356,7 +356,7 @@ public class ExamenController {
 				+ " id : " + idUtilisateur);
 
 		///// Passage as Utilisateur 2
-		idUtilisateur=2;
+		idUtilisateur=5;
 		Integer idapprenant=idUtilisateur;
 		
 		Optional<Apprenant> a = apprenantService.findById(idapprenant);

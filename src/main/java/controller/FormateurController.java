@@ -1,5 +1,7 @@
 package controller;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,7 +36,6 @@ public class FormateurController {
 
 	@Autowired
 	FormateurService formateurService;
-
 	@Autowired
 	FormateurMatiereService formateurMatiereService;
 
@@ -123,11 +124,20 @@ public class FormateurController {
 				.map(promotionsForma -> promotionsForma.getPromotion().getIdPromotion()).collect(Collectors.toList());
 
 		System.err.println(" >>>>>>>  " + formateur);
-
+		System.err.println(" >>>>>>> DDN  " + formateur.getDateNaissance());
+		
 		FormateurDtoFinal formateurDtoFinal = new FormateurDtoFinal(formateur.getIdUtilisateur(), formateur.getNom(),
 				formateur.getPrenom(), formateur.getMail(), formateur.getPassword(), formateur.getDateInscription(),
 				formateur.getDateNaissance(), formateur.getActive(), null, formateur.getIsAdmin(), null,
 				formateur.getQuestionSecrete(), formateur.getReponseSecrete(), listeIdPromotion);
+		
+		System.err.println(" >>>>>>> DDN DTO  "+formateurDtoFinal.getDateNaissance());
+		
+		String dateNaissanceString = null;
+		DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");  
+		dateNaissanceString = formatter.format(formateur.getDateNaissance());  
+		System.err.println(" >>>>>>> DDN DTO String  "+dateNaissanceString);
+		formateurDtoFinal.setDateNaissanceString(dateNaissanceString);
 
 		model.addAttribute("formateurDtoFinal", formateurDtoFinal);
 		model.addAttribute("promotions", promotions);
@@ -142,9 +152,6 @@ public class FormateurController {
 		boolean isModification = true;
 
 		Formateur formateur = formateurService.findById(idFormateur).get();
-
-		
-	
 
 //		System.err.println(" >>>>>>>  " + formateur);
 

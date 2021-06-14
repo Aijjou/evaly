@@ -84,7 +84,7 @@ public class ResultatExamenController {
 		System.err.println(" --- --- --- verificationRoles --- --- --- ");
 	}
 
-	@RequestMapping(value = "protected/liste-resultat", method = RequestMethod.GET)
+	@RequestMapping(value = "/protected/liste-resultat", method = RequestMethod.GET)
 	public String afficheExamen(Model model) {
 
 		verificationRolesAndSetIdUtilisateur();
@@ -125,6 +125,6 @@ public class ResultatExamenController {
 			List<ResultatExamen> resultsappr = resultatExamenService.findByApprenant(apt);
 			model.addAttribute("resultats", resultsappr);
 		}
-		return "protected/liste-resultat";
+		return "/protected/liste-resultat";
 	}
 }

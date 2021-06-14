@@ -100,9 +100,9 @@
 							id="datatable">
 							<thead class="bg-dark">
 								<tr>
+									<th  class="text-center"  scope="col">Matière</th>
 									<th class="text-center"   scope="col">Nom sujet</th>
 									<th  class="text-center"  scope="col">Description</th>
-									<th  class="text-center"  scope="col">Matière</th>
 									<th  class="text-center"  scope="col">Thème(s)</th>
 									<th class="text-center"   scope="col">Nombre notes</th>
 									<th  class="text-center"  scope="col">Moyenne/20</th>
@@ -111,9 +111,10 @@
 							</thead>
 							<tbody class="bg-dark ">
 								<tr th:each="sujet : ${sujets}" class="bg-dark">
+									<td class="text-center"   th:text="${sujet.matiere.nom}"></td>
 									<td class="text-center"   th:text="${sujet.nom}"></td>
 									<td class="text-center"   th:text="${sujet.descriptionSujet}"></td>
-									<td class="text-center"   th:text="${sujet.matiere.nom}"></td>
+								
 									<td>
 										<th:block th:each="theme : ${sujet.theme}">
 											<span th:text="${theme.nom}">
