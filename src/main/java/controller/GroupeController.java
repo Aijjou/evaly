@@ -26,7 +26,7 @@ public class GroupeController {
 	@Autowired
 	GroupeService groupeService;
 
-	@RequestMapping(value = "admin/groupe", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/groupe", method = RequestMethod.GET)
 	public String afficheGroupe(Model model) {
 
 	
@@ -45,7 +45,7 @@ public class GroupeController {
 		
 		model.addAttribute("groupes", groupesFormateurs);
 
-		return "admin/groupe";
+		return "/admin/groupe";
 
 	}
 
