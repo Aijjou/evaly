@@ -1,9 +1,7 @@
 package controller;
 
-import java.nio.file.attribute.UserPrincipal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,25 +12,22 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import com.cloudinary.provisioning.Account.Role;
-
-import dto.ApprenantDtoFinal;
 import dto.FormateurDto;
 import dto.FormateurDtoFinal;
-import model.Apprenant;
-import model.Examen;
 import model.Formateur;
+import model.FormateurGroupeFormateur;
 import model.FormateurMatiere;
+import model.GroupeFormateur;
 import model.Matiere;
 import model.Promotion;
 import model.PromotionFormateur;
-import model.Sujet;
 import service.ExamenService;
+import service.FormateurGroupeFormateurService;
 import service.FormateurMatiereService;
 import service.FormateurService;
 import service.GroupeService;
+import service.MatiereService;
 import service.PromotionService;
 import service.SujetService;
 
@@ -51,7 +46,13 @@ public class FormateurController {
 	FormateurMatiereService formateurMatiereService;
 
 	@Autowired
+	FormateurGroupeFormateurService formateurGroupeFormateurService;
+
+	@Autowired
 	SujetService sujetService;
+
+	@Autowired
+	MatiereService matiereService;
 
 	@Autowired
 	PromotionService promotionService;
@@ -155,20 +156,30 @@ public class FormateurController {
 
 		Formateur formateur = formateurService.findById(idFormateur).get();
 
-		
-	
+		List<FormateurGroupeFormateur> formateurGroupeFormateurs = formateurGroupeFormateurService
+				.findGroupeFormateurByFormateur(formateur);
 
-//		System.err.println(" >>>>>>>  " + formateur);
+		List<FormateurMatiere> formateurMatieres = formateurMatiereService.findByFormateur(formateur);
 
-//		FormateurDtoFinal formateurDtoFinal = new FormateurDtoFinal(formateur.getIdUtilisateur(), formateur.getNom(),
-//				formateur.getPrenom(), formateur.getMail(), formateur.getPassword(), formateur.getDateInscription(),
-//				formateur.getDateNaissance(), formateur.getActive(), null, formateur.getIsAdmin(), null,
-//				formateur.getQuestionSecrete(), formateur.getReponseSecrete(), listeIdPromotion);
+		List<GroupeFormateur> groupes = groupeService.getListGroupeFormateur();
 
-//		FormateurDto formateurDto = new FormateurDto(formateur.getIdUtilisateur(), formateur.getNom(),
-//				formateur.getPrenom(), formateur.getMail(), formateur.getDateInscription());
+		List<Matiere> matieres = matiereService.matieres();
 
-//		model.addAttribute("formateurDtoFinal", formateurDtoFinal);
+		List<Integer> listeIdGroup = formateurGroupeFormateurs.stream()
+				.map(groupe -> groupe.getGroupeFormateur().getIdGroupeFormateur()).collect(Collectors.toList());
+
+		List<Integer> listIntegerMatieres = formateurMatieres.stream()
+				.map(formateurMatiere -> formateurMatiere.getMatiere().getIdMatiere()).collect(Collectors.toList());
+
+		System.err.println(" >>>>>>>  " + formateur);
+
+		FormateurDto formateurDto = new FormateurDto(formateur.getIdUtilisateur(), formateur.getNom(),
+				formateur.getPrenom(), formateur.getMail(), formateur.getDateInscription(), listeIdGroup.get(0),
+				listIntegerMatieres, true, formateur.getIsAdmin(), formateur.getIsReferent());
+
+		model.addAttribute("matieres", matieres);
+		model.addAttribute("groupes", groupes);
+		model.addAttribute("formateurDto", formateurDto);
 		model.addAttribute("isModification", isModification);
 
 		return "/admin/inscription-formateur-admin";

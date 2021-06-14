@@ -45,6 +45,10 @@ public class FormateurDto {
 		this.isReferent = isReferent;
 	}
 
+	public FormateurDto() {
+
+	}
+
 	public String getNom() {
 		return nom;
 	}
@@ -116,7 +120,6 @@ public class FormateurDto {
 	public void setIsReferent(Boolean isReferent) {
 		this.isReferent = isReferent;
 	}
-	
 
 	public Integer getIdFormateurDto() {
 		return idFormateurDto;

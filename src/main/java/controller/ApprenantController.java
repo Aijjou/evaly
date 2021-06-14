@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.Console;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,10 +16,14 @@ import dto.ApprenantDto;
 import dto.ApprenantDtoFinal;
 import model.Apprenant;
 import model.Examen;
+import model.Organisation;
 import model.Promotion;
+import model.Utilisateur;
 import service.ApprenantService;
 import service.ExamenService;
+import service.OrganisationService;
 import service.PromotionService;
+import service.UtilisateurService;
 
 @Controller
 public class ApprenantController {
@@ -34,6 +39,12 @@ public class ApprenantController {
 	ApprenantService apprenantService;
 	@Autowired
 	ExamenService examenService;
+
+	@Autowired
+	UtilisateurService utilisateurService;
+
+	@Autowired
+	OrganisationService organisationService;
 
 	@RequestMapping(value = "/protected/liste-apprenant", method = RequestMethod.GET)
 	public String afficheApprenant(Model model) {
@@ -157,12 +168,35 @@ public class ApprenantController {
 	@RequestMapping(value = "/protected/info-utilisateur/{id}", method = RequestMethod.GET)
 	public String afficheUnUtilisateur(Model model, @PathVariable("id") Integer idApprenant) {
 
-		Apprenant apprenant = apprenantService.findById(idApprenant).get();
+		Utilisateur utilisateur = utilisateurService.findById(idApprenant).get();
+		System.err.println("utilisateur edit " + utilisateur.getPrenom());
+		Organisation organisation = organisationService.findOrganisation(utilisateur.getIdOrganisation()).get();
 
-		Promotion promotion = apprenant.getPromotion();
+		utilisateur.getRoles().stream().forEach(role -> {
 
-		model.addAttribute("apprenant", apprenant);
-		model.addAttribute("promotion", promotion);
+			if (role.getName() == "ROLE_ADMIN") {
+				isAdmin = true;
+				isApprenant = false;
+				isFormateur = false;
+			} else if (role.getName() == "ROLE_FORMATEUR") {
+				isAdmin = false;
+				isApprenant = false;
+				isFormateur = true;
+
+			} else if (role.getName() == "ROLE_APPRENANT") {
+				isAdmin = false;
+				isApprenant = true;
+				isFormateur = false;
+				Apprenant apprenant = apprenantService.findById(idApprenant).get();
+				Promotion promotion = apprenant.getPromotion();
+				model.addAttribute("promotion", promotion);
+			}
+
+		});
+
+		model.addAttribute("utilisateur", utilisateur);
+
+		model.addAttribute("organisation", organisation);
 
 		return "/protected/info-utilisateur";
 	}
