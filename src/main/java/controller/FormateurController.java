@@ -1,5 +1,9 @@
 package controller;
 
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,13 +17,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+
 import dto.FormateurDto;
-import dto.FormateurDtoFinal;
-import model.Formateur;
+
+
 import model.FormateurGroupeFormateur;
 import model.FormateurMatiere;
 import model.GroupeFormateur;
 import model.Matiere;
+
+import dto.FormateurDtoFinal;
+import model.Formateur;
+
 import model.Promotion;
 import model.PromotionFormateur;
 import service.ExamenService;
@@ -41,7 +50,6 @@ public class FormateurController {
 
 	@Autowired
 	FormateurService formateurService;
-
 	@Autowired
 	FormateurMatiereService formateurMatiereService;
 
@@ -136,11 +144,20 @@ public class FormateurController {
 				.map(promotionsForma -> promotionsForma.getPromotion().getIdPromotion()).collect(Collectors.toList());
 
 		System.err.println(" >>>>>>>  " + formateur);
-
+		System.err.println(" >>>>>>> DDN  " + formateur.getDateNaissance());
+		
 		FormateurDtoFinal formateurDtoFinal = new FormateurDtoFinal(formateur.getIdUtilisateur(), formateur.getNom(),
 				formateur.getPrenom(), formateur.getMail(), formateur.getPassword(), formateur.getDateInscription(),
 				formateur.getDateNaissance(), formateur.getActive(), null, formateur.getIsAdmin(), null,
 				formateur.getQuestionSecrete(), formateur.getReponseSecrete(), listeIdPromotion);
+		
+		System.err.println(" >>>>>>> DDN DTO  "+formateurDtoFinal.getDateNaissance());
+		
+		String dateNaissanceString = null;
+		DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");  
+		dateNaissanceString = formatter.format(formateur.getDateNaissance());  
+		System.err.println(" >>>>>>> DDN DTO String  "+dateNaissanceString);
+		formateurDtoFinal.setDateNaissanceString(dateNaissanceString);
 
 		model.addAttribute("formateurDtoFinal", formateurDtoFinal);
 		model.addAttribute("promotions", promotions);
@@ -156,10 +173,12 @@ public class FormateurController {
 
 		Formateur formateur = formateurService.findById(idFormateur).get();
 
+
 		List<FormateurGroupeFormateur> formateurGroupeFormateurs = formateurGroupeFormateurService
 				.findGroupeFormateurByFormateur(formateur);
 
 		List<FormateurMatiere> formateurMatieres = formateurMatiereService.findByFormateur(formateur);
+
 
 		List<GroupeFormateur> groupes = groupeService.getListGroupeFormateur();
 

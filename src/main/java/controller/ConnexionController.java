@@ -44,6 +44,20 @@ public class ConnexionController {
 
 		return "/public/connexion";
 	}
+	
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public String loginSlash(Model model, HttpServletRequest request, HttpServletResponse response) {
+
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+	
+		String titreString = "Decouvrez Evaly";
+
+		model.addAttribute("titre", titreString);
+
+		return "/public/connexion";
+
+	}
 
 	@RequestMapping(value = "/protected/home", method = RequestMethod.GET)
 	public String getHome(Model model) {

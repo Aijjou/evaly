@@ -33,14 +33,6 @@ public class Matiere implements java.io.Serializable {
 	public Matiere() {
 	}
 
-	public Matiere(GroupeFormateur groupeFormateur, String nom, Set<FormateurMatiere> formateurMatieres,
-			Set<Theme> themes) {
-		this.groupeFormateur = groupeFormateur;
-		this.nom = nom;
-		this.formateurMatieres = formateurMatieres;
-		this.themes = themes;
-	}
-
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 

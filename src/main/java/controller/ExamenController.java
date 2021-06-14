@@ -54,7 +54,6 @@ import service.SujetService;
 @Scope("session")
 public class ExamenController {
 
-
 	@Autowired
 	ExamenService examenService;
 	@Autowired
@@ -81,6 +80,8 @@ public class ExamenController {
 	Boolean isApprenant = false;
 	Boolean isConnectBoolean = true;
 	Integer idUtilisateur = null;
+	
+	String message=null;
 
 	private void verificationRolesAndSetIdUtilisateur() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -89,108 +90,99 @@ public class ExamenController {
 			if (role.getAuthority().equals("ROLE_ADMIN")) {
 				isAdmin = true;
 				System.out.println("ROLE_ADMIN");
-			}
+			} else
+				isAdmin = false;
+
 			if (role.getAuthority().equals("ROLE_APPRENANT")) {
 				isApprenant = true;
 				System.out.println("ROLE_APPRENANT");
-			}
+			} else
+				isApprenant = false;
+
 			if (role.getAuthority().equals("ROLE_FORMATEUR")) {
 				isFormateur = true;
 				System.out.println("ROLE_FORMATEUR");
-			}
+			} else
+				isFormateur = false;
 		});
+		if (isAdmin || isFormateur || isApprenant) {
 		principal.UserPrincipal userPrincipal = (principal.UserPrincipal) auth.getPrincipal();
 		idUtilisateur = userPrincipal.getId();
+		}
 		System.err.println(" --- --- --- verificationRoles --- --- --- ");
 	}
-	
-	
-	
-	@RequestMapping(value = "protected/liste-examen", method = RequestMethod.GET)
-	public String afficheExamenProf(Model model) {
-		
-		
+
+	@RequestMapping(value = "/protected/liste-examen", method = RequestMethod.GET)
+	public String afficheListeExamen(Model model) {
+
 		verificationRolesAndSetIdUtilisateur();
 		System.out.println("admin ? " + isAdmin + " apprenant ? " + isApprenant + " formateur ? " + isFormateur
 				+ " id : " + idUtilisateur);
-		
+
+//		//TEST AS APPRENANT
+//		isAdmin=false;
+//		isApprenant=true;
+//		idUtilisateur=3;
+
 		if (isAdmin) {
-			//FIND ALL
+			// FIND ALL
 			List<Examen> examensAll = new ArrayList<Examen>();
-			examensAll=examenService.examens();
+			examensAll = examenService.examens();
 			model.addAttribute("examens", examensAll);
 		}
-		
+
 		if (isFormateur) {
 			List<Examen> examensformateur = new ArrayList<Examen>();
-			
+
 			Optional<Formateur> fmto = formateurService.findById(idUtilisateur);
 			Formateur fmt = fmto.get();
-			
+
 			Set<PromotionFormateur> promoFormateur = fmt.getPromotionFormateurs();
-			
+
 			for (PromotionFormateur m : promoFormateur) {
 				Set<Examen> examenspromo = m.getPromotion().getExamens();
 				examensformateur.addAll(examenspromo);
 			}
-			
-			examensformateur=examenService.examens();
+
+			examensformateur = examenService.examens();
 			model.addAttribute("examens", examensformateur);
 		}
-		
+
 		if (isApprenant) {
-			
+
 			Optional<Apprenant> apto = apprenantService.findById(idUtilisateur);
 			Apprenant apt = apto.get();
-			
+
 			Promotion promo = apt.getPromotion();
-			
-			Set<Examen> examensapprenantset=promo.getExamens();
+
+			Set<Examen> examensapprenantset = promo.getExamens();
 			List<Examen> examensapt = new ArrayList<Examen>();
+			List<Examen> examenalreadydone = new ArrayList<Examen>();
 			examensapt.addAll(examensapprenantset);
+
+			for (Examen e : examensapt) {
+				List<ReponseApprenantExamen> le = reponseApprenantExamenService.findByApprenantAndExamen(apt, e);
+				if (le.size() > 0)
+					examenalreadydone.add(e);
+			}
+
+			examensapt.removeAll(examenalreadydone);
+
 			model.addAttribute("examens", examensapt);
 		}
+		
+		if(message!=null) {
+			model.addAttribute("message", message);
+			message=null;
+		}
+		else model.addAttribute("message","");
+		
 
-//		Integer idFormateur = 1;
-//
-//		//affichage de la liste des examens pour les matieres du formateur
-//		
-//		//recuperation du formateur et de ces matieres
-//		Optional<Formateur> formateurOp = formateurService.findById(idFormateur);
-//		Formateur formateur = formateurOp.get();
-//		List<FormateurMatiere> profMat = formateurMatiereService.findByFormateur(formateur);
-//		List<Matiere> matieres = new ArrayList<Matiere>();
-//		
-//		//ajout des matiere dans la liste "matieres" grace aux idMatiere dans la liste "profMat"
-//		for (int i = 0; i < profMat.size(); i++) {
-//			Matiere mat = profMat.get(i).getMatiere();
-//			matieres.add(mat);
-//		}
-//		
-//		//recuperation des sujets correspondants aux matieres du formateur
-//		List<Sujet> sujetsProf = new ArrayList<Sujet>();
-//		for (int j = 0; j < matieres.size(); j++) {
-//			//chaque matiere peut avoir plusieurs sujets, donc ajout des listes sujets par matiere
-//			List<Sujet> sujetByMat = sujetService.findByMatiere(matieres.get(j));
-//			sujetsProf.addAll(sujetByMat);
-//		}
-//		
-//		//recuperation de la liste des exams qui utilise les sujets de la matiere du formateur
-//		List<Examen> examensForProf = new ArrayList<Examen>();
-//		for (int k = 0; k < sujetsProf.size(); k++) {
-//			List<Examen> examSujetProf = examenService.findBySujet(sujetsProf.get(k));
-//			examensForProf.addAll(examSujetProf);
-//		}
-//		
-//		for (Examen e : examensForProf) {
-//			System.out.println(e.getDateExamenString());
-//		}
-
-		return "protected/liste-examen";
+		return "/protected/liste-examen";
 
 	}
 
-	@RequestMapping(value = "protected/creation-examen", method = RequestMethod.GET)
+	@RequestMapping(value = "/protected/creation-examen", method = RequestMethod.GET)
 	public String creationExamen(ExamenDto examen, Model model) {
 		ExamenDto edto = new ExamenDto();
 		// edto.setDateExamen(new Date());
@@ -201,12 +193,17 @@ public class ExamenController {
 		model.addAttribute("sujets", sujetService.sujets());
 		model.addAttribute("promotions", promotionService.promotions());
 
-		return "protected/creation-examen";
+		return "/protected/creation-examen";
 
 	}
 
 	@RequestMapping(value = "/protected/creation-examen-sub", method = RequestMethod.POST)
 	public String creationExamenSubmit(@ModelAttribute ExamenDto examen, Model model) {
+
+		verificationRolesAndSetIdUtilisateur();
+		System.out.println("admin ? " + isAdmin + " apprenant ? " + isApprenant + " formateur ? " + isFormateur
+				+ " id : " + idUtilisateur);
+
 		System.out.println(examen.getDateExamen() + " " + examen.getTitre() + " " + examen.getSujet() + " "
 				+ examen.getDureeExamen() + " " + examen.getPromotion());
 		if (examen.getDateExamen() == null || examen.getTitre() == null || examen.getSujet() == null
@@ -216,74 +213,83 @@ public class ExamenController {
 			model.addAttribute("promotions", promotionService.promotions());
 			return "protected/creation-examen";
 		}
-		Examen nve = new Examen();
-		
-		// FORMATEUR PAR DEFAUT
-		Optional<Formateur> f = formateurService.findById(1);
-		nve.setFormateur(f.get());
 
-		System.out.println(examen.getDateExamen());
-		nve.setTitre(examen.getTitre());
-		nve.setDureeExamen(examen.getDureeExamen());
-		Optional<Promotion> promo = promotionService.findById(examen.getPromotion());
-		nve.setPromotion(promo.get());
-		Optional<Sujet> sujet = sujetService.findById(examen.getSujet());
-		nve.setSujet(sujet.get());
+		if (isApprenant)
+			return "redirect:/protected/home";
 
-		for (int i = 0; i < 10; i++) {
+		if (isAdmin || isFormateur) {
+
+			Examen nve = new Examen();
+
+			// FORMATEUR PAR DEFAUT
+			Optional<Formateur> f = formateurService.findById(1);
+			nve.setFormateur(f.get());
+
 			System.out.println(examen.getDateExamen());
-		}
-		LocalDateTime dateTime = LocalDateTime.parse(examen.getDateExamen());
-		for (int i = 0; i < 10; i++) {
-			System.out.println(dateTime);
-		}
-		Date out = Date.from(dateTime.atZone(ZoneId.systemDefault()).toInstant());
-		for (int i = 0; i < 10; i++) {
-			System.out.println("DATE GOING TO SAVE : "+out);
-		}
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-		String datetosave = sdf.format(out);
-		nve.setDateExamenString(datetosave);
-		nve.setDateExamen(out);
-		Date fromstring = null;
-		try {
-			fromstring = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(datetosave);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (int i = 0; i < 10; i++) {
-			System.out.println("DATE GOING TO SAVE FROM STRING : "+fromstring);
-		}
-		examenService.save(nve);
+			nve.setTitre(examen.getTitre());
+			nve.setDureeExamen(examen.getDureeExamen());
+			Optional<Promotion> promo = promotionService.findById(examen.getPromotion());
+			nve.setPromotion(promo.get());
+			Optional<Sujet> sujet = sujetService.findById(examen.getSujet());
+			nve.setSujet(sujet.get());
 
+			for (int i = 0; i < 10; i++) {
+				System.out.println(examen.getDateExamen());
+			}
+			LocalDateTime dateTime = LocalDateTime.parse(examen.getDateExamen());
+			for (int i = 0; i < 10; i++) {
+				System.out.println(dateTime);
+			}
+			Date out = Date.from(dateTime.atZone(ZoneId.systemDefault()).toInstant());
+			for (int i = 0; i < 10; i++) {
+				System.out.println("DATE GOING TO SAVE : " + out);
+			}
 
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+			String datetosave = sdf.format(out);
+			nve.setDateExamenString(datetosave);
+			nve.setDateExamen(out);
+			Date fromstring = null;
+			try {
+				fromstring = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(datetosave);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			for (int i = 0; i < 10; i++) {
+				System.out.println("DATE GOING TO SAVE FROM STRING : " + fromstring);
+			}
+			examenService.save(nve);
+
+			return "redirect:/protected/liste-examen";
+		}
 		return "redirect:/protected/liste-examen";
 	}
 
-	@RequestMapping(value = "protected/questionnaire/{idExamen}", method = RequestMethod.GET)
+	@RequestMapping(value = "/protected/questionnaire/{idExamen}", method = RequestMethod.GET)
 	public String passageExamen(Model model, @PathVariable(name = "idExamen") String idExamen) {
+
+		verificationRolesAndSetIdUtilisateur();
+		System.out.println("admin ? " + isAdmin + " apprenant ? " + isApprenant + " formateur ? " + isFormateur
+				+ " id : " + idUtilisateur);
+
+		///// Passage as Utilisateur 2
+		idUtilisateur=5;
 
 		Integer idex = Integer.parseInt(idExamen);
 		Optional<Examen> examenopt = examenService.findById(idex);
 		Examen examen = examenopt.get();
-		
-		
-		Integer idapprenant = 2;
+
+		Integer idapprenant = idUtilisateur;
 		Optional<Apprenant> a = apprenantService.findById(idapprenant);
 		Apprenant app = a.get();
-		
+
 		// Vérification d'un résultat existant
-				//
-				// Find ResultatExamenByApprenantAndExamen
-				// si trouvé redirect liste-examen // else affichage
-				//
+		//
+		// Find ResultatExamenByApprenantAndExamen
+		// si trouvé redirect liste-examen // else affichage
 		
-//		if (resultatExamenService.findByApprenantAndExamen(app, examen)!=null) {
-//			return "redirect:/protected/liste-examen";
-//		}
-		
+		Date now = new Date();
 		String depart = examen.getDateExamenString();
 		String fin = null;
 		Date datedebutexamen = null;
@@ -295,31 +301,44 @@ public class ExamenController {
 		}
 		Long departmillisec = datedebutexamen.getTime();
 		Integer duree = examen.getDureeExamen();
-		Long dureemillisec = (long) (duree*60*1000);
-		Date datefinexamen = new Date(departmillisec+dureemillisec);
+		Long dureemillisec = (long) (duree * 60 * 1000);
+		Date datefinexamen = new Date(departmillisec + dureemillisec);
 		
 		for (int i = 0; i < 10; i++) {
-			System.out.println("DEPART"+depart+" FIN "+datefinexamen);
+			System.out.println("DEPART" + depart + " FIN " + datefinexamen);
+		}
+		
+		// Vérif si date actuelle comprise entre début et fin examen
+		if (now.compareTo(datedebutexamen)<0) {
+			System.err.print("REDIRECT LISTE EXAMEN - EXAMEN NON COMMENCE");
+			message="L'examen n'a pas encore débuté.";
+			return "redirect:/protected/liste-examen";
+		}
+		
+		if (now.compareTo(datefinexamen)>0) {
+			System.err.print("REDIRECT LISTE EXAMEN - EXAMEN TERMINE");
+			message="L'examen est terminé.";
+			return "redirect:/protected/liste-examen";
+		}
+		
+		// Vérif si l'examen a déjà été passé
+		List<ReponseApprenantExamen> lrae = reponseApprenantExamenService.findByApprenantAndExamen(app, examen);
+		if (lrae.size()>0) {
+			System.err.print("REDIRECT LISTE EXAMEN - REPONSES DEJA PRESENTES");
+			message="Vous avez déjà effectué cet examen.";
+			return "redirect:/protected/liste-examen";
 		}
 		
 		String pattern = "yyyy-MM-dd HH:mm";
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-
 		String timeleftstring = simpleDateFormat.format(datefinexamen);
 		System.out.println(timeleftstring);
-		
-		Date now = new Date();
+
 		Long nowmilli = now.getTime();
 		Long finmilli = datefinexamen.getTime();
-		Long timeleftmilli = finmilli-nowmilli;
+		Long timeleftmilli = finmilli - nowmilli;
 		
-//	    try {
-//			model.addAttribute("endDate", new SimpleDateFormat("yyyy-MM-dd").parse("2022-01-01"));
-//		} catch (ParseException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		 try {
+		try {
 			model.addAttribute("endDate", new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(timeleftstring));
 			model.addAttribute("timeleftmilli", timeleftmilli);
 		} catch (ParseException e) {
@@ -332,22 +351,61 @@ public class ExamenController {
 		ArrayList<QuestionDto> questions = qdto.getQuestions();
 		model.addAttribute("qdto", qdto);
 		model.addAttribute("questions", questions);
-		System.out.println(qdto);
-		System.out.println(qdto);
-		System.out.println(qdto);
 
-		return "protected/questionnaire";
+		return "/protected/questionnaire";
 	}
 
 	@RequestMapping(value = "/protected/questionnaire-sub", method = RequestMethod.POST)
 	public String passageExamenSub(@ModelAttribute QuestionnaireDto qu, Model model, @RequestParam List<Integer> ok) {
 
-		Integer idapprenant = 2;
+		verificationRolesAndSetIdUtilisateur();
+		System.out.println("admin ? " + isAdmin + " apprenant ? " + isApprenant + " formateur ? " + isFormateur
+				+ " id : " + idUtilisateur);
 
+		///// Passage as Utilisateur 2
+		idUtilisateur=5;
+		Integer idapprenant=idUtilisateur;
+		
 		Optional<Apprenant> a = apprenantService.findById(idapprenant);
 		Apprenant app = a.get();
-		Optional<Examen> e = examenService.findById(qu.getIdExamen());
-		Examen exa = e.get();
+		Optional<Examen> exap = examenService.findById(qu.getIdExamen());
+		Examen exa = exap.get();
+		
+		Date now = new Date();
+		String depart = exa.getDateExamenString();
+		String fin = null;
+		Date datedebutexamen = null;
+		try {
+			datedebutexamen = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(depart);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Long departmillisec = datedebutexamen.getTime();
+		Integer duree = exa.getDureeExamen();
+		Long dureemillisec = (long) (duree * 60 * 1000);
+		Date datefinexamen = new Date(departmillisec + dureemillisec);
+		Long datefinexamenlong = datefinexamen.getTime();
+		Date datefinexamenplusuneminute = new Date(datefinexamenlong + 60000);
+		if (now.compareTo(datedebutexamen)<0) {
+			System.err.print("REDIRECT LISTE EXAMEN - EXAMEN NON COMMENCE");
+			message="L'examen n'a pas encore débuté.";
+			return "redirect:/protected/liste-examen";
+		}
+		
+		if (now.compareTo(datefinexamenplusuneminute)>0) {
+			System.err.print("REDIRECT LISTE EXAMEN - FIN EXAMEN DEPASSEE");
+			message="L'heure de fin d'examen a été dépassée de plus d'une minute, les réponses sont ignorées.";
+			return "redirect:/protected/liste-examen";
+		}
+
+		List<ReponseApprenantExamen> lrae = reponseApprenantExamenService.findByApprenantAndExamen(app, exa);
+		if (lrae.size()>0) {
+			System.err.print("REDIRECT LISTE EXAMEN - REPONSES DEJA PRESENTES");
+			message="Vous avez déjà effectué cet examen.";
+			return "redirect:/protected/liste-examen";
+		}
+		
 		List<ReponseApprenantExamen> listrae = new ArrayList<ReponseApprenantExamen>();
 
 		for (Integer i : ok) {
@@ -397,19 +455,18 @@ public class ExamenController {
 			}
 			for (int i = 0; i < 2; i++)
 				System.out.println("REPONSES APPRENANTS :" + reponsesdelapprenant);
-			
-			
+
 			// Vérification bonnes réponses
 			Boolean point = true;
-			
-				for (Integer i : bonnesreponses) {
-					System.out.println("FOR "+i);
-					if (reponsesdelapprenant.contains(i) == false) {
-						point = false;
-						System.out.println("FOR "+i+" "+point);
-					}
+
+			for (Integer i : bonnesreponses) {
+				System.out.println("FOR " + i);
+				if (reponsesdelapprenant.contains(i) == false) {
+					point = false;
+					System.out.println("FOR " + i + " " + point);
 				}
-			
+			}
+
 			for (int i = 0; i < 2; i++)
 				System.out.println("COMPARE :" + reponsesdelapprenant.size() + " " + bonnesreponses.size());
 			if (reponsesdelapprenant.size() != bonnesreponses.size()) {
@@ -424,14 +481,13 @@ public class ExamenController {
 			if (point == true) {
 				points += q.getCoefficient();
 				q.setNbreussite(q.getNbreussite() + 1);
-				
+
 			}
-			
+
 			System.out.println("CALCUL " + 100 * (q.getNbreussite()) / q.getNbnotes());
 			System.out.println("CALCUL +100*" + "(" + q.getNbreussite() + ")/" + q.getNbnotes());
 			q.setTauxreussite(100 * (q.getNbreussite()) / q.getNbnotes());
-			
-			
+
 			for (int i = 0; i < 2; i++)
 				System.out.println(" Q :" + q.getIdQuestion() + " COEFF" + q.getCoefficient());
 			for (int i = 0; i < 2; i++)
@@ -441,7 +497,7 @@ public class ExamenController {
 			for (int i = 0; i < 2; i++)
 				System.out.println(" POST SAVE :" + q.getIdQuestion());
 		}
-		
+
 		Double note = (double) ((20 * points) / totalcoeff);
 
 		// Mise à jour sujet
@@ -462,7 +518,6 @@ public class ExamenController {
 		re.setExamen(exa);
 		re.setNote(note);
 		resultatExamenService.save(re);
-
 
 		return "redirect:/protected/liste-resultat";
 	}

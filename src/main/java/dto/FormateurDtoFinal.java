@@ -5,8 +5,6 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import ognl.InappropriateExpressionException;
-
 public class FormateurDtoFinal {
 
 	private Integer idFormateurDto;
@@ -23,6 +21,7 @@ public class FormateurDtoFinal {
 	private String question;
 	private String reponse;
 	private List<Integer> idPromotions;
+	private String dateNaissanceString;
 
 	public FormateurDtoFinal(Integer idFormateurDto, String nom, String prenom, String mail, String password,
 			Date dateInscriptionDate, Date dateNaissance, Boolean active, MultipartFile photo, Boolean isAdmin,
@@ -43,6 +42,20 @@ public class FormateurDtoFinal {
 		this.reponse = reponse;
 		this.idPromotions = idPromotions;
 	}
+
+	
+	
+	public String getDateNaissanceString() {
+		return dateNaissanceString;
+	}
+
+
+
+	public void setDateNaissanceString(String dateNaissanceString) {
+		this.dateNaissanceString = dateNaissanceString;
+	}
+
+
 
 	public String getNom() {
 		return nom;

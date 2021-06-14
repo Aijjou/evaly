@@ -47,7 +47,7 @@ public class QuestionController {
 
 	@Autowired
 	ReponseService reponseService;
-	
+
 	@Autowired
 	FormateurService formateurService;
 
@@ -64,30 +64,39 @@ public class QuestionController {
 			if (role.getAuthority().equals("ROLE_ADMIN")) {
 				isAdmin = true;
 				System.out.println("ROLE_ADMIN");
-			}
+			} else
+				isAdmin = false;
+
 			if (role.getAuthority().equals("ROLE_APPRENANT")) {
 				isApprenant = true;
 				System.out.println("ROLE_APPRENANT");
-			}
+			} else
+				isApprenant = false;
+
 			if (role.getAuthority().equals("ROLE_FORMATEUR")) {
 				isFormateur = true;
 				System.out.println("ROLE_FORMATEUR");
-			}
+			} else
+				isFormateur = false;
 		});
+		if (isAdmin || isFormateur || isApprenant) {
 		principal.UserPrincipal userPrincipal = (principal.UserPrincipal) auth.getPrincipal();
 		idUtilisateur = userPrincipal.getId();
+		}
 		System.err.println(" --- --- --- verificationRoles --- --- --- ");
 	}
 
-	@RequestMapping(value = "/protected/creation-question", method = RequestMethod.GET)
+	@RequestMapping(value = "protected/creation-question", method = RequestMethod.GET)
 	public String creationQuestion(QuestionDto question, Model model) {
 
 		verificationRolesAndSetIdUtilisateur();
 		System.out.println("admin ? " + isAdmin + " apprenant ? " + isApprenant + " formateur ? " + isFormateur
 				+ " id : " + idUtilisateur);
+		
+		if (idUtilisateur==null)return "redirect:/public/connexion";
 		if (isApprenant)
 			return "redirect:/public/accessDenied";
-		
+
 		if (isAdmin) {
 			List<Theme> listth = themeService.themes();
 			model.addAttribute("listtheme", listth);
@@ -95,15 +104,15 @@ public class QuestionController {
 			List<Matiere> listmatiere = matiereService.matieres();
 			model.addAttribute("listmatiere", listmatiere);
 		}
-		
+
 		if (isFormateur) {
 			Optional<Formateur> fmto = formateurService.findById(idUtilisateur);
-			
+
 			Formateur fmt = fmto.get();
-			
+
 			List<Theme> listthfinal = new ArrayList<Theme>();
 			List<Matiere> listmatiere = new ArrayList<Matiere>();
-			
+
 			Set<FormateurMatiere> formateurMatieres = fmt.getFormateurMatieres();
 
 			for (FormateurMatiere m : formateurMatieres) {
@@ -133,7 +142,7 @@ public class QuestionController {
 				+ " id : " + idUtilisateur);
 		if (isApprenant)
 			return "redirect:/public/accessDenied";
-		
+
 		if (isAdmin) {
 			List<Theme> listth = themeService.themes();
 			model.addAttribute("listtheme", listth);
@@ -141,15 +150,15 @@ public class QuestionController {
 			List<Matiere> listmatiere = matiereService.matieres();
 			model.addAttribute("listmatiere", listmatiere);
 		}
-		
+
 		if (isFormateur) {
 			Optional<Formateur> fmto = formateurService.findById(idUtilisateur);
-			
+
 			Formateur fmt = fmto.get();
-			
+
 			List<Theme> listthfinal = new ArrayList<Theme>();
 			List<Matiere> listmatiere = new ArrayList<Matiere>();
-			
+
 			Set<FormateurMatiere> formateurMatieres = fmt.getFormateurMatieres();
 
 			for (FormateurMatiere m : formateurMatieres) {
@@ -250,15 +259,16 @@ public class QuestionController {
 				+ " id : " + idUtilisateur);
 		if (isApprenant)
 			return "redirect:/protected/home";
-		
-		System.out.println();
 
-		System.out.println("------Test rep3-------");
-		System.out.print("Test réponses 3 rep3null");
-		System.out.println(question.getRep3() == null);
-		System.out.print("Test réponses 3 rep3empty" + question.getRep3().isEmpty());
-		System.out.println(question.getRep3().isEmpty());
-		System.out.println("-------------");
+		System.out.println();
+		if (question.getIsQcm()) {
+			System.out.println("------Test rep3-------");
+			System.out.print("Test réponses 3 rep3null");
+			System.out.println(question.getRep3() == null);
+			System.out.print("Test réponses 3 rep3empty" + question.getRep3().isEmpty());
+			System.out.println(question.getRep3().isEmpty());
+			System.out.println("-------------");
+		}
 		for (int i = 0; i < 2; i++)
 			System.out.println("Theme : " + question.getTheme());
 		for (int i = 0; i < 2; i++)
@@ -319,9 +329,10 @@ public class QuestionController {
 		System.out.println(question.getRep1() + " " + question.getRep1br());
 		System.out.println(question.getRep2() + " " + question.getRep2br());
 		System.out.println("-------------");
+		if (question.getIsQcm()) {
 		System.out.println("Test réponses 3 rep3null" + question.getRep3() == null + "test isempty"
 				+ question.getRep3().isEmpty());
-
+		}
 		if (question.getIsQcm()) {
 			if (!question.getRep1().isEmpty()) {
 				n1.setDescriptionReponse(question.getRep1());
@@ -556,20 +567,19 @@ public class QuestionController {
 		System.out.println("admin ? " + isAdmin + " apprenant ? " + isApprenant + " formateur ? " + isFormateur
 				+ " id : " + idUtilisateur);
 
-		
 		if (isApprenant)
 			return "redirect:/public/accessDenied";
-		
+
 		if (isAdmin) {
 			List<Question> questions = questionService.questions();
 			model.addAttribute("questions", questions);
 		}
-		
+
 		if (isFormateur) {
 			Optional<Formateur> fmto = formateurService.findById(idUtilisateur);
-			
+
 			Formateur fmt = fmto.get();
-			
+
 			List<Question> questions = new ArrayList<Question>();
 			List<Matiere> listmatiere = new ArrayList<Matiere>();
 			Set<FormateurMatiere> formateurMatieres = fmt.getFormateurMatieres();

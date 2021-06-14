@@ -29,6 +29,9 @@ public class FormateurDto {
 		this.isAdmin = isAdmin;
 		this.isReferent = isReferent;
 	}
+	
+	public FormateurDto() {
+    }
 
 	public FormateurDto(Integer idFormateurDto, String nom, String prenom, String mail, Date dateInscriptionDate,
 			Integer idGroupe, List<Integer> idMatieres, Boolean active, Boolean isAdmin, Boolean isReferent) {
@@ -45,9 +48,7 @@ public class FormateurDto {
 		this.isReferent = isReferent;
 	}
 
-	public FormateurDto() {
 
-	}
 
 	public String getNom() {
 		return nom;

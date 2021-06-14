@@ -84,6 +84,7 @@ public class PromotionController {
 			System.err.println("isAdmin");
 			promotions = promotionService.promotions();
 		}
+		
 		if (isFormateur == true) {
 
 			List<Promotion> promotions2 = new ArrayList<>();
@@ -92,28 +93,20 @@ public class PromotionController {
 					.findByFormateur(formateurService.findById(idUtilisateur).get());
 
 			promotionFormateurs.stream().forEach(promotionFormateur -> {
-
 				promotions2.add(promotionFormateur.getPromotion());
 
 			});
-
 			promotions = promotions2;
-
 		}
 		if (isApprenant == true) {
 			System.err.println("isApprenant");
-
 			Apprenant apprenant = apprenantService.findById(idUtilisateur).get();
-
 			Promotion promotion = promotionService.findById(apprenant.getPromotion().getIdPromotion()).get();
-
 			promotions.add(promotion);
-
 		}
 
 		Organisation org = promotions.get(0).getOrganisation();
 		String nomOrganisation = org.getName();
-		
 
 		System.err.println(nomOrganisation);
 
@@ -121,40 +114,8 @@ public class PromotionController {
 		model.addAttribute("promotions", promotions);
 		model.addAttribute("organisation", nomOrganisation);
 
-
 		return "/protected/liste-promotion";
 
 	}
 
-	@RequestMapping(value = "/protected/liste-eleve", method = RequestMethod.POST)
-	public String afficheEleves(Model model, @RequestParam Integer promoSelect) {
-
-		Optional<Promotion> promoOp = promotionService.findById(promoSelect);
-		Promotion promotion = promoOp.get();
-		String nomFormation = promotion.getNom();
-
-		List<Apprenant> eleves = apprenantService.apprenantsByPromotion(promotion);
-
-		for (Apprenant apprenant : eleves) {
-
-			if (apprenant.getPromotion() != null) {
-				apprenant.setNomPromoString(apprenant.getPromotion().getNom());
-			}
-		}
-
-		isAdmin = false;
-		isFormateur = false;
-		isApprenant = false;
-		isConnectBoolean = true;
-
-		model.addAttribute("connexion", isConnectBoolean);
-		model.addAttribute("apprenant", isApprenant);
-		model.addAttribute("admin", isAdmin);
-		model.addAttribute("formateur", isFormateur);
-		model.addAttribute("apprenants", eleves);
-		model.addAttribute("formation", nomFormation);
-
-		return "/protected/liste-eleve";
-
-	}
 }

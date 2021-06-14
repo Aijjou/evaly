@@ -69,22 +69,29 @@ public class ResultatExamenController {
 			if (role.getAuthority().equals("ROLE_ADMIN")) {
 				isAdmin = true;
 				System.out.println("ROLE_ADMIN");
-			}
+			} else
+				isAdmin = false;
+
 			if (role.getAuthority().equals("ROLE_APPRENANT")) {
 				isApprenant = true;
 				System.out.println("ROLE_APPRENANT");
-			}
+			} else
+				isApprenant = false;
+
 			if (role.getAuthority().equals("ROLE_FORMATEUR")) {
 				isFormateur = true;
 				System.out.println("ROLE_FORMATEUR");
-			}
+			} else
+				isFormateur = false;
 		});
+		if (isAdmin || isFormateur || isApprenant) {
 		principal.UserPrincipal userPrincipal = (principal.UserPrincipal) auth.getPrincipal();
 		idUtilisateur = userPrincipal.getId();
+		}
 		System.err.println(" --- --- --- verificationRoles --- --- --- ");
 	}
 
-	@RequestMapping(value = "protected/liste-resultat", method = RequestMethod.GET)
+	@RequestMapping(value = "/protected/liste-resultat", method = RequestMethod.GET)
 	public String afficheExamen(Model model) {
 
 		verificationRolesAndSetIdUtilisateur();
@@ -125,6 +132,6 @@ public class ResultatExamenController {
 			List<ResultatExamen> resultsappr = resultatExamenService.findByApprenant(apt);
 			model.addAttribute("resultats", resultsappr);
 		}
-		return "protected/liste-resultat";
+		return "/protected/liste-resultat";
 	}
 }
