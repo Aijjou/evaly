@@ -21,6 +21,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "matiere", catalog = "evaly")
+//@Table(name = "matiere", catalog = "u575564338_evaly")
 public class Matiere implements java.io.Serializable {
 
 	private Integer idMatiere;

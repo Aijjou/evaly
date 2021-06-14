@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
 <meta charset="UTF-8">
@@ -37,12 +38,19 @@
 	<div class="principal d-flex flex-column justify-content-around">
 
 		<div class="d-flex flex-row justify-content-center mb-4 titre">
-			<div
+			<div th:if="${isModification != true}"
 				class="card connexion w-25 d-flex flex-column justify-content-between pt-1 pl-3 pr-4 pb-2 mb-4 ">
 				<small class="row d-flex flex-row justify-content-start promotion"><i
 					class="fas fa-address-card align-self-center ml-1 font-weight-bold"></i>&nbsp;
 					<div class="align-self-center pt-1">INSCRIPTION</div></small>
 				<div class="row align-self-center">INSCRIPTION - ADMIN</div>
+			</div>
+			<div th:if="${isModification == true}"
+				class="card connexion w-25 d-flex flex-column justify-content-between pt-1 pl-3 pr-4 pb-2 mb-4 ">
+				<small class="row d-flex flex-row justify-content-start promotion"><i
+					class="fas fa-pen-square align-self-center ml-1 font-weight-bold"></i>&nbsp;
+					<div class="align-self-center pt-1">MODIFACTION</div></small>
+				<div class="text-center pr-0 pl-0">MODIFICATION - ADMIN</div>
 			</div>
 		</div>
 		<div class="d-flex flex-row justify-content-center mt-2">
@@ -51,6 +59,8 @@
 				<form class="w-75 mt-3" method="POST"
 					th:object="${adminEtablissementDto}"
 					th:action="@{/public/inscription-admin}">
+					<input th:field="*{idAdminEtablissementDtoInteger}"
+						id="idAdminEtablissementDtoInteger" class="d-none" />
 					<div class="row">
 						<div class="col-6">
 							<div class="form w-100">
@@ -59,35 +69,35 @@
 								</div>
 								<div class="mb-3">
 									<label for="nom" class="text-dark font-weight-bold mb-0">Organisation*</label>
-									<input th:fields="*{nom}" type="text" class="form-control"
+									<input th:field="*{nom}" type="text" class="form-control"
 										id="nom" name="nom" placeholder="Ex : Afpa Roubaix" required>
 								</div>
 								<div class="mb-3">
 									<label for="numero" class="text-dark font-weight-bold mb-0">Numéro</label>
-									<input th:fields="*{numero}" type="number" class="form-control"
+									<input th:field="*{numero}" type="number" class="form-control"
 										id="numero" name="numero" placeholder="Ex : 46" required>
 								</div>
 								<div class="mb-3">
 									<label for="rue" class="text-dark font-weight-bold mb-0">Rue</label>
-									<input th:fields="*{rue}" type="text" class="form-control"
+									<input th:field="*{rue}" type="text" class="form-control"
 										id="rue" name="rue" placeholder="Ex : Rue de la Paix" required>
 								</div>
 								<div class="mb-3">
 									<label for="ville" class="text-dark font-weight-bold mb-0">Ville</label>
-									<input th:fields="*{ville}" type="text" class="form-control"
+									<input th:field="*{ville}" type="text" class="form-control"
 										id="ville" name="ville" placeholder="Ex : Armentières"
 										required>
 								</div>
 								<div class="mb-3">
 									<label for="nom" class="text-dark mb-0 font-weight-bold">Code
-										postal</label> <input th:fields="*{code}" type="text"
+										postal</label> <input th:field="*{code}" type="text"
 										class="form-control" id="code" name="code"
 										placeholder="Ex : 59369" required>
 									<div class="pt-3">
 										<div class="form-group">
 											<div class="form-check">
 												<input class="form-check-input" type="checkbox"
-													th:fields="*{isFormateur}" name="isFormateur"
+													th:field="*{isFormateur}" name="isFormateur"
 													id="isFormateur" value="true"> <label
 													class="form-check-label text-dark"> Formateur </label>
 											</div>
@@ -104,39 +114,39 @@
 								<div class="mb-3">
 									<label for="nom" class="text-dark font-weight-bold mb-0">Nom</label>
 									<input type="text" class="form-control" id="nom"
-										th:fields="*{nomReferent}" placeholder="Ex : Safouane"
+										th:field="*{nomReferent}" placeholder="Ex : Safouane"
 										required name="nomReferent">
 								</div>
 								<div class="mb-2">
 									<label for="nom" class="text-dark font-weight-bold mb-0">Prénom</label>
 									<input type="text" class="form-control" id="prenom"
-										th:fields="*{prenomReferent}" placeholder="Ex : Pierre"
+										th:field="*{prenomReferent}" placeholder="Ex : Pierre"
 										required name="prenomReferent">
 								</div>
 								<div class="mb-3">
 									<label for="rue" class="text-dark font-weight-bold mb-0">Mail</label>
 									<input type="email" class="form-control" id="mail"
-										th:fields="*{mail}" placeholder="Ex : maladedulosc59@gmail.fr"
+										th:field="*{mail}" placeholder="Ex : maladedulosc59@gmail.fr"
 										required name="mail">
 								</div>
 								<div class="mb-3">
 									<label for="ville" class="text-dark font-weight-bold mb-0">Mot
 										de passe</label> <input type="password" class="form-control"
-										th:fields="*{password}" id="password"
+										th:field="*{password}" id="password"
 										placeholder="Ex: a&lm1256e@" required name="password">
 								</div>
 
 								<div class="mb-3">
 									<label for="nom" class="text-dark font-weight-bold mb-0">Question
 										secrète </label> <input type="text" class="form-control" id="question"
-										th:fields="*{question}" placeholder="Who is your father?"
+										th:field="*{question}" placeholder="Who is your father?"
 										required name="question">
 								</div>
 								<div class="mb-3">
 									<label for="reponseSecrete" class="text-dark font-weight-bold">Réponse
 										secrète</label>
 									<textarea class="form-control" id="reponseSecrete" rows="3"
-										th:fields="*{reponse}" name="reponse"></textarea>
+										th:field="*{reponse}" name="reponse"></textarea>
 								</div>
 							</div>
 						</div>
@@ -148,7 +158,6 @@
 				</form>
 			</div>
 		</div>
-
 	</div>
 </body>
 

@@ -12,6 +12,8 @@ public interface GroupeService {
 	
 	public Optional<GroupeFormateur> findById(Integer id);
 	
+	public List<Integer> findGroupeFormateurByidGroupeFormateur(Integer idFormateur);
+	
 
 	void save(GroupeFormateur t);
 

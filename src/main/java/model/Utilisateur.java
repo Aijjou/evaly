@@ -29,6 +29,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 @Entity
 @Table(name = "utilisateur", catalog = "evaly")
+//@Table(name = "utilisateur", catalog = "u575564338_evaly")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Utilisateur implements java.io.Serializable {
 
@@ -48,6 +49,7 @@ public class Utilisateur implements java.io.Serializable {
 	private Date dateInscription;
 	private Boolean active;
 	private Boolean isAdmin;
+	private Integer idOrganisation;
 	private Set<Role> roles;
 	private Set<VerifyUtilisateur> verifyUtilisateurs;
 	private Set<Formateur> formateurs = new HashSet<Formateur>(0);
@@ -58,7 +60,7 @@ public class Utilisateur implements java.io.Serializable {
 
 	public Utilisateur(String nom, String prenom, String mail, String password, String questionSecrete,
 			String reponseSecrete, Date dateInscription, Set<Formateur> formateurs, Set<Apprenant> apprenants,
-			String photo, Boolean active,Set<Role> roles, Boolean isAdmin) {
+			String photo, Boolean active, Set<Role> roles, Boolean isAdmin, Integer idOrganisation) {
 		this.nom = nom;
 		this.prenom = prenom;
 		this.mail = mail;
@@ -72,8 +74,49 @@ public class Utilisateur implements java.io.Serializable {
 		this.active = active;
 		this.roles = roles;
 		this.isAdmin = isAdmin;
+		this.idOrganisation = idOrganisation;
+
+	}
+	public Utilisateur(Integer idUtilisateur, String nom, String prenom, String mail, String password, String questionSecrete,
+			String reponseSecrete, Date dateInscription, Set<Formateur> formateurs, Set<Apprenant> apprenants,
+			String photo, Boolean active, Set<Role> roles, Boolean isAdmin, Integer idOrganisation) {
+		this.nom = nom;
+		this.prenom = prenom;
+		this.mail = mail;
+		this.photo = photo;
+		this.password = password;
+		this.questionSecrete = questionSecrete;
+		this.reponseSecrete = reponseSecrete;
+		this.dateInscription = dateInscription;
+		this.formateurs = formateurs;
+		this.apprenants = apprenants;
+		this.active = active;
+		this.roles = roles;
+		this.isAdmin = isAdmin;
+		this.idOrganisation = idOrganisation;
 		
 	}
+
+	public Utilisateur(String nom, String prenom, String mail, String password, String questionSecrete,
+			String reponseSecrete, Date dateInscription, Set<Formateur> formateurs, Set<Apprenant> apprenants,
+			String photo, Boolean active, Set<Role> roles, Boolean isAdmin) {
+		this.nom = nom;
+		this.prenom = prenom;
+		this.mail = mail;
+		this.photo = photo;
+		this.password = password;
+		this.questionSecrete = questionSecrete;
+		this.reponseSecrete = reponseSecrete;
+		this.dateInscription = dateInscription;
+		this.formateurs = formateurs;
+		this.apprenants = apprenants;
+		this.active = active;
+		this.roles = roles;
+		this.isAdmin = isAdmin;
+	
+
+	}
+
 	
 	
 	@Id
@@ -87,8 +130,7 @@ public class Utilisateur implements java.io.Serializable {
 		this.idUtilisateur = idUtilisateur;
 	}
 
-
-    @JsonIgnore
+	@JsonIgnore
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "user_roles", catalog = "evaly", joinColumns = {
 			@JoinColumn(name = "id_utilisateur", referencedColumnName = "id_utilisateur") }, inverseJoinColumns = @JoinColumn(name = "id_role", referencedColumnName = "id_role"))
@@ -96,7 +138,7 @@ public class Utilisateur implements java.io.Serializable {
 		return roles;
 	}
 
-    @Column(name = "is_active")
+	@Column(name = "is_active")
 	public Boolean getActive() {
 		return active;
 	}
@@ -109,13 +151,11 @@ public class Utilisateur implements java.io.Serializable {
 		this.roles = roles;
 	}
 
-
 	@Column(name = "nom", length = 100)
 	public String getNom() {
 		return this.nom;
 	}
-	
-	
+
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "utilisateur", cascade = CascadeType.ALL)
 	public Set<VerifyUtilisateur> getVerifyUtilisateurs() {
@@ -212,8 +252,7 @@ public class Utilisateur implements java.io.Serializable {
 		this.apprenants = apprenants;
 	}
 
-	
-	@Column(name="is_admin")
+	@Column(name = "is_admin")
 	public Boolean getIsAdmin() {
 		return isAdmin;
 	}
@@ -221,8 +260,6 @@ public class Utilisateur implements java.io.Serializable {
 	public void setIsAdmin(Boolean isAdmin) {
 		this.isAdmin = isAdmin;
 	}
-
-	
 
 	@Column(name = "date_naissance", length = 200)
 	public Date getDateNaissance() {
@@ -233,16 +270,24 @@ public class Utilisateur implements java.io.Serializable {
 		this.dateNaissance = dateNaissance;
 	}
 
+	public Integer getIdOrganisation() {
+		return idOrganisation;
+	}
+
+	public void setIdOrganisation(Integer idOrganisation) {
+		this.idOrganisation = idOrganisation;
+	}
+	
+	
+
+
 	@Override
 	public String toString() {
 		return "Utilisateur [idUtilisateur=" + idUtilisateur + ", nom=" + nom + ", prenom=" + prenom + ", mail=" + mail
-				+ ", photo=" + photo + ", questionSecrete=" + questionSecrete
-				+ ", reponseSecrete=" + reponseSecrete + ", dateInscription=" + dateInscription + ", active=" + active
-				+ ", isAdmin=" + isAdmin + ", roles=" + roles + ", verifyUtilisateurs=" + verifyUtilisateurs
-				+ ", formateurs=" + formateurs + ", apprenants=" + apprenants + "]";
+				+ ", photo=" + photo + ", questionSecrete=" + questionSecrete + ", reponseSecrete=" + reponseSecrete
+				+ ", dateInscription=" + dateInscription + ", active=" + active + ", isAdmin=" + isAdmin + ", roles="
+				+ roles + ", verifyUtilisateurs=" + verifyUtilisateurs + ", formateurs=" + formateurs + ", apprenants="
+				+ apprenants + "]";
 	}
-
-
-	
 
 }

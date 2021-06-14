@@ -12,7 +12,9 @@ import model.PromotionFormateur;
 public interface PromotionFormateurRepository extends CrudRepository<PromotionFormateur, Integer> {
 
 	public List<PromotionFormateur> findByPromotion(Promotion promotion);
-	
+
 	public List<PromotionFormateur> findByFormateur(Formateur formateur);
+
+	
 
 }

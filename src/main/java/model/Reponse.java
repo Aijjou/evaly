@@ -19,6 +19,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "reponse", catalog = "evaly")
+//@Table(name = "reponse", catalog = "u575564338_evaly")
 public class Reponse implements java.io.Serializable, Comparable{
 
 	private Integer idReponse;

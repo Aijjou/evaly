@@ -21,6 +21,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "theme", catalog = "evaly")
+//@Table(name = "theme", catalog = "u575564338_evaly")
 public class Theme implements java.io.Serializable {
 
 	@Override

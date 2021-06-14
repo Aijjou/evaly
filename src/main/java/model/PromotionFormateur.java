@@ -13,6 +13,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "promotion_formateur", catalog = "evaly")
+//@Table(name = "promotion_formateur", catalog = "u575564338_evaly")
 public class PromotionFormateur implements java.io.Serializable {
 
 	private Integer idPromotionFormateur;

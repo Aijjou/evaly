@@ -37,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.csrf().disable().authorizeRequests().antMatchers("/admin/**").hasAuthority("ROLE_ADMIN").antMatchers("/protected/**")
 				.hasAnyAuthority("ROLE_FORMATEUR", "ROLE_ADMIN", "ROLE_APPRENANT")
 				.antMatchers("/webjars/**", "/static/**", "/peritable/**", "/public/**", "/assets/**", "/css/**",
-						"/images/**", "/fontawesome/**", "/logout")
+						"/images/**", "/fontawesome/**", "/logout", "/protected/**", "/admin/**")
 				.permitAll().anyRequest().authenticated().and().formLogin().loginPage("/public/connexion")
 				.defaultSuccessUrl("/protected/home").usernameParameter("email").passwordParameter("password").and()
 				.logout().logoutSuccessUrl("/public/connexion").deleteCookies("JSESSIONID").and().exceptionHandling()

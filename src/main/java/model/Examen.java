@@ -25,6 +25,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "examen", catalog = "evaly")
+//@Table(name = "examen", catalog = "u575564338_evaly")
 public class Examen implements java.io.Serializable {
 
 	private Integer idExamen;

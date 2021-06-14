@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +18,7 @@ import service.GroupeService;
 @Transactional
 public class GroupeServiceImpl implements GroupeService{
 
-	@Resource
+	@Autowired
 	GroupeRepository groupeRepository;
 	
 	
@@ -37,6 +38,12 @@ public class GroupeServiceImpl implements GroupeService{
 	public void save(GroupeFormateur s) {
 		groupeRepository.save(s);
 
+	}
+
+	@Override
+	public List<Integer> findGroupeFormateurByidGroupeFormateur(Integer idFormateur) {
+	
+		return findGroupeFormateurByidGroupeFormateur(idFormateur);
 	}
 
 }

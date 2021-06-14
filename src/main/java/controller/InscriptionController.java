@@ -6,16 +6,16 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.apache.commons.logging.Log;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.core.Authentication;
@@ -27,11 +27,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.thymeleaf.util.StringUtils;
 
 import dto.AdminEtablissementDto;
 import dto.ApprenantDto;
@@ -61,6 +61,8 @@ import service.VerifyUtilisateurService;
 
 @Controller
 public class InscriptionController {
+
+	private static Logger logger = Logger.getLogger(InscriptionController.class);
 
 	@Autowired
 	private GroupeService groupeService;
@@ -206,6 +208,31 @@ public class InscriptionController {
 		return "/public/inscription-final";
 	}
 
+	@RequestMapping(value = "/admin/edit-admin-admin/{idAdmin}", method = RequestMethod.GET)
+	public String editAdminAdmin(Model model, @PathVariable("idAdmin") Integer idAdmin) {
+
+		boolean isModification = true;
+
+		Utilisateur utilisateur = utilisateurService.findById(idAdmin).get();
+
+		Organisation organisation = organisationService.findOrganisation(utilisateur.getIdOrganisation()).get();
+
+		logger.info("utilisateur " + utilisateur);
+		logger.info("organisation " + organisation);
+
+		AdminEtablissementDto adminEtablissementDto = new AdminEtablissementDto(utilisateur.getIdUtilisateur(),
+				organisation.getName(), organisation.getNumero(), organisation.getRue(), organisation.getVille(),
+				organisation.getCode(), null, utilisateur.getNom(), utilisateur.getPrenom(), utilisateur.getMail(),
+				null, utilisateur.getQuestionSecrete(), utilisateur.getReponseSecrete(), utilisateur.getIsAdmin());
+
+		System.err.println(adminEtablissementDto);
+
+		model.addAttribute("isModification", isModification);
+		model.addAttribute("adminEtablissementDto", adminEtablissementDto);
+
+		return "/public/inscription-admin";
+	}
+
 	@RequestMapping(value = "/public/inscription-final", method = RequestMethod.POST)
 	public String inscriptionFinal(Model model,
 			@Valid @ModelAttribute("formateurDtoFinal") FormateurDtoFinal formateurDtoFinal, BindingResult result,
@@ -239,6 +266,8 @@ public class InscriptionController {
 				.cleanPath(apprenantDtoFinal.getPhoto().getOriginalFilename());
 		Path path = Paths.get(UPLOAD_DIR + fileName);
 		Files.copy(apprenantDtoFinal.getPhoto().getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+
+		System.err.println("dateNaissance + " + apprenantDtoFinal.getDateNaissance());
 
 		Apprenant apprenant = utilisateurService.createApprenantFinal(apprenantDtoFinal);
 
@@ -291,17 +320,28 @@ public class InscriptionController {
 			@Valid @ModelAttribute("adminEtablissementDto") AdminEtablissementDto adminEtablissementDto,
 			BindingResult result, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		System.out.println(" adminDto   " + adminEtablissementDto);
+		System.out.println(" adminDto   " + adminEtablissementDto.getIdAdminEtablissementDtoInteger());
+
+		UtilisateurDto utilisateurDto;
 
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-		if (adminEtablissementDto.getIsFormateur() != null) {
+		if (adminEtablissementDto.getIsFormateur() != false) {
 			System.out.println("isFormateur");
 
-			UtilisateurDto utilisateurDto = new UtilisateurDto(adminEtablissementDto.getNomReferent(),
-					adminEtablissementDto.getPrenomReferent(), adminEtablissementDto.getMail(),
-					adminEtablissementDto.getPassword(), null, adminEtablissementDto.getQuestion(),
-					adminEtablissementDto.getReponse(), true);
+			if (adminEtablissementDto.getIdAdminEtablissementDtoInteger() != null) {
+
+				utilisateurDto = new UtilisateurDto(adminEtablissementDto.getIdAdminEtablissementDtoInteger(),
+						adminEtablissementDto.getNomReferent(), adminEtablissementDto.getPrenomReferent(),
+						adminEtablissementDto.getMail(), adminEtablissementDto.getPassword(), null,
+						adminEtablissementDto.getQuestion(), adminEtablissementDto.getReponse(), true);
+
+			} else {
+				utilisateurDto = new UtilisateurDto(adminEtablissementDto.getNomReferent(),
+						adminEtablissementDto.getPrenomReferent(), adminEtablissementDto.getMail(),
+						adminEtablissementDto.getPassword(), null, adminEtablissementDto.getQuestion(),
+						adminEtablissementDto.getReponse(), true);
+			}
 
 			Utilisateur utilisateur = utilisateurService.createFormateur(utilisateurDto);
 
@@ -309,11 +349,21 @@ public class InscriptionController {
 
 		} else {
 			System.out.println("isAdmin");
-			UtilisateurDto utilisateurDto = new UtilisateurDto(adminEtablissementDto.getNomReferent(),
-					adminEtablissementDto.getPrenomReferent(), adminEtablissementDto.getMail(),
-					adminEtablissementDto.getPassword(), null, adminEtablissementDto.getQuestion(),
-					adminEtablissementDto.getReponse(), true);
 
+			if (adminEtablissementDto.getIdAdminEtablissementDtoInteger() != null) {
+				System.out.println("isAdmin + id not null");
+				utilisateurDto = new UtilisateurDto(adminEtablissementDto.getIdAdminEtablissementDtoInteger(),
+						adminEtablissementDto.getNomReferent(), adminEtablissementDto.getPrenomReferent(),
+						adminEtablissementDto.getMail(), adminEtablissementDto.getPassword(), null,
+						adminEtablissementDto.getQuestion(), adminEtablissementDto.getReponse(), true);
+
+			} else {
+				System.out.println("isAdmin + id null");
+				utilisateurDto = new UtilisateurDto(adminEtablissementDto.getNomReferent(),
+						adminEtablissementDto.getPrenomReferent(), adminEtablissementDto.getMail(),
+						adminEtablissementDto.getPassword(), null, adminEtablissementDto.getQuestion(),
+						adminEtablissementDto.getReponse(), true);
+			}
 			Utilisateur utilisateur = utilisateurService.createAdmin(utilisateurDto);
 
 			System.out.println(" formateur " + utilisateur);
