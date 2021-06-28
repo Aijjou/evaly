@@ -274,7 +274,7 @@ public class ExamenController {
 				+ " id : " + idUtilisateur);
 
 		///// Passage as Utilisateur 2
-		idUtilisateur=5;
+		//idUtilisateur=5;
 
 		Integer idex = Integer.parseInt(idExamen);
 		Optional<Examen> examenopt = examenService.findById(idex);
@@ -324,6 +324,7 @@ public class ExamenController {
 		// Vérif si l'examen a déjà été passé
 		List<ReponseApprenantExamen> lrae = reponseApprenantExamenService.findByApprenantAndExamen(app, examen);
 		if (lrae.size()>0) {
+			
 			System.err.print("REDIRECT LISTE EXAMEN - REPONSES DEJA PRESENTES");
 			message="Vous avez déjà effectué cet examen.";
 			return "redirect:/protected/liste-examen";
@@ -363,7 +364,7 @@ public class ExamenController {
 				+ " id : " + idUtilisateur);
 
 		///// Passage as Utilisateur 2
-		idUtilisateur=5;
+	//	idUtilisateur=5;
 		Integer idapprenant=idUtilisateur;
 		
 		Optional<Apprenant> a = apprenantService.findById(idapprenant);

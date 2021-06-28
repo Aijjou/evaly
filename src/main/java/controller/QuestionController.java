@@ -404,11 +404,7 @@ public class QuestionController {
 		if (isApprenant)
 			return "redirect:/protected/home";
 
-		System.out.println("------Test rep3 EDIT -------");
-		System.out.print("Test réponses 3 rep3null");
-		System.out.println(question.getRep3() == null);
-		System.out.print("Test réponses 3 rep3empty" + question.getRep3().isEmpty());
-		System.out.println(question.getRep3().isEmpty());
+		
 		System.out.println("-------------");
 		Optional<Question> edited = questionService.findById(question.getIdQuestion());
 		Question edit = edited.get();
