@@ -3,6 +3,7 @@ package service.impl;
 import java.io.File;
 import java.sql.Date;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -170,50 +171,81 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Override
 	public Formateur createFormateurParAdmin(FormateurDto formateur) throws MessagingException {
 
-		FormateurGroupeFormateur formateurGroupeFormateur = new FormateurGroupeFormateur();
-
-		Date dateInscrDate = new Date(System.currentTimeMillis());
+		FormateurGroupeFormateur formateurGroupeFormateur;
 
 		Role role = roleService.findById(2).get();
 
 		Set<Role> listeRoles = new HashSet<>();
 		Formateur formateur2 = new Formateur();
 
+		if (formateur.getIdFormateurDto() != null) {
+
+			formateur2.setIdUtilisateur(formateur.getIdFormateurDto());
+			Formateur formateur4 = formateurRepository.findById(formateur.getIdFormateurDto()).get();
+
+			formateur2.setActive(true);
+			formateur2.setDateNaissance(formateur4.getDateNaissance());
+			formateur2.setIdOrganisation(1);
+			formateur2.setPassword(formateur4.getPassword());
+			formateur2.setIsAdmin(formateur4.getIsAdmin());
+			formateur2.setIsReferent(formateur4.getIsReferent());
+			formateur2.setPhoto(formateur4.getPhoto());
+			formateur2.setQuestionSecrete(formateur4.getQuestionSecrete());
+			formateur2.setReponseSecrete(formateur4.getReponseSecrete());
+
+		}
 		formateur2.setDateInscription(formateur.getDateInscriptionDate());
 		formateur2.setMail(formateur.getMail());
 		formateur2.setNom(formateur.getNom());
 		formateur2.setPrenom(formateur.getPrenom());
-
 		formateur2.setIsAdmin(false);
 		formateur2.setRoles(listeRoles);
 		formateur2.getRoles().add(role);
 
 		formateur2.setIsReferent(formateur.getIsReferent());
 
-		String token = RandomUtil.generateRandomStringNumber(6).toUpperCase();
+		if (formateur.getIdFormateurDto() == null) {
 
-		VerifyUtilisateur verifyUtilisateur = new VerifyUtilisateur();
+			String token = RandomUtil.generateRandomStringNumber(6).toUpperCase();
 
-		verifyUtilisateur.setUtilisateur(formateur2);
+			VerifyUtilisateur verifyUtilisateur = new VerifyUtilisateur();
 
-		verifyUtilisateur.setCreatedDate(LocalDateTime.now());
+			verifyUtilisateur.setUtilisateur(formateur2);
 
-		verifyUtilisateur.setExpiredDataToken(LocalDateTime.now().plusDays(1));
-		verifyUtilisateur.setToken(token);
-		verifyUtilisateurRepository.save(verifyUtilisateur);
+			verifyUtilisateur.setCreatedDate(LocalDateTime.now());
 
-		Map<String, Object> maps = new HashMap<>();
-		maps.put("utilisateur", formateur2);
-		maps.put("token", token);
+			verifyUtilisateur.setExpiredDataToken(LocalDateTime.now().plusDays(1));
+			verifyUtilisateur.setToken(token);
+			verifyUtilisateurRepository.save(verifyUtilisateur);
 
-		Mail mail = new Mail();
-		mail.setFrom("postmaster@mg.iteacode.com");
-		mail.setSubject("Validation inscription Evaly");
-		mail.setTo(formateur2.getMail());
-		mail.setModel(maps);
-		mailService.sendEmail(mail);
+			Map<String, Object> maps = new HashMap<>();
+			maps.put("utilisateur", formateur2);
+			maps.put("token", token);
+
+			Mail mail = new Mail();
+			mail.setFrom("postmaster@mg.iteacode.com");
+			mail.setSubject("Validation inscription Evaly");
+			mail.setTo(formateur2.getMail());
+			mail.setModel(maps);
+			mailService.sendEmail(mail);
+
+		}
 
 		Formateur formateur3 = formateurRepository.save(formateur2);
+
+		if (formateur.getIdFormateurDto() != null) {
+			List<FormateurMatiere> formateurMatieres = new ArrayList<>();
+			formateurGroupeFormateur = formateurGroupeFormateurRepository.findByFormateur(formateur2).get(0);
+			formateurGroupeFormateurRepository.delete(formateurGroupeFormateur);
+			formateurMatieres = formateurMatiereRepository.findByFormateur(formateur2);
+
+			formateurMatieres.stream().forEach(formateurMatiere -> {
+
+				formateurMatiereRepository.delete(formateurMatiere);
+
+			});
+
+		}
 
 		for (int i = 0; i < formateur.getIdMatieres().size(); i++) {
 			FormateurMatiere formateurMatiere = new FormateurMatiere();
@@ -221,10 +253,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			formateurMatiere.setMatiere(matiereRepository.findById(formateur.getIdMatieres().get(i)).get());
 			formateurMatiereRepository.save(formateurMatiere);
 		}
+		FormateurGroupeFormateur formateurGroupeFormateur2 = new FormateurGroupeFormateur();
 
-		formateurGroupeFormateur.setFormateur(formateur3);
-		formateurGroupeFormateur.setGroupeFormateur(groupeRepository.findById(formateur.getIdGroupe()).get());
-		formateurGroupeFormateurRepository.save(formateurGroupeFormateur);
+		formateurGroupeFormateur2.setFormateur(formateur3);
+		formateurGroupeFormateur2.setGroupeFormateur(groupeRepository.findById(formateur.getIdGroupe()).get());
+		formateurGroupeFormateurRepository.save(formateurGroupeFormateur2);
 
 		return formateur3;
 	}

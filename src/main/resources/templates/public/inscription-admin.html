@@ -114,8 +114,8 @@
 								<div class="mb-3">
 									<label for="nom" class="text-dark font-weight-bold mb-0">Nom</label>
 									<input type="text" class="form-control" id="nom"
-										th:field="*{nomReferent}" placeholder="Ex : Safouane"
-										required name="nomReferent">
+										th:field="*{nomReferent}" placeholder="Ex : Safouane" required
+										name="nomReferent">
 								</div>
 								<div class="mb-2">
 									<label for="nom" class="text-dark font-weight-bold mb-0">Prénom</label>
@@ -151,7 +151,7 @@
 							</div>
 						</div>
 						<div class="d-flex flex-row justify-content-end w-100">
-							<a class="btn annulerButton mr-2" href="/protected/liste-eleve">ANNULER</a>
+							<a class="btn annulerButton mr-2" th:href="@{/protected/home}">ANNULER</a>
 							<button type="submit" class="btn validerButton">VALIDER</button>
 						</div>
 					</div>

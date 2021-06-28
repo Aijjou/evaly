@@ -41,25 +41,33 @@
 				class="card connexion w-25 d-flex flex-column justify-content-between pt-1 pl-3 pr-4 pb-2 mb-4">
 				<small class="row d-flex flex-row justify-content-start promotion"><i
 					class="fas fa-user-graduate align-self-center ml-1 font-weight-bold"></i>&nbsp;
-					<div class="align-self-center pt-1">APPRENANT</div></small>
+					<div class="align-self-center pt-1">UTILISATEUR</div></small>
 				<div class="row align-self-center ">
-					<span th:text="${apprenant.prenom}"></span> &nbsp;<span
-						th:text="${apprenant.nom}"></span>
+					<span th:text="${utilisateur.prenom}"></span> &nbsp;<span
+						th:text="${utilisateur.nom}"></span>
 				</div>
 			</div>
 		</div>
 		<div class="row mt-4 w-75 align-self-center main">
 			<div class="card w-100 p-4">
 				<div class="row d-flex flex-row justify-content-start w-100 p-4">
-					<img th:src="${apprenant.photo}" id="photoEleve" alt=""
+					<img th:src="${utilisateur.photo}" id="photoEleve" alt=""
 						class="shadow mr-4">
-					<div
+					<div th:if="${isAdmin != true || isFormateur != true}"
 						class="formationTitre d-flex flex-column justify-content-start">
 						<small class="row"><i
 							class="fas fa-graduation-cap align-self-center font-weight-bold ml-1"></i>&nbsp;
 							<div class="align-self-center pt-1">PROMOTION</div></small> <label for=""
 							class="text-dark font-weight-bold"><span
-							th:text="${promotion.nom}"></span></label>
+							th:text="${promotion?.nom}"></span></label>
+					</div>
+					<div th:if="${isAdmin == true || isFormateur == true}"
+						class="formationTitre d-flex flex-column justify-content-start">
+						<small class="row"><i
+							class="fas fa-graduation-cap align-self-center font-weight-bold ml-1"></i>&nbsp;
+							<div class="align-self-center pt-1">ORGANISATION</div></small> <label
+							for="" class="text-dark font-weight-bold"><span
+							th:text="${organisation.name}"></span></label>
 					</div>
 				</div>
 				<ul class="nav nav-tabs d-flex flex-row justify-content-start"
@@ -69,7 +77,8 @@
 							data-bs-target="#home" type="button" role="tab"
 							aria-controls="home" aria-selected="true" onclick="afficheHome()">Informations</button>
 					</li>
-					<li class="nav-item" role="presentation">
+					<li class="nav-item" role="presentation"
+						th:if="${isApprenant == true}">>
 						<button class="nav-link" id="profile-tab" data-bs-toggle="tab"
 							data-bs-target="#profile" type="button" role="tab"
 							aria-controls="profile" aria-selected="false"
@@ -83,18 +92,24 @@
 							<div class="col-md-6 d-flex flex-column justify-content-center">
 								<label for="" class="mb-4" id="identiteTitre">IDENTITE</label>
 								<ul class="text-dark">
-									<li><b>Nom :</b> &nbsp; <span th:text="${apprenant.nom}"></span></li>
+									<li><b>Nom :</b> &nbsp; <span th:text="${utilisateur.nom}"></span></li>
 									<li><b>Prénom :</b> &nbsp; <span
-										th:text="${apprenant.prenom}"></span></li>
+										th:text="${utilisateur.prenom}"></span></li>
 									<li><b>Date de naissance:</b> &nbsp; <span
-										th:text="${#dates.format(apprenant.dateNaissance, 'dd-MMM-yyyy')}"></span></li>
+										th:text="${#dates.format(utilisateur.dateNaissance, 'dd-MMM-yyyy')}"></span></li>
 
 								</ul>
 							</div>
 							<div class="col-md-6 d-flex flex-column justify-content-center">
 								<label for="" class="mb-4" id="coordoneeTitre">COORDONNEES</label>
 								<ul class=text-dark>
-									<li><b>Email :</b>  &nbsp; <span th:text=${apprenant.mail}></span></li>
+
+									<li><b>Email :</b> &nbsp; <span
+										th:text=${utilisateur.mail}></span></li>
+									<li><b>Date inscription :</b> &nbsp; <span
+										th:text="${#dates.format(utilisateur.dateInscription, 'dd-MMM-yyyy')}"></span></li>
+
+
 								</ul>
 							</div>
 						</div>
@@ -103,29 +118,33 @@
 						aria-labelledby="profile-tab">
 						<div class="row p-4 w-100">
 							<table
-							class="table table-dark align-self-center shadow rounded bg-dark text-white justify-content-center" 
-							id="datatable" >
-							<thead class="bg-dark">
-								<tr>
-									<th   class="text-center" scope="col">Promotion</th>
-								<th  class="text-center"  scope="col">Matière</th>
-									<th  class="text-center"  scope="col">Titre Examen</th>
-									<th   class="text-center" scope="col">Date Examen</th>
-									<th   class="text-center" scope="col">Moy. sujet</th>
-									<th  class="text-center"  scope="col">Note</th>
-								</tr>
-							</thead>
-							<tbody class="bg-dark ">
-								<tr th:each="result : ${results}" class="bg-dark">
-								<td class="text-center"   th:text="${result.examen.promotion.nom}"></td>
-								<td  class="text-center"  th:text="${result.examen.matiere.nom}"></td>
-									<td  class="text-center"  th:text="${result.examen.titre}"></td>
-									<td  class="text-center"  th:text="${result.examen.dateExamen}"></td>
-									<td class="text-center"  th:text="${result.examen.sujet.noteMoyenne}"><span>&nbsp; /  &nbsp; 20</span></td>
-									<td class="text-center"  th:text="${result.note}">  &nbsp; /  &nbsp; 20</td>
-								</tr>
-							</tbody>
-						</table>
+								class="table table-dark align-self-center shadow rounded bg-dark text-white justify-content-center"
+								id="datatable">
+								<thead class="bg-dark">
+									<tr>
+										<th class="text-center" scope="col">Promotion</th>
+										<th class="text-center" scope="col">Matière</th>
+										<th class="text-center" scope="col">Titre Examen</th>
+										<th class="text-center" scope="col">Date Examen</th>
+										<th class="text-center" scope="col">Moy. sujet</th>
+										<th class="text-center" scope="col">Note</th>
+									</tr>
+								</thead>
+								<tbody class="bg-dark ">
+									<tr th:each="result : ${results}" class="bg-dark">
+										<td class="text-center"
+											th:text="${result.examen.promotion.nom}"></td>
+										<td class="text-center" th:text="${result.examen.matiere.nom}"></td>
+										<td class="text-center" th:text="${result.examen.titre}"></td>
+										<td class="text-center" th:text="${result.examen.dateExamen}"></td>
+										<td class="text-center"
+											th:text="${result.examen.sujet.noteMoyenne}"><span>&nbsp;
+												/ &nbsp; 20</span></td>
+										<td class="text-center" th:text="${result.note}">&nbsp; /
+											&nbsp; 20</td>
+									</tr>
+								</tbody>
+							</table>
 						</div>
 					</div>
 				</div>

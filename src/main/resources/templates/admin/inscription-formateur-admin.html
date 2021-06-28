@@ -40,12 +40,20 @@
 	<div class=" principal d-flex flex-column justify-content-around">
 
 		<div class="d-flex flex-row justify-content-center mb-4 titre">
-			<div
+			<div th:if="${isModification != true}"
 				class="card connexion w-25 d-flex flex-column justify-content-between pt-1 pl-3 pr-4 pb-2 mb-4 ">
 				<small class="row d-flex flex-row justify-content-start promotion"><i
 					class="fas fa-users-cog align-self-center ml-1 font-weight-bold"></i>&nbsp;
 					<div class="align-self-center pt-1">Admin</div></small>
 				<div class="row align-self-center ">INSCRIPTION - FORMATEUR</div>
+			</div>
+			<div th:if="${isModification == true}"
+				class="card connexion w-25 d-flex flex-column justify-content-between pt-1 pl-3 pr-4 pb-2 mb-4 ">
+				<small class="row d-flex flex-row justify-content-start promotion"><i
+					class="fas fa-pen-square align-self-center ml-1 font-weight-bold"></i>&nbsp;
+					<div class="align-self-center pt-1">Admin</div></small>
+				<div class="row align-self-center pr-0 pl-0">MODIFICATION -
+					FORMATEUR</div>
 			</div>
 		</div>
 		<div class="d-flex flex-row justify-content-center mt-4">
@@ -54,6 +62,7 @@
 				<form class="w-75" th:action="@{/admin/inscription-formateur-admin}"
 					method="POST" th:object="${formateurDto}">
 					<div class="form-row">
+						<input type="hidden" th:field="*{idFormateurDto}" />
 						<div class="form-group col-md-6">
 							<label for="nom" class="text-dark font-weight-bold">Nom</label> <input
 								type="text" class="form-control" id="nom" th:field="*{nom}"
@@ -75,7 +84,7 @@
 						</div>
 						<div class="form-group col-md-6 mb-0">
 							<label for="reponse" class="text-dark font-weight-bold">Date
-								d'inscription</label> <input type="date" id="datepicker"
+								d'inscription</label> <input type="date" id="dateinscriptionDate"
 								th:field="*{dateInscriptionDate}" name="dateInscriptionDate"
 								class="form-control text-left mr-2">
 
@@ -86,8 +95,7 @@
 						<div class="form-group col-6">
 							<label for="exampleFormControlSelect1"
 								class="text-dark font-weight-bold">Selectionner un
-								groupe</label> <select class="form-control" th:field="*{idGroupe}"
-								>
+								groupe</label> <select class="form-control" th:field="*{idGroupe}">
 								<option th:each="groupe:${groupes}" th:text="${groupe.nom}"
 									th:value="${groupe.idGroupeFormateur}"></option>
 
@@ -98,7 +106,7 @@
 							<label for="exampleFormControlSelect2"
 								class="text-dark font-weight-bold">Selectionner une ou
 								plusieurs matières</label> <select multiple class="form-control"
-								th:field="*{idMatieres}" >
+								th:field="*{idMatieres}">
 								<option th:each="matiere:${matieres}" th:text="${matiere.nom}"
 									th:value="${matiere.idMatiere}"></option>
 
@@ -117,7 +125,8 @@
 						</div>
 					</div>
 					<div class="d-flex flex-row justify-content-end">
-						<a type="submit" href="#" class="btn annulerButton mr-2">ANNULER</a>
+						<a  th:href="@{/protected/home}"
+							class="btn annulerButton mr-2">ANNULER</a>
 						<button type="submit" class="btn validerButton">VALIDER</button>
 					</div>
 				</form>
