@@ -264,8 +264,8 @@ public class InscriptionController {
 
 		String fileName = org.springframework.util.StringUtils
 				.cleanPath(apprenantDtoFinal.getPhoto().getOriginalFilename());
-		Path path = Paths.get(UPLOAD_DIR + fileName);
-		Files.copy(apprenantDtoFinal.getPhoto().getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+		//Path path = Paths.get(UPLOAD_DIR + fileName);
+		//Files.copy(apprenantDtoFinal.getPhoto().getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
 
 		System.err.println("dateNaissance + " + apprenantDtoFinal.getDateNaissance());
 
